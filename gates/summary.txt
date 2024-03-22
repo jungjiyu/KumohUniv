@@ -2,10 +2,11 @@
 
 기본세팅 마치면 보이는 구성
   : Design source 
+    : https://m.blog.naver.com/ansdbtls4067/221249220831
     : .vhd 확장자
-    : 탭에서 더블 클릭함 코드 수정 가능
     : 실제로 존재하는 파일임
     : 구성
+      : 주석 달기 == "--"
       : library IEEE;
         : 라이브러리 선언부
 
@@ -14,29 +15,47 @@
         : 화면에서 보라색 폰트로 표시된 부분은 비바도의 내장 함수 같은걸 사용한는거고, 검은색은 내가 직접 설정하는거임. 
           : 보라색과 동일한 이름으로 변수 생성 불
 
-      : entity 어쩌구 is ... end 쩌구; 
-          : 모듈 선언부 로, 내부적으로 포트 정의을 하게 된다
-          : 어쩌구== 모듈명
-          : 포트 정의 
-            port ( 포트명 : in std_logic 혹은 out std_logic;
-                포트명2 :  in std_logic 혹은 out std_logic;
+      : entity 어쩌구 is ... end 어쩌구; 
+          : entity 를 선언한다. entity 의 이름과 entity 의 port 를 정의하게 된다
+            : entity >> 디지털 회로 블록의 이름
+            : port >> 입 출력 입구 라고 봄 된다
+
+          : port 선언 형식 >> port( ); 내부에서 포트명과 데이터 타입 선언
+            port ( 포트명 : 모드 데이터형;
+                포트명2 : 모드 데이터형;
                 . . .
-                 포트명n :  in std_logic 혹은 out std_logic );
- 
-                  >> in std_logic 혹은 out std_logic 은 해당 포트의 타입이라고 보면 됨
+                 포트명n : 모드 데이터형 );
+                  >> 모드 : 
+                    (1) in  : 입력 Port의 경우에 사용
+                    (2) out : 출력 Port인 경우에 사용
+                    (3) inout : 입출력 양방향인 모드
+                    (4) buffer : 기본적으로 out으로 사용.  출력으로 나가는 신호를 내부에서 다시 입력으로 피드백하여 사용할 때 사용
+                    (5) linkage
+            
                     : 해당 포트에 값 할당하는건(== 동작사항 설정하는건) architecture 아래에서 정의하게됨
                   >> 마지막 포트 정의에는 ';' 안붙이는거 주의
                   >> port 괄호 닫는 부분에 ';' 붙여주는거 주
 
-      : architecture Behavioral of 어쩌구 is 
-        : 이 아래론 동작 설정 부분
-        : 어쩌구 == 모듈
-        :  architecture Behavioral of 어쩌구 is  와 begin 의 사이에는 begin .. end Behavioral 부분에서 사용될 변수가 선언됨
-        : architecture "Behavioral" of  에서의 Behavioral과 begin .. end "Behavioral" 에서의 Behavioral 은 같은 변수이다. 원하는 이름으로 바꿀 수 있는데, 바꿀꺼면 둘다 바꿔야된
+      : architecture Behavioral of 특정엔티티 is  ...  end Behavioral
+        : Architecture >> 디지털 회로 블럭의 내부 동작 설정 부분
+        : 하나의 entity 에 대해 여러 architecture 이 존재 가능
+        : 구조
+           architecture 아키텍쳐명 of 특정엔티티 
+              변수건부분  
+            begin
+              포트와변수에구체적인값할당
+            end 아키텍쳐명;
 
-      : begin ... end Behavioral
-          : 변수, 포트에 구체적인 값을 할당 . 할당은 "=" 가 아닌 "<=" 기호임을 주
+            : 아키텍쳐명은 보통 Behavioral 임
+            : begin... end 
+              : entitiy 의 변수, 포트에 구체적인 값을 할당하는부분 . 할당은 "=" 가 아닌 "<=" 기호임을 주의.
+              : 내부에 begin .. end process; 도 사용 가능. 
+
  
 
   : Simulation Source
     : 초기엔 실제론 존재하지 않는 가상의 파일. 이후 작업을 다 마치면 생성됨
+
+
+
+
