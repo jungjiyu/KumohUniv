@@ -39,17 +39,30 @@
       : architecture Behavioral of 특정엔티티 is  ...  end Behavioral
         : Architecture >> 디지털 회로 블럭의 내부 동작 설정 부분
         : 하나의 entity 에 대해 여러 architecture 이 존재 가능
+            : 여러개의 architecture 가 존재할 경우 마지막엔 최종적으로 하나의 Architecture 을 선택하는 Configuration(Entity와 Architecture의 결합 정의) 를 하게 됨
+
         : 구조
            architecture 아키텍쳐명 of 특정엔티티 
-              변수건부분  
+              선언부분  
             begin
               포트와변수에구체적인값할당
             end 아키텍쳐명;
 
             : 아키텍쳐명은 보통 Behavioral 임
+            : 선언 부분에서 선언 가능한 것들 >>https://nadau.tistory.com/326
+              (1) Function 
+              (2) signal 
+              (3) type 
+              (4) Component 
+              (5) Constant 
+              (6)
+
             : begin... end 
               : entitiy 의 변수, 포트에 구체적인 값을 할당하는부분 . 할당은 "=" 가 아닌 "<=" 기호임을 주의.
               : 내부에 begin .. end process; 도 사용 가능. 
+                : 뭔지 모르게씀 . 일단 내부 신호의 변화를 감지하는 감지리스트라고 함
+                : 감지리스트에서 필요 시그널을 누락시키고 명시하지 않은 경우에는 회로합성의 결과에는 전혀 문제를 야기시키지 않지만, 시뮬레이션 결과에서 그 변화가 관찰되지 못하여 잘못된 결과를 야기시킬 수 있습니다. 따라서 클록 기반의 동기회로는 process문 내에서 구현되며, 출력 및 신호의 변화가 클록 변화에 의해 야기되는 경우에는 내부 조합회로의 입력신호를 감지리스트에 명시할 필요가 없을 것이며, 단지 클록 또는 비동기 리셋이 감지리스트에 추가되면 될 것입니다. 반면에 조합회로 만으로 구성된 process 문에서는 모든 입력신호는 반드시 감지리스트에 명시되어야만 합니다.
+
 
  
 
