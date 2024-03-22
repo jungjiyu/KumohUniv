@@ -1,1 +1,42 @@
+기본 세팅 : create new pj - source file 부분에서 또 create - (constraint file 부분은 pass) - 굳이 버튼으로 in out 안만들어줘도 코딩 통해 생성 가능
 
+기본세팅 마치면 보이는 구성
+  : Design source 
+    : .vhd 확장자
+    : 탭에서 더블 클릭함 코드 수정 가능
+    : 실제로 존재하는 파일임
+    : 구성
+      : library IEEE;
+        : 라이브러리 선언부
+
+      : use IEEE.STD_LOGIC_1164.ALL;
+        : IEEE 라이브러리의 STD_LOGIC_116 의 모든 함수를 사용하겠다는거
+        : 화면에서 보라색 폰트로 표시된 부분은 비바도의 내장 함수 같은걸 사용한는거고, 검은색은 내가 직접 설정하는거임. 
+          : 보라색과 동일한 이름으로 변수 생성 불
+
+      : entity 어쩌구 is ... end 쩌구; 
+          : 모듈 선언부 로, 내부적으로 포트 정의을 하게 된다
+          : 어쩌구== 모듈명
+          : 포트 정의 
+            port ( 포트명 : in std_logic 혹은 out std_logic;
+                포트명2 :  in std_logic 혹은 out std_logic;
+                . . .
+                 포트명n :  in std_logic 혹은 out std_logic );
+ 
+                  >> in std_logic 혹은 out std_logic 은 해당 포트의 타입이라고 보면 됨
+                    : 해당 포트에 값 할당하는건(== 동작사항 설정하는건) architecture 아래에서 정의하게됨
+                  >> 마지막 포트 정의에는 ';' 안붙이는거 주의
+                  >> port 괄호 닫는 부분에 ';' 붙여주는거 주
+
+      : architecture Behavioral of 어쩌구 is 
+        : 이 아래론 동작 설정 부분
+        : 어쩌구 == 모듈
+        :  architecture Behavioral of 어쩌구 is  와 begin 의 사이에는 begin .. end Behavioral 부분에서 사용될 변수가 선언됨
+        : architecture "Behavioral" of  에서의 Behavioral과 begin .. end "Behavioral" 에서의 Behavioral 은 같은 변수이다. 원하는 이름으로 바꿀 수 있는데, 바꿀꺼면 둘다 바꿔야된
+
+      : begin ... end Behavioral
+          : 변수, 포트에 구체적인 값을 할당 . 할당은 "=" 가 아닌 "<=" 기호임을 주
+ 
+
+  : Simulation Source
+    : 초기엔 실제론 존재하지 않는 가상의 파일. 이후 작업을 다 마치면 생성됨
