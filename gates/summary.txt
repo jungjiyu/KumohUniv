@@ -1,67 +1,12 @@
+RTL Register-transfer level :  레지스터와 로직회로를 이용하는 "디지털 회로 설계" 수준.
+
+VHDL : 하드웨어 기 언어
+
+design source : 
+constraint file : synthesis/implementation 등 시뮬레이션 이후 단계에서 사용하는 파일
+simulation source :
+
 기본 세팅 : create new pj - source file 부분에서 또 create - (constraint file 부분은 pass) - 굳이 버튼으로 in out 안만들어줘도 코딩 통해 생성 가능
-
-기본세팅 마치면 보이는 구성
-  : Design source 
-    : https://m.blog.naver.com/ansdbtls4067/221249220831
-    : .vhd 확장자
-    : 실제로 존재하는 파일임
-    : 구성
-      : 주석 달기 == "--"
-      : library IEEE;
-        : 라이브러리 선언부
-
-      : use IEEE.STD_LOGIC_1164.ALL;
-        : IEEE 라이브러리의 STD_LOGIC_116 의 모든 함수를 사용하겠다는거
-        : 화면에서 보라색 폰트로 표시된 부분은 비바도의 내장 함수 같은걸 사용한는거고, 검은색은 내가 직접 설정하는거임. 
-          : 보라색과 동일한 이름으로 변수 생성 불
-
-      : entity 어쩌구 is ... end 어쩌구; 
-          : entity 를 선언한다. entity 의 이름과 entity 의 port 를 정의하게 된다
-            : entity >> 디지털 회로 블록의 이름
-            : port >> 입 출력 입구 라고 봄 된다
-
-          : port 선언 형식 >> port( ); 내부에서 포트명과 데이터 타입 선언
-            port ( 포트명 : 모드 데이터형;
-                포트명2 : 모드 데이터형;
-                . . .
-                 포트명n : 모드 데이터형 );
-                  >> 모드 : 
-                    (1) in  : 입력 Port의 경우에 사용
-                    (2) out : 출력 Port인 경우에 사용
-                    (3) inout : 입출력 양방향인 모드
-                    (4) buffer : 기본적으로 out으로 사용.  출력으로 나가는 신호를 내부에서 다시 입력으로 피드백하여 사용할 때 사용
-                    (5) linkage
-            
-                    : 해당 포트에 값 할당하는건(== 동작사항 설정하는건) architecture 아래에서 정의하게됨
-                  >> 마지막 포트 정의에는 ';' 안붙이는거 주의
-                  >> port 괄호 닫는 부분에 ';' 붙여주는거 주
-
-      : architecture Behavioral of 특정엔티티 is  ...  end Behavioral
-        : Architecture >> 디지털 회로 블럭의 내부 동작 설정 부분
-        : 하나의 entity 에 대해 여러 architecture 이 존재 가능
-            : 여러개의 architecture 가 존재할 경우 마지막엔 최종적으로 하나의 Architecture 을 선택하는 Configuration(Entity와 Architecture의 결합 정의) 를 하게 됨
-
-        : 구조
-           architecture 아키텍쳐명 of 특정엔티티 
-              선언부분  
-            begin
-              포트와변수에구체적인값할당
-            end 아키텍쳐명;
-
-            : 아키텍쳐명은 보통 Behavioral 임
-            : 선언 부분에서 선언 가능한 것들 >>https://nadau.tistory.com/326
-              (1) Function 
-              (2) signal 
-              (3) type 
-              (4) Component 
-              (5) Constant 
-              (6)
-
-            : begin... end 
-              : entitiy 의 변수, 포트에 구체적인 값을 할당하는부분 . 할당은 "=" 가 아닌 "<=" 기호임을 주의.
-              : 내부에 begin .. end process; 도 사용 가능. 
-                : 뭔지 모르게씀 . 일단 내부 신호의 변화를 감지하는 감지리스트라고 함
-                : 감지리스트에서 필요 시그널을 누락시키고 명시하지 않은 경우에는 회로합성의 결과에는 전혀 문제를 야기시키지 않지만, 시뮬레이션 결과에서 그 변화가 관찰되지 못하여 잘못된 결과를 야기시킬 수 있습니다. 따라서 클록 기반의 동기회로는 process문 내에서 구현되며, 출력 및 신호의 변화가 클록 변화에 의해 야기되는 경우에는 내부 조합회로의 입력신호를 감지리스트에 명시할 필요가 없을 것이며, 단지 클록 또는 비동기 리셋이 감지리스트에 추가되면 될 것입니다. 반면에 조합회로 만으로 구성된 process 문에서는 모든 입력신호는 반드시 감지리스트에 명시되어야만 합니다.
 
 
  
