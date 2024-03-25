@@ -1,18 +1,28 @@
+https://blog.naver.com/iniproinc/222521784565
+
 RTL Register-transfer level :  레지스터와 로직회로를 이용하는 "디지털 회로 설계" 수준.
+	: vhdl 을 이용하여 design 한 결과물을 RTL 이라 봄 된다
 
-VHDL : 하드웨어 기 언어
+design source : 우릭가 실제로 디자인한 로직, 코드.
+	: vhdl 의 언어로 작성
+	: DUT 를 만드는 거임
+testbench == simulation source : 작성한 design source를 검증하는 코드.
+	: 테스트 밴치엔 port 존재 안한다
+	: 보통 다음의 모듈을 추가한다
+		- DUT Design Under Test : 설계한 모듈. 테스트 중인 장치
+		- clock & reset gen : degital logic 을 동작시키기 위해 필요한 clock 과 reset 을 만들어주는 모듈
+		- stimulus : DUT 의 input 을 gen 하는 역할을 한다. 자극을 주면 output 이 나오는게 digital logic,
+		- checker : DUT 의 output 이 원하는 결과에 맞는지 check 하는 모듈
 
-design source : 
-constraint file : synthesis/implementation 등 시뮬레이션 이후 단계에서 사용하는 파일
-simulation source :
-
-기본 세팅 : create new pj - source file 부분에서 또 create - (constraint file 부분은 pass) - 굳이 버튼으로 in out 안만들어줘도 코딩 통해 생성 가능
-
-
- 
-
-  : Simulation Source
-    : 초기엔 실제론 존재하지 않는 가상의 파일. 이후 작업을 다 마치면 생성됨
-
+Behavioral simulation : cell 및 wire 의 delay 정보가 들어가지 않은 코드 자체의 functional simulation
 
 
+
+https://rubber-tree.tistory.com/28
+simulation>> 작성된 코드를 rtl 시뮬레이션할때 사용. 제대로 설계되었나 확인
+synthesis >> 시뮬레이션까지 다 했으면 synthesis, 즉 합성을 함
+implementation > 합성이 완료되면 실제로 물리적 소자와 맵핑을  함
+
+https://www.youtube.com/watch?v=Dld3rW6vEPk
+
+https://www.youtube.com/watch?v=SeuWt4c5Ek4
