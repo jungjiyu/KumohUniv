@@ -1,0 +1,21 @@
+<form>
+    <button onclick='func()'>다른버튼</button>
+</form>
+
+ 
+
+이런식으로 버튼이 폼 안에 있을 때
+버튼을 눌렀을 때 onclick에 정의된 펑션이 동작하지 않고 form 의 submit 펑션이 실행되는데
+자동으로 submit 되는걸 방지하고 다른 동작을 실행시키고 싶으시다면
+
+ 
+
+ 
+
+<form>
+    <button type='button' onclick='func()'>다른버튼</button>
+</form>
+
+ 
+
+이런식으로 버튼에 타입을 버튼으로 주면 해결됩니다.
