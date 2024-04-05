@@ -396,3 +396,110 @@ visibility
 
 visibility: hidden; :: 보이지만 않는거지, 자리는 차지한다
 display: none ; 을 하면 아예 없어진다. 자리도 차지 안한다
+
+            transition: width 5s;
+와 같이 transition 하는데 걸리는 시간을 조절해서 속도를 조절할 수도 있다
+
+            transition: width 5s height 5s border 5s, transform 5s;
+            -webkit-transition: width 5s, height 5s, border 5s, -webkit-transform 5s;
+
+
+webkit-transition 속성은 호환성을 확보하기 위해 사용
+	: 애플용 엔진과 "구버전" 크롬에서 동작
+		: 요즘 크롬에서는 작동 안함
+		: 근데 이걸 지우면 동작을 제대로 안된다고 한다.
+
+ 브라우저 렌더링 엔진:  
+	렌더 >> 그림을 그린다
+
+
+ 블링크 분기(fork)
+
+fork : 푹 집어서 카피해서 만든것.
+
+근데 완전히 카피해서 쓴건 아니고 하부만 카피해서 만든거라고 한다
+
+
+
+
+matrix() 메소드는 모든 2차원 변환을 하나로 결합한다.
+
+
+ **CSS 레이아웃**
+레이아웃이란 : 집안에서의 가구 배치와 비슷하다.
+두가지 관점.용도
+    - 전체 화면 배치
+    - 부분 엘리먼트 내부의 배치
+
+Divide and Concur : 분할해서 정복해라
+
+요즘엔 flex 로 많이하긴 하는데 그래도 레이아웃 기법은 중요하다
+
+인라인 블록(inline-block) 요소 
+    - 기본적으로 인라인 요소처럼 줄바꿈 없이 한 줄에 다른 요소들과 함께 배치된다.
+    - 하지만 블록 요소처럼 위치와 크기 지정이 가능하다.
+
+
+display 속성
+	: 주의 >> display 에 hidden 속성은 없음
+
+인라인의 경우 자신이 배정된 박스 크기 벗어나게 설정해도 별로 달라지지 않는데 인라인 블록의 경우 자신이 배정된 박스 크기 벗어나게 설정하면 실제로 바뀐다
+
+box-sizing: border-box;
+	: content 영역 뿐 아니라 border 의 width까지 포함하게 된다
+	: 그러니까 덜 헷갈리게 된다
+
+
+*{
+}
+내부에는 보통 box-sizing: border-box; 가 들어간다
+
+
+
+.div2 {
+  width: 300px;
+  height: 100px;  
+  padding: 50px;
+  border: 1px solid red;
+  box-sizing: border-box;
+}
+
+에서   box-sizing: border-box; 을 없애면 갑자기 커진다, padding 은 또 따로 반영되는거니까
+
+
+정적 위치 설정(static positioning) : 브라우져가 잡은 레이아웃 그대로 사용
+
+        #two {
+            position: static;
+            background-color: yellow;
+            width: 200px;
+            height: 50px;
+        }
+
+에서 position: static; 을 지워도 딱히 바뀌지 않는다.  디폴트였던걸 굳이 명시해준거니까
+
+
+ relative : 브라우저가 정해준 위치 기준으로 배치하는 거
+
+절대 위치(absolute positioning): 브라우저가 아닌 전체 페이지를 기준으로 배치하는 방법이다.
+
+다른거 있어도 전체 펭이즈를 기준으로 한다
+
+# **고정 위치 설정**
+- 고정 위치(fixed positioning)은 화면을 기준으로 배치하는 방법이다.
+: 그러니까 뷰포트 기준이다
+: 스크롤을 해도 안움직인다
+
+height 도 auto 로 지정할 수 있고 이경우 글자의 크기에 맟춰 설정된다
+
+
+*** Float : 원래는 그림 옆으로 흐르게 만드는 용도
+- 레이아웃을 설정하기 위한 목적으로도 사용으로 매우 자주 사용됨
+
+저장 아이콘은 플로피 디스크이다
+전화기 아이콘은 수화기이다
+float 를 쓰는 것은 이런 것과 비슷한 맥락이다. 그러니까 오래되긴 했어도 통상적으로 많이 쓰니까 쓴단 말이다
+
+
+이미지== 인라인 >> 글씨같은거 >> 화면 줄이면 그림도 밑으로 이동한다
+
