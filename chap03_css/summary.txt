@@ -505,3 +505,6 @@ float 를 쓰는 것은 이런 것과 비슷한 맥락이다. 그러니까 오�
 
 이미지== 인라인 >> 글씨같은거 >> 화면 줄이면 그림도 밑으로 이동한다
 
+padding 과 margin 
+	: padding 은 content 영역과 border 영역 사이의 영역으로 content 의 연장이라 볼 수 있다
+	: maring 은 border 영역 바깥 부분으로 content 와 다른 content 간의 거리를 나타낸다고 볼 수 있다
