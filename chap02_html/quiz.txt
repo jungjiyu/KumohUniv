@@ -68,7 +68,10 @@
 67. width 를 tr 에서 설정 가능한가? >> 못한
 68. table 에서는 padding 이 효과가 있는가 아님 margin 이 효과가 있는가? >> padding 만 효과 있다. 
 69. table 에서 셀의 margin 역할을 ㅎ ㅏ는 스타일 속성은 무엇인가? >> border-spacing
-70. table 의 속성 border 와 스타일속성 border 의 차이점 >> table 의 속성 border 의 경우 테이블의 경계 뿐 아니라 모든 셀의 테두리까지 결정 되지만, 스타일 속성 border 는 talbe 자신의 경계만 지정하고 내부 셀들의 경계까지 지정해주진 않는다
+70. table 의 속성 border 와 스타일속성 border 의 차이점 >> 일단 테이블의 속성 border 의 경우 할당 가능한 값이 1 혹은 0 밖에 없고, 이로 테이블자체와 테이블 내부 셀들의 경계를 표시할지의 여부를 결정한다. 스타일 속성 border 의 경우 "일단" 테이블 자체만의 경계의 굵기.모양.속성을 지정한다
+71. table 의 border 속성과 스타일 속성 border 를 동시에 적용하면 어떠한 일이 발생하는가 >> 
+  : if ) border="0" style="border:1px solid red" >> 테이블 자체만의 테두리에 스타일 속성이 적용된다
+  : if ) border="1" style="border:1px solid red" >> 스타일 속성이 테이블 전반적으로 적용된다
 
 
 
