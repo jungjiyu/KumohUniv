@@ -1,1 +1,2 @@
-post 방식의 경우 http request header 가 아닌 body에 담아서 보내는거 아님?
+1. post 방식의 경우 http request header 가 아닌 body에 담아서 보내는거 아님?
+2. payload 자체는 전달하고자 하는 본질적인 데이터이고, header 나 body 는 패킷의 특정 영역을 의미하는거임?
