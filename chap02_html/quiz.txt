@@ -106,6 +106,38 @@
 
 96. form 태그에서 미리보기 텍스트 설정하는 속성은 무엇인가? >> placeholder
 97. textarea 태그의 경우 높이와 너비를 어떻게 결정하는가? >> rows 와 cols 로. (width, height 가 아님)
+99. 색상을 선택할 수 있는 input 태그의 type 은 ?? >> color
+100. 현지 년월일, 날짜를 선택할 수 있는 input 태그의 type 은 ?? >> datetime-local
+101. 100번에 할당가능한 value 의 형식은 ? >> "XXXX-XX-XXTxx:xx"
+102. http 패킷의 구성은? >> http header, http body
+103. pay load 는 ? >> 보내고자 하는 데이터 자체
+104. get 방식으로 request 보내면 데이턴ㄴ 어디 담겨서 보내지는가 >> http request header
+105. post 방식으로 request 보내면 데이터는 어디 담겨서 보내지는가 >> http request body
+106. get 방식으로 바이너리 파일 못보내는 이유는 뭔가? >> 쿼리스트링에서 각 파라미터는 & 로 구분되는데 이러한 기호까지 바이너리 파일이 데이터로 인식할 수 있다. 결과적으로 데이터간의 구분이 불가하다
+107. type="file" 인 input 태그를 포함하는 form 에 뭘 꼭 명시해줘야하는가? >> enctype="multipart/form-data"
+108. type="number" 는 기존부터 존재했었나? .> 아니다. html5부터 생겼다
+109. type="number" 에서 최솟값을 -100 최댓값을 100 , setp 을 100 으로 설정해라 >> min="-100" max="100" step="100"
+110. input 태그는 끝태그가 있는가 ? >> 없다
+111. 컴퓨터 언어의 문법 수식으로 나타내는. 구문을 기술하는 언어 도구는 무엇인가? >> bnf
+112. 컴퓨터 언어를 만드는 법을 서술
+    1. 언어를 bnf 로 수식화
+    2. 수식화된 표현을 기반으로 Lex 와 Yacc 를 이용해 자동 생성
+113. 컴파일러의 구성 요소는 ? 
+  : front end 부분 >> 
+    (1) lexical analyzer : 어휘 분석기 --> 토큰 생성
+    (2) syntax anaylzer : 구문 분석기 --> 파싱. 그러니까 토큰의 관계를 파악하여 파스 트리 생성
+    (3) semantic analyzer : 의미 분석기 --> 파스 트리를 바탕으로 중간 표현(Itermediate Expression) 생성
+  : back end 부분 >> code generator : 코드 생성기 --> 중간 표현을 바탕으로 어셈블리어(중간언어) 혹은 기계어 변환
+
+114. lex 와 yacc 는 각각 컴파일러의 구성 요소의 어느 부분에 대응하는가?
+  lex > lexical anlyzer
+  yacc > syntax anlyzer
+
+115. 정규 표현식은 왜 쓰는가? >> 복잡한 코드를 간단하게 작성하기 위해
+116. 정규 표현식은 가독성이 좋은가 ?? >> 아니다
+117. 정규 표현식에서 특정 의미를 가지는 문자를 뭐라고 하는가? >> 메타 문자
+
+
 
 
 
