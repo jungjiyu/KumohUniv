@@ -1,0 +1,1 @@
+post 방식의 경우 http request header 가 아닌 body에 담아서 보내는거 아님?
