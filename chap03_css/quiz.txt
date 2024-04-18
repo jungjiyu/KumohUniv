@@ -74,8 +74,10 @@
 63. 부모 블럭 박스가 box-sizing:content-box일때 자식 인라인 박스의 수직 정렬은 어떻게 해야하는가: 자식의 line-height 값을 부모의 height 값으로 해주면 된다
 64. 부모 블럭 박스가 box-sizing:border-box일때 자식 인라인 박스의 수직 정렬은 어떻게 해야하는가: 자식의 line-height 값을 " 부모의 height 값 - (부모의padding-top +부모의padding-bottom )" 으로 해주면 된다
 
-64. 자식 블럭 박스의 수평 정렬은 어떻게 하는가? >> margin-right:auto; maring-left:auto;
-65. auto 와 50% 는 어떻게 다른가? >> 50% 는 말 그대로 부모 사이즈의 절반이고, auto 는 부모의 
+65. 자식 블럭 박스의 수평 정렬은 어떻게 하는가? >> margin-right:auto; maring-left:auto;
+66. auto 와 50% 는 어떻게 다른가? >> 50% 는 말 그대로 부모 사이즈의 절반이고, auto 는 부모의 
+67. 자식 블럭 박스의 수직 정렬을 어떻게 하는가? >> (부모의 conent영역의 높이 - 자식의 border의 높이)/2 한 값을 각각 margin-top, maring-bottom 의 값으로 해준다
+68.
 
 
 
