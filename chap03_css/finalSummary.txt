@@ -224,6 +224,8 @@ CSS Cascading Style Sheet
 			: ㅈㄴ 주의할 것은 명색이 "text" 임에도 불구하고 block 혹은 inline block 요소에 한하여 적용 가능하다! (inline 요소에는 적용 불가)
 
 		line-height: 텍스트 줄의 높이 설정
+			: 인라인 요소에서의 일종의 height 설정이라고 보면 된다.
+			: line-height 값에 따라서 텍스트 위 아래의 leading 영역이 증감된다. 이때 line-height 값은 텍스트의 높이 포함에서 할당하는 것임을 주의.
 		
 		text-transform : 대소문자 변환 지정
 			(1) none : 미지정<< 디폴트.
@@ -332,12 +334,18 @@ CSS Cascading Style Sheet
 
 	: 레이아웃 관련 설정
 		padding: 요소의 border 과 content 영역 사이의 간격을 조정
+			: 주의 ) padding 에는 음수값, auto 값을 줄 수 없다
 			: 세분화) padding-top,  padding-right,  padding-bottom, padding-left
- 			: padding) 단순 " padding 위 오른 바닥 왼" 으로 한꺼번에 설정 가능
+ 			: padding) 
+				1. " padding 위 오른 바닥 왼" 으로 한꺼번에 설정 가능
+				2. " padding 위/바닥 오/왼" 으로 한꺼번에 설정 가능
 
 		margin : 요소의 border바깥 영역의 크기를 조절 
+			: 주의 ) margin 에는 음수값, auto 값을 줄 수 "있"다
 			: 세분화) margin-top,  margin-right,  margin-bottom, margin-left
- 			: margin) 단순 " margin 위 오른 바닥 왼" 으로 한꺼번에 설정 가능
+ 			: margin) 
+				1. " margin 위 오른 바닥 왼" 으로 한꺼번에 설정 가능
+				2. " margin 위/바닥  오/왼" 으로 한꺼번에 설정 가능
 
 		border : 경계선 결정
 			1. border-top,  border-right,  border-bottom, border-left
@@ -368,15 +376,37 @@ CSS Cascading Style Sheet
 		3. 보더 영역 
 		4. 마진 영역 << 마진 영역은 투명하다
 
-: 인라인 요소와 박스 요소의 레이아웃
+: 인라인 요소와 블럭 요소의 레이아웃
 	: 인라인 요소
 		: margin, padding 의 경우 좌우 방향으로만 가능하고 top, bottom 방향으로는 설정 못한다.
 			: border 은 모든 방향으로 다 된다
-		: 수평 정렬 >> text-align : center
-	: 박스 요소 
-		: 모든 방향으로 margin, padding 적용가능하다
-		: 수평 정렬 >> margin-left:auto; margin-right:auto;
+		: 인라인 요소를 (자식요소로써) 수평 정렬 >> text-align : center
+		: 인라인 요소를 (자식요소로써) 수직 정렬 
+			sol1 : 자식의 line-height 값을 부모의 "content 영역"의 height 값과 같게 한다
+				: 자식이 들어가는 영역은 content  영역이지, border 내부의 영역 그 자체가 아니라서 그렇다.
+				if ) 부모 블록 요소가 box-sizing:border-box 일 경우 >>  line-height 값을  " 부모의 height - (padding-top + padding-bottom) " 으로 해줘야됨
+					
+				if ) 부모 블록 요소가 box-sizing:content-box 일 경우 >>  line-height 를 부모 블록 요소의 height 값 그 자체로 하면 됨.
 
+
+	: 블럭 요소 
+		: 모든 방향으로 margin, padding 적용가능하다
+		: 주의 ) 
+			1. auto 는 margin-right, margin-left 에만 적용 가능하고 margin-top ,margin-bottom 에는 적용이 안된다
+				: margin-top, bottom 에 auto 값을 할당한다고 에러가 나지 않지만 실질적으로 이때 auto 값은 0과 같다고 한다
+
+			2 auto != 50%
+				: 50% 는 말 그대로 부모 사이즈의 절반이 되는거고, auto 는 알잘딱깔센으로 해당 자식 요소를 배치했을때 남게되는 사이즈를 절반으로 나눈거다.
+				: 50% 는 부모의 컨텐츠 영역의 50% 인가 아니면 border 의 50%인가? 
+			
+		: 블럭 요소를 (자식요소로써) 수평 정렬 >> margin-left:auto; margin-right:auto;
+		: 블럭 요소를 (자식요소로써) 수직 정렬 >> margin-top: 직접계산한값; margin-bottom: 직접계산한값;
+			: 직접 계산한 값 = " (부모 content 영역의 height - 자식 border 영역의 height) /2 "
+ 
+		: 블럭 요소를 (자식요소로써) 정중앙에 정렬 >> margin: 어떤값 auto;
+
+
+			
 
 : 색상의 표현
 	: 색상은 숫자가 더 클수록 "밝은"색을 나타낸다.
