@@ -69,6 +69,13 @@
 59. backgournd-image 가 더 바닥에 깔리는가 background-color 가 더 바닥에 깔리는가? >> backgournd-color 가 더 바닥에 깔린다
 60. backgrouund 설정은 어디까지 적용되는가? >> border 까지
 61. 스타일속성값으로 url 은 어떻게 할당하는가? >> url("주소")
+62. 자식 인라인 박스의 수직 정렬은 어떻게 하는가? 부모 블럭 박스의 box-sizing 설정 여부와 상관 없이 적용할 수 있게 서술하시오 >> 부모블럭박스의컨텐츠 영역의 높이를 자식인라인박스의line-height 값으로 한다
+
+63. 부모 블럭 박스가 box-sizing:content-box일때 자식 인라인 박스의 수직 정렬은 어떻게 해야하는가: 자식의 line-height 값을 부모의 height 값으로 해주면 된다
+64. 부모 블럭 박스가 box-sizing:border-box일때 자식 인라인 박스의 수직 정렬은 어떻게 해야하는가: 자식의 line-height 값을 " 부모의 height 값 - (부모의padding-top +부모의padding-bottom )" 으로 해주면 된다
+
+64. 자식 블럭 박스의 수평 정렬은 어떻게 하는가? >> margin-right:auto; maring-left:auto;
+65. auto 와 50% 는 어떻게 다른가? >> 50% 는 말 그대로 부모 사이즈의 절반이고, auto 는 부모의 
 
 
 
