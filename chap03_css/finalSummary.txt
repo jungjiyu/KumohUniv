@@ -446,12 +446,45 @@ CSS Cascading Style Sheet
 
 
 	: 애니메이션관련
-		(1) transition
-			: 한 상태에서 다른 상태로 변화하는데 걸리는 시간을 설정할 수 있다
-			: "전환대상속성 걸리는시간" 의 형태로 값을 할당한다.
+		: trantision 
+			: 정해진 시간 동안 요소의 특정속성값을 부드럽게 변화시킬 수 있다.
+			: transition 자체로는 최종 상태를 유지하는 기능은 없고, 잠시 다른 상태로 변화 시켰다가 다시  원상태로 돌아온다.
+			: transition 속성을 명시하는 대상은 초기 요소이건 후의 요소 이건 상관없는 듯.
 
-		(2)
+			(1) transition : 모든 transition 속성을 이용한 스타일을 한 줄에 설정 가능
+				: 할당 가능 형태
+					1.  "property duration function delay" 
+					2. "property duration"
+					3. "전환대상속성1 걸리는시간1 ,전환대상속성2 걸리는시간2, 전환대상속성3 걸리는시간3 ,..   " 
 
+
+			(2) transition-property : 요소에 추가할 전환 효과 설정
+				: tip
+					1. transition-property 에 명시되지 않는다고 해당 스타일 속성이 발현되지 않는게 아니다. 그냥 전환 효과가 적용되지 않을 뿐이다.
+
+				: 할당가능한 값
+					0. none : 모든 속성을 전환 효과 대상으로 안함
+					1. all : 해당 요소의 모든 속성을 전환 효과 대상으로 함 << default
+					2. 특정속성 : 특정 속성만을 전환 효과 대상으로 함
+						: 콤마를 활용하여 여러 특정 속성을 대상으로 할 수도 있음
+
+			(3) transition-duration : 전환하는데 걸리는 시간 설정
+				: defalut >> 0s
+
+			(4) transition-timing-function : 전환 효과의 시간당 "속도" 를 설정
+				1. linear : 처음부터 끝까지 일정한 속도
+ 				2. ease : 천천--> 빠름 -->천천 << default 값
+		 		3. ease-in : 천천 --> 보통
+		 		3. ease-out : 보통 --> 천천
+		 		4. ease-in-out : 천천 --> 보통 --> 천천
+				5. cubic-bezier : 커스텀
+					: 베지에 곡선 bezier curves
+					: " cubic-bezier( x1, y1 , x2, y2) " 의 형태로 할당
+						: 각 좌표값으로 0~1 값 할당 가능
+
+
+			(5) transition-delay : 전환 효과가 나타나기 "전"까지 (지연) 시간을 설정
+			
 
 
 
