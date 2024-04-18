@@ -77,7 +77,10 @@
 65. 자식 블럭 박스의 수평 정렬은 어떻게 하는가? >> margin-right:auto; maring-left:auto;
 66. auto 와 50% 는 어떻게 다른가? >> 50% 는 말 그대로 부모 사이즈의 절반이고, auto 는 부모의 
 67. 자식 블럭 박스의 수직 정렬을 어떻게 하는가? >> (부모의 conent영역의 높이 - 자식의 border의 높이)/2 한 값을 각각 margin-top, maring-bottom 의 값으로 해준다
-68.
+68. 리스트는 어떨때 사용하는가 >> 네비게이션 바 만들때
+69. list 의 마커의 모양을 변경하는 속성은 ? >> list-style-type
+70. list의 스타일을 전체적으로 정의하는 속성은? >> list-style
+71. 
 
 
 
