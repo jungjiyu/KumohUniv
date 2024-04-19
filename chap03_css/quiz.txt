@@ -102,6 +102,10 @@
 86. 레이아웃이란 무엇인가? >> 요소의 크기 및 배치 등을 결정하는 것
 87. "대체 박스 모델" 이란 무엇인가? >> width, height 가 padding 과 border 를 포함하게 하게 한 박스 모델
 88. padding 영역이 줄고 늘어나면 영향을 받는건 border 의 사이즈인가 아니면 content 의 사이즈인가? >> content 의 사이즈이다. padding 영역이 늘어나면 content 는 줄어들고, padding 영역이 줄어들면 content 는 늘어난다
+89. 일반 박스 모델에서 padding 영역이 줄고 늘어나면 width, height 가 영향을 받는가?  >> 그렇다
+90. 89 는 왜 그런가? >> 일반 박스 모델의 경우 content 영역의 사이즈를 기준으로 width, height 가 결정되는데 content 영역은 padding 따라서 줄고 늘어나기 때문이다
+91. 대체 박스 모델에서 padding 영역이 줄고 늘어나면 width, heigth 가 영향을 받는가? >> 아니다
+92. 91번은 왜 그런가? >> 대체 박스 모델의 경우 border 영역의 사이즈를 기준으로 width, height 가 결정되는데 border 영역은 padding 영역에 영향을 받지 않기 때문.
 
 
 
