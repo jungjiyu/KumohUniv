@@ -355,40 +355,20 @@ CSS Cascading Style Sheet
 		7. background
 			: "배경색 배경이미지 반복여부 위치" 를  한번에 할당 가능하다 
 
-	: 레이아웃 관련 설정
-		padding: 요소의 border 과 content 영역 사이의 간격을 조정
-			: 주의 ) padding 에는 음수값, auto 값을 줄 수 없다
-			: 세분화) padding-top,  padding-right,  padding-bottom, padding-left
- 			: padding) 
-				1. " padding 위 오른 바닥 왼" 으로 한꺼번에 설정 가능
-				2. " padding 위/바닥 오/왼" 으로 한꺼번에 설정 가능
 
-		margin : 요소의 border바깥 영역의 크기를 조절 
-			: 주의 ) margin 에는 음수값, auto 값을 줄 수 "있"다
-			: 세분화) margin-top,  margin-right,  margin-bottom, margin-left
- 			: margin) 
-				1. " margin 위 오른 바닥 왼" 으로 한꺼번에 설정 가능
-				2. " margin 위/바닥  오/왼" 으로 한꺼번에 설정 가능
 
-		border : 경계선 결정
-			1. border-top,  border-right,  border-bottom, border-left
-				: 각각 "두께 스타일 색" 의 값 부여 가능
-			2. border
-				:  "두께 스타일 색"  으로 모든 방향의 경계 설정 가능
-				: 주의 ) "위두께 오두께 아래두꼐 왼두께 스타일 색" 처럼 각 변을 한꺼번에 커스터마이징 할 순 없다
-			3. border-radius
-				: 경계 모서리의 둥근 정도 설정
 
-		box-sizing 
-			: width 와 height 를 어떻게 구할지 결정한다
-			: 이러나 저러나 margin 영역은 border-box 에 포함되지 않는다!
-			(1) border-box : "border 영역"을 기준으로 width, heigth 가 구해진다
-				: 그러니까 길이 == 콘텐츠영역+ 패딩영역
-			(2) content-box : 콘텐츠 영역을 기준으로 width, height 가 구해진다 << 디폴트값
 
-		width, height
-			: "box-sizing:border-box;" 없이는 "컨텐츠 영역" 의 너비와 높이
-			:  "box-sizing:border-box;" 있으면 "border 영역" 의 너비와 높이
+
+
+
+
+
+
+
+
+
+
 
 
 : 박스 모델
@@ -398,10 +378,8 @@ CSS Cascading Style Sheet
 		3. 보더 영역 
 		4. 마진 영역 << 마진 영역은 투명하다
 
-레이아웃
-	 : 웹페이지에서 HTML 요소의 위치, 크기 등을 결정하는 것. 배치.
 
-: 인라인 요소와 블럭 요소의 레이아웃
+
 	(1) 인라인 요소
 		: margin, padding 의 경우 좌우 방향으로만 가능하고 top, bottom 방향으로는 설정 못한다.
 			: border 은 모든 방향으로 다 된다
@@ -435,6 +413,65 @@ CSS Cascading Style Sheet
 		: 외적으로는 인라인 요소를 따르지만 내적으로는 블럭 요소를 따른다.
 			: 한 줄을 다 차지하진 않지만 height 를 설정할 수 있다
 
+: 대체 박스 모델
+	: 요소의 width, height 가 border 영역의 너비, 높이 인 것. 즉 width, height 가 padding 과 border 를 포함하게 되는것
+
+
+
+
+
+
+레이아웃 >>  웹페이지에서 HTML 요소의 위치, 크기 등을 결정하는 것. 배치.
+	: 박스 모델 관련 설정
+		padding: 요소의 border 과 content 영역 사이의 간격을 조정
+			: 주의 
+				1. padding 에는 음수값, auto 값을 줄 수 없다
+				2. padding 이 늘고 줄으면
+					: 콘텐츠영역은 줄고 늘어난다 >> content-box 일떄 width, height 가 padding 의 영향 받는다
+					: border 영역의 사이즈가 변경되진 않는다 >> border-box 일때 width, height 가 padding의 영향 안받는다
+
+			: 세분화) padding-top,  padding-right,  padding-bottom, padding-left
+ 			: padding) 
+				1. " padding 위 오른 바닥 왼" 으로 한꺼번에 설정 가능
+				2. " padding 위/바닥 오/왼" 으로 한꺼번에 설정 가능
+
+		margin : 요소의 border바깥 영역의 크기를 조절 
+			: 주의 ) margin 에는 음수값, auto 값을 줄 수 "있"다
+			: 세분화) margin-top,  margin-right,  margin-bottom, margin-left
+ 			: margin) 
+				1. " margin 위 오른 바닥 왼" 으로 한꺼번에 설정 가능
+				2. " margin 위/바닥  오/왼" 으로 한꺼번에 설정 가능
+
+		border : 경계선 결정
+			1. border-top,  border-right,  border-bottom, border-left
+				: 각각 "두께 스타일 색" 의 값 부여 가능
+			2. border
+				:  "두께 스타일 색"  으로 모든 방향의 경계 설정 가능
+				: 주의 ) "위두께 오두께 아래두꼐 왼두께 스타일 색" 처럼 각 변을 한꺼번에 커스터마이징 할 순 없다
+			3. border-radius
+				: 경계 모서리의 둥근 정도 설정
+
+		box-sizing 
+			: width 와 height 를 어떻게 구할지 결정한다
+			: 이러나 저러나 margin 영역은 border-box 에 포함되지 않는다!
+			(1) border-box : "border 영역"을 기준으로 width, heigth 가 구해진다
+				: 그러니까 길이 == 콘텐츠영역+ 패딩영역
+				: padding 값이 바뀌면 요소의 width, height 도 변한다 >> padding 값 따라서 contnet 여영의 사이즈가 변하기 때문이다
+
+			(2) content-box : 콘텐츠 영역을 기준으로 width, height 가 구해진다 
+				: padding 값이 바뀌어도 요소의 width, height 가 유지된다 >> padding 값과 상관없이 border 영역의 사이즈는 유지되기 때문이다
+
+
+
+
+	: 위치 설정 관련
+		1. 정적 위치 설정 static positioning : 정상적인 흐름에 따른 배치
+			: 별다른 기준점 없이 흐르는 데로 배치한 것.
+
+		2. 상대 위치 설정	relative positioning : 정상적인 위치가 "기준"점
+		3. 절대 위치 설정 absoulte positioning : 컨테이너의 원점이 "기준"점
+		4. 고정 위치 설정 fixed positioning : 윈도우의 원점이 "기준"점
+
 
 : 브라우져 렌더링 과정 
 	: DOM 트리 구축-> 렌더트리 구축 -> reflow -> repaint -> composite	
@@ -458,6 +495,26 @@ CSS Cascading Style Sheet
 
 		: opacity:0 >> 보이지만 않을 뿐 영역을 차지하고 있고 이벤트 또한 작동한다. 해당 요소 밑에 깔려있는 요소는 클릭 "불"가능하다.
 			: DOM 에 존재해서 레이아웃에 포함되고, 재렌더링한것도 아니라 걍 단순 색깔만 변경한거라 여전히 클릭 이벤트 적용하고, 그 밑에 있는 요소를 걍 뚫지는 못하는 것이다.
+
+
+:웹브라우저 렌더링 엔진
+	: HTML , CSS ,JS 같은 웹 요소를 렌더링 하는 역할을 함
+	: https://xpmxf4.tistory.com/19
+
+	(1) webkit 
+		: 애플에서 개발되어 사용되고 있고, 구버전 크롬에서 사용하던 엔진
+		: 애플용 엔진과 구버전 크롬에서만 동작하지만 사용하는 걸 추천함.	
+
+	(2) Blink
+		: 구글이 크롬을 위해 개발한 렌더링 엔진
+		: webkit 의 문제점을 개선하고 추가 기능을 구현함
+
+	-webkit- , -moz- , , -ms- 와 같은 CSS 접두어
+		: css 의 속성들이 모든 브라우저에서 호환되는 것은 아니라, 이와 같은 접두어를 붙여 모든 브라우저에서 똑같은 동작을 하도록 표준화 시켜주는것.
+		: https://blog.naver.com/ghdcksgml2/222413054871
+
+
+
 
 
 
@@ -485,23 +542,6 @@ CSS Cascading Style Sheet
 			: 0.0 ~ 1.0 값 할당 가능, 0 에 가까울 수록 더 투명한거임
 				: 암기 tip ) 오빠는 작으면 안보인다
 			: 0 이면 보이진 않지만, 자신의 영역을 유지하고, 클릭 ㅇ이벤트도 된다.
-
-
-:웹브라우저 렌더링 엔진
-	: HTML , CSS ,JS 같은 웹 요소를 렌더링 하는 역할을 함
-	: https://xpmxf4.tistory.com/19
-
-	(1) webkit 
-		: 애플에서 개발되어 사용되고 있고, 구버전 크롬에서 사용하던 엔진
-		: 애플용 엔진과 구버전 크롬에서만 동작하지만 사용하는 걸 추천함.	
-
-	(2) Blink
-		: 구글이 크롬을 위해 개발한 렌더링 엔진
-		: webkit 의 문제점을 개선하고 추가 기능을 구현함
-
--webkit- , -moz- , , -ms- 와 같은 CSS 접두어
-	: css 의 속성들이 모든 브라우저에서 호환되는 것은 아니라, 이와 같은 접두어를 붙여 모든 브라우저에서 똑같은 동작을 하도록 표준화 시켜주는것.
-	: https://blog.naver.com/ghdcksgml2/222413054871
 
 
 	: 애니메이션관련
