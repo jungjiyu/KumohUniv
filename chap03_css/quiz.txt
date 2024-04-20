@@ -119,8 +119,8 @@
 101.뷰포트에 아에 고정시키는 값은 무엇인가? >> fixed
 102. ppt 에서는 센스 없게 absolute 를 단순 뭐라고 정의해놨는가? << 전체 페이지를 기준으로 위치 잡는것.
 103. position 이 static 이 아닐 경우 무엇에 관련된 속성을 함꼐 사용하며 그 속성으론 무엇이 있는가? >> offset 과 관련한 속성을 함꼐 써주고, 그 속성으로는 top left bottom right 가 있따
-
-
+104. width, height 의 값을 상대단위값으로 했을때 해당 요소의 box-sizing 값이 width, height 에 실제로 할당되는 값에 영향을 미치는가? (그러니까 border-box, content-box 여부 따라서 % 반영되어 할당되는 값이 달라지는가) >> 그렇지 않다. width, height 자체에 할당되어 지는 값은 같고, 그 사이즈를 border 사ㅣㅇ즈로 사용 하느냐 content 
+사이즈로 사용하느냐 따라서 요소의 크기가 달라보이는거다
 
 
 
