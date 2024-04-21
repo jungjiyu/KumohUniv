@@ -22,6 +22,13 @@
 
 19. js 에서 DOM 객체에 어떻게 접근하는가? >> document 객체를 통하여 접근 가능하다
 20. html 문서와 js 를 분리하는 것의 장점 >> 1. 코드 재사용 2. 유지보수
+21. html 문서에 외부 js 파일을 어떻게 포함시키는가 ? >> <script src ="파일명.js"></script>
+22 . js 포함 위치에 따라 렌더링에 어떤 영향을 미치게 된느가? 
+  :: <head> 의 경우 html parsing --> js fetching --> js executing --> html parsing 이 되기 때문에 js 파일이 클 경우 사용자에게 파싱이 되다만 페이지가 오랫동안 보여질 수 있다
+  :: <body>의 경우 html parsing --> js fetching --> js executing 이 되기 때문에 사용자에게 빠르게 html 파싱이 완료된 페이지를 보여줄 수 있으나 js 에 의존적인 요소는 제 기능을 못하게 된다
+
+23. 22번의 대안은 무엇인가? >> HTML5 부터 새로 등장한 속성인 "defer" 를 사용한다. 이렇게 하면 html parsing & js fetching --> js executing 이 되기 때문에 좀 더 빠르게 할 수 있다
+
 
 
 
