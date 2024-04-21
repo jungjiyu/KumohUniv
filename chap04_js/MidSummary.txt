@@ -97,14 +97,11 @@ https://velog.io/@jkijki12/%EC%BB%B4%ED%8C%8C%EC%9D%BC-%EC%9D%B8%ED%84%B0%ED%94%
 
 		: https://www.codestates.com/blog/content/dom-javascript
 
-		
 
+
+
+: JS 삽입 위치가 렌더링에 주는 영향
 	: 자바스크립트가 HTML 에 삽입되는 위치 
-		: HTML 문서와 js 가 분리되는 것을 권장
-			: 장점 
-				1. 코드 재사용 
-				2. 유지보수
-
 		(1) 인라인 자바스크립트
 			: 대상 요소의 태그 내에 소스코드를 작성하는 방식
 				: ' on이벤트명 '속성을 활용해 "자바스크립틈명령어" 를 할당하는 꼴로 사용
@@ -117,4 +114,62 @@ https://velog.io/@jkijki12/%EC%BB%B4%ED%8C%8C%EC%9D%BC-%EC%9D%B8%ED%84%B0%ED%94%
 		(3) 외부 자바스크립트
 			: HTML과 자바스크립트를 분리해서 외부 파일로 분리하는 방식
 			:  해당 html 파일 내부에 <script src="파일명.js" ></script> 를 통해 가져온다.
+			: 장점 
+				1. 코드 재사용 
+				2. 유지보수
+			: <head> 혹은 <body> 영역 에 작성 가능 
+
+
+	: 기본적인 HTML , CSS 렌더링 과정
+		1. HTML 읽고 파싱(토큰화하여 parse tree 생성)하여 DOM tree 생성
+		2. CSS 를 읽고 파싱하여 CSSOM tree 생성
+		3. DOM 과 CSSOM 을 합쳐 Render tree 생성
+		4. Render tree 를 기반으로 렌더링
+
+	: JS 로 인한 영향
+		: <head> 에 삽입한 경우 
+			: parsing HTML --> fetching JS --> executing JS --> parsing HTML
+			: HTML 파싱하다가 , 멈춘 후 js fetching 을 하고 excuting 이 완료 되면 , HTML 파싱을 재개한다
+			: 문제점
+				1. js 파일이 클 경우 파싱을 하다만 페이지를 사용자에게 오랫동안 보여주게 된다
+				2. script 파일이 아직 파싱되지 않은 DOM 요소에 접근하여 문제가 발생할 수 있다
+
+		: <body> 에 삽입할 경우 
+			:  parsing HTML --> fetching JS --> executing JS
+			: HTML 파싱을 먼저 진행 한 후 JS 파일을 다운로드 받고 실행
+			: 장점 >> HTML 파싱이 완료된 페이지를 빠르게 볼 수 있다.
+			: 담점 >>  js 에 의존적인 컨텐츠를 보는데에는 오래 걸린다.
+
+
+	******: defer 속성과 함꼐 삽입할 경우 
+			: parsing HTML & fetching JS --> executing JS  
+			: HTML parising 과 fectcing 을 병렬로 하고, 이가 모두 끝나면 js 를 excute 하기 때문에 순서에도 문제가 발생하지 않고 비교적 빠르다
+
+		: https://happytape.tistory.com/38.
+
+
+
+JS 문법 기초
+	: 문장 ) "브라우저"를 향한 "명령어"
+		: 순차적으로 실행된다		
+		: 세미콜론을 꼭 쓸 필욘 없지만 관습적으로 써준다
+
+	: 변수 ) 데이터를 저장하는 상자
+		: https://velog.io/@bathingape/JavaScript-var-let-const-%EC%B0%A8%EC%9D%B4%EC%A0%90
+		: 변수 선언 방법
+			sol0. const 로 선언 
+				: 변하지 않는 변수
+				: 변경이 불필요한 객체는 const 로 정의하는 게 좋다
+
+			sol1 . let 으로 선언
+				: 블럭 구조 지원
+
+			sol2 . var 로 선언
+				: 호이스팅
+				: 오류 발생 가능성 높음
+
+			sol3, 선언 없이 사용
+				: 걍 쓰레기 아님?
+
+		: 권장 방향 >> 일단 const 로 무조건 선언. 이게 안되는 경우 let 으로 선언해 사용
 
