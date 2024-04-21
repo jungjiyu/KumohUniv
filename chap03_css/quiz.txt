@@ -121,6 +121,13 @@
 103. position 이 static 이 아닐 경우 무엇에 관련된 속성을 함꼐 사용하며 그 속성으론 무엇이 있는가? >> offset 과 관련한 속성을 함꼐 써주고, 그 속성으로는 top left bottom right 가 있따
 104. width, height 의 값을 상대단위값으로 했을때 해당 요소의 box-sizing 값이 width, height 에 실제로 할당되는 값에 영향을 미치는가? (그러니까 border-box, content-box 여부 따라서 % 반영되어 할당되는 값이 달라지는가) >> 그렇지 않다. width, height 자체에 할당되어 지는 값은 같고, 그 사이즈를 border 사ㅣㅇ즈로 사용 하느냐 content 
 사이즈로 사용하느냐 따라서 요소의 크기가 달라보이는거다
+105 넘치는거 관련한 속성은 무엇인가? >> overflow
+106. 넘치는거 그대로 보여줄려면어떤 값을 할당하는가? >> overflow:visible
+107. 넘치는거 자르려면 어케하나 >> overflow:hidden
+108. 넘치는거 무조건 스크롤 생성시키려면 어케하는가 >> overflow:scroll
+109. 필요한 사이드에만 스크롤 생성시키려면 어케하는가? >> overflow:auto
+110. clear 속성은 왜 존재하며 적용 대상은 어떤 요소인가? >> float 의 영향에서 벗어날 수 있게 해주는 속성으로 , 주로  both 값을 할당한다. 적용 대상은 "블럭 레벨" 요소이다
+111.
 
 
 
