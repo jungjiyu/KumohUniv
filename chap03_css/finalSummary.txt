@@ -534,18 +534,6 @@ CSS Cascading Style Sheet
 					: https://inpa.tistory.com/entry/CSS-%F0%9F%93%9A-%EC%9C%84%EC%97%90-%ED%97%A4%EB%8D%94%EB%A5%BC-%EA%B3%A0%EC%A0%95%ED%95%98%EC%9E%90-%F0%9F%8E%A8-sticky-position
 
 
-	: 넘치는거 관련
-		(1) overflow
-			: 요소 내의 컨텐츠가 요소보다 커서 넘칠 때 어떻게 보여줄지 정하는 속성
-			: 할당 가능한 값
-				1. visible: 넘치는 부분이 상자 밖으로 보여진다<< 디폴트값
-				2. hidden : 넘치는 부분은 잘려서 보이지 않는다
-				3. scroll : 무조건 스크롤 바를 생성하고, 그 스크롤 바를 통하여 박스내에서 넘치는 부분을 볼 수 있게 한다.
-				4. auto : 넘치는 부분이 없으면 스크롤 바를 생성하지 않고, 넘치는 부분이 있으면 스크롤 바를 생성시켜 박스내에서 넘치는 부분을 볼 수 있게 한다.
-			: https://xxvigrufv.tistory.com/15
-
-		(2) overflow-x : x 방향으로 넘치는 경우만 설정한다
-		(3) overflow-y :  y 방향으로 넘치는 경우만 설정한다
 
 
 normal flow, BFC, IFC
@@ -580,6 +568,39 @@ normal flow, BFC, IFC
 	: https://velog.io/@nalsae/%EB%82%B4%EB%B3%B4%EC%A0%95CSS-float-%EB%94%A5-%EB%8B%A4%EC%9D%B4%EB%B8%8C
 
 
+
+	: 요소의 스택 순서 관련
+		: 스택 순서 == 쌓이는 순서
+		: z-index 가 젹용되지 않은 일반적인 스택순서
+			 root 요소 --> 더 먼저 나온 자식 요소 --> 더 나중에 나온 자식 요소 
+			
+		z-index
+			: https://abcdqbbq.tistory.com/39
+			: 요소의 스택 순서를 지정한다.
+			: 주의 
+				1. position:static 인 요소에는 적용 불가하다!!!
+					: static인 요소는 z-index 속성이 0으로 고정되어 있다
+				2. 해당 요소는 형제 요소 혹은 "자신"의 후손 요소 에 대하여 z-index 가 비교 될 수 있다
+					: 형제 요소의 후손 요소까지는 인식 못한다. 
+						: 그러니까 아무리 높은 z-index 의 후손을 가진 형제 있어도, 그 형제 자체의 z-index 가 낮으면 해당 후손까지 조상님 떄문에 짓밟히게 된다
+				3. z-index 값으로 마이너스 값을 줄 수 있지만, 마이너스 값을 줄 경우 background 보다 밑에 깔리게되어 (background 가 투명한 색이 아닐 경우) 보이지 않게 될 수도 있따.
+
+
+	: 넘치는거 관련
+		(1) overflow
+			: 요소 내의 컨텐츠가 요소보다 커서 넘칠 때 어떻게 보여줄지 정하는 속성
+			: 할당 가능한 값
+				1. visible: 넘치는 부분이 상자 밖으로 보여진다<< 디폴트값
+				2. hidden : 넘치는 부분은 잘려서 보이지 않는다
+				3. scroll : 무조건 스크롤 바를 생성하고, 그 스크롤 바를 통하여 박스내에서 넘치는 부분을 볼 수 있게 한다.
+				4. auto : 넘치는 부분이 없으면 스크롤 바를 생성하지 않고, 넘치는 부분이 있으면 스크롤 바를 생성시켜 박스내에서 넘치는 부분을 볼 수 있게 한다.
+			: https://xxvigrufv.tistory.com/15
+
+		(2) overflow-x : x 방향으로 넘치는 경우만 설정한다
+		(3) overflow-y :  y 방향으로 넘치는 경우만 설정한다
+
+
+
 	: 부유 관련
 		(1) float
 			: 해당 요소가 해당 요소의 "이후"에 등장하는 "모든" 요소에 대해 특정 방향에 배치되게 한다.
@@ -607,14 +628,15 @@ normal flow, BFC, IFC
 					: 부모의 콘텐츠 영역 사이즈를 확인해보면 float 요소 사이즈는 카운트 되지 않음을 확인할 수 있다.
 					: 그렇다고 position: absolute 처럼 모두에게 유령 취급 되는게 아니다 (3번에서 계속)
 
-				3. float 에 영향을 받을 수 있는 범위는 float 가 적용된 요소와 같은 부모를 공유하는 이후 요소들이다. 
-					: 해당 부모 블럭 밖의 요소들은 float 의 영향을 받지 않는다
+				3. 해당 부모 블럭 밖의 요소들도 때로는 float 의 영향을 받을 수 있다.
+					: height 가 설정되있지 않은 부모가  float 자식 요소들로만 채워진다면, 실제로 그 부모는 height 가 0이게 된다. 그 부모 뒤의 요소가 block 요소라면, 그 자식들을 인지하지 못하고 쳐들어오게 된다.
+					: https://www.w3schools.com/css/tryit.asp?filename=trycss_layout_cols
 
-				4. 영향 범위 내의 float 이 적용된 요소의 이후 요소들은 인라인이냐 블럭에 따라서 효과가 다르게 적용된다.
+				4.  float 이 적용된 요소의 이후 요소들은 인라인이냐 블럭에 따라서 효과가 다르게 적용된다.
 					: 인라인 요소들 >> float 이 적용된 요소가 집을 나갔음에도 똑똑하게 해당 영역을 인식하고, 알아서 비켜서 배치된다.
 					: 블럭 요소들 >>  float 이 적용된 요소를 인식하지 못하고 걍 해당 영역을 침범한다. 그러니까 유령 취급한다.
-						: float 이 적용된 요소만 인식 못하는거지, 다른 inline, block 요소들은 잘 인식하는거다
-					: float 이 적용된 요소들 >> float 이 적용된 요소들 끼리는 display 가 block 임에도 불구하고, 서로를 잘 인식하는 것 "같다" (이전 영역을 침범하지 않고, 이쁘게 나열된다.)
+						: float 이 적용된 요소만 인식 못하는거지, 앞에 쌓인 inline, block 요소들은 잘 인식하는거다
+					: float 이 적용된 요소들 >> float 이 적용된 요소들 끼리는 BFC라서, 서로를 잘 인식하는 것 "같다" (이전 영역을 침범하지 않고, 이쁘게 나열된다.)
 						: https://www.w3schools.com/css/tryit.asp?filename=trycss_float5
 
 				5.  position 속성값을 fixed 혹은 absolute로 가지는 요소에는 float 를 적용할 수 없다.
@@ -637,9 +659,12 @@ normal flow, BFC, IFC
 
 
 		(2) clear
-			: 해당 요소부터 더이상 float 속성에 영향을 받지 않게 하는 속성	
+			: 해당 요소부터 더이상 float 속성에 영향을 받지 않게 하는 속성
+			: 정확히 말하자면, 해당 요소에게 float된 요소를 인지할 수 있게 해주는 능력 부여하는 것이다. 
+				: 주의 ) BFC화 했을때 부여되는 능력과 비슷하긴 해도,  BFC 화 하는건 아니다.	
 			: !! clear 속성은 block 레벨 요소들에만 선언 가능하다
-			: clear 시켜줌으로써 float 속성으로부터 해방시키는걸 clearfix 라고도 한다.
+			: clearfix
+				: CSS에 :after라는 가상요소를 사용해서 HTML문서에 존재하지 않는 새로운 요소를 생성한 후 clear:both속성을 주어 해결하는 방법
 			: 할당 가능한 값
 				1. none )  clear 를 적용하지 않음 << 기본값
 				2. right ) float : right 를 취소 시킨다
