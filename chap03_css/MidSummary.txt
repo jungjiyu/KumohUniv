@@ -799,6 +799,7 @@ f4.tistory.com/19
 			(4) transition-timing-function : 전환 효과의 "속도" 를 설정
 				1. linear : 처음부터 끝까지 일정한 속도
  				2. ease : 천천--> 빠름 -->천천 << default 값
+					암기 tip ) ease >> 0010 >> 1000 >> 천(천)
 		 		3. ease-in : 천천 --> 보통
 		 		3. ease-out : 보통 --> 천천
 		 		4. ease-in-out : 천천 --> 보통 --> 천천
@@ -893,13 +894,22 @@ f4.tistory.com/19
 
 			: transition vs animation
 				: 공통점 >> js 없이도 직접 애니메이션 효과 적용 가능
-				: transition >> 요소의 상태가 변해야 애니메이션 실행
-				: animation >> 요소의 상태 변화와 상관 없이 애니메이션을 실행 + 요소의 동작을 키 프레임 단위로 변경 가능
+				: transition
+					: 트리거가 있어야 상태 변화할 수 있다
+					: 두가지 상태만 지정 가능하다
+					: 종료 후 상태 유지가 되지 않는다
+
+				: animation
+					: 트리거 없어도 애니메이션을 실행가능
+					: 키 프레임 단위로 세분화하여 변환 가능하다
+
 
 			: 키프레임 Keyframe 
 				: 애니메이션의 중간 프레임. animation 의 중간 상태를 정의한것. 
 				: 정의 형식 
 					:   0% 와 100% 는 각각 from , to 로 작성할 수 있고, 그 사이에 여러 개의 여러 % 값을 작성 가능하다.
+					: % 값은 꼭 오름차순으로 작성할 필요는 없다
+					:  m% 과 n% 를 ' , ' 를 이용해 한번에 정의 가능하다
 
 					@keyframes 키프레임명{
 						0%{  속성명1:값1 ; 속성명2:값2 ; ..  }
@@ -915,10 +925,12 @@ f4.tistory.com/19
 					
 					
 
-			: 속기형 >> animation
-				: 최소 animation-name 과 animation-duration 은 지정해야 애니메이션이 실행된다.
-				: 할당 값 " name | duration | timing-function | delay | iteration-count | direction | fill-mode | play-state "
-    
+			: 속기형 >> 
+				animation
+					:  " name | duration | timing-function | delay | iteration-count | direction | fill-mode | play-state " 형태의 값을 할당한다. 
+						:  animation-name 과 animation-duration 은 필수적으로 지정해야 애니메이션이 실행된다.
+
+
     
 			: 단일 속성 >>
 				(1) animation-name :  애니메이션의 중간 상태를 지정
