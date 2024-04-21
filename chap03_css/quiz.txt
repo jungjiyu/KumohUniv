@@ -143,6 +143,7 @@
     : transition 은 두 상태 간의 변화만 가능. 트리거가 필요. 종료 상태 유지 불가.
     : animation 은 keyframe 으로 여러개의 중간 상태 정의 가능. 트리거 불필요. 종료 상태 유지 가능
 
+124. transform 속성은 반드시 transition 속성과 함꼐 써줘야하는가? >> 아니다. anitmation 속성과도 함께 쓰일 수 있다.
 
 
 
