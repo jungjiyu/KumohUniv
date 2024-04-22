@@ -29,6 +29,17 @@
 https://velog.io/@jkijki12/%EC%BB%B4%ED%8C%8C%EC%9D%BC-%EC%9D%B8%ED%84%B0%ED%94%84%EB%A6%AC%ED%84%B0-%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8
 
 
+전역 객체 
+	: https://poiemaweb.com/js-global-object
+	: 최상위 객체를 의미한다.
+	: 성질
+		: 전역 객체의 자식 객체를 사용할 때, 전역 객체는 생략 가능하다.  
+			ex) document.getElementById( ); // window.getElementById( )  
+
+		: 전역변수를 프로퍼티로 가진다.
+			ex) 
+				let a = 'AAA'; 
+				console.log(a); // console.log(window.a);	
 
 자바스크립트
 	: "동적인" 웹 페이지 작성을 위한 언어
@@ -55,24 +66,29 @@ https://velog.io/@jkijki12/%EC%BB%B4%ED%8C%8C%EC%9D%BC-%EC%9D%B8%ED%84%B0%ED%94%
 
 	: BOM  Browser Object Model 브라우저 객체 모델
 		: 브라우져와 관련된 객체들의 집합
-		: 최상위 객체 == window
+		: 브라우저 환경에서의 최상위 객체,전역 객체 == window
+			: 전역 객체 == 최상위 객체
 
-
+	
 
 	: DOM Doucument Object Model 문서 객체 모델
 		: 웹페이지 (html , xml 문서 등)를 구조화 시켜 활용 가능한 객체(object) 형태로 만든 일종의 web api. 인터페이스.
 	
 
 		:  DOM ⊂ BOM
-			: DOM 은 window 객체의 하위 객체 이다
+			: DOM 은 window 객체의 하위 객체 이다 
 
 		: tree 자료구조를 가진다. 계층적으로 표현된다.
 			document 노드 : 최상위 "루트" 노드 
 				: 해당 HTML 문서 전체를 나타내는 노드. 
 					: html 문서 당 하나 씩 존재
 				: document 객체를 가리킴. 
-					:  주의) html 이 루트 "요소"라고는 하지만, DOM 에서 루트 노드는 아니다!
-					: BOM 의 최상위 객체인 window 객체로도 접근 가능 (window.document)
+					:  주의
+						0. document 객체가 DOM tree 에서 최상위 노드이긴 하지만, 전역 객체인건 아니다. (전역 객체는 window 이다)
+						1. html 이 루트 "요소"라고는 하지만, DOM 에서 루트 노드는 아니다!
+
+					:  최상위 객체인 window 객체로도 접근 가능 (window.document)
+
 				: element 노드를 자식 노드로 함
 
 			element 노드 
@@ -90,6 +106,7 @@ https://velog.io/@jkijki12/%EC%BB%B4%ED%8C%8C%EC%9D%BC-%EC%9D%B8%ED%84%B0%ED%94%
 			: 조작이 가능한거지, js 내에  DOM이 있는게 아니다
 			: DOM 은 특정 프로그래밍 언어에 의존하지 않는 독립적인 인터페이스
 			: js 에서는 "document " 객체를 통하여 DOM 에 접근, 사용 가능하다.
+				: js 에서는 document 객체가 DOM tree 의 최상위 노드.
 
 		: DOM 의 동적 생성과 정적 생성
 			: 정적 생성 >> HTML 문서에 존재하는 태그를 노드로 생성하는 것. 
@@ -181,8 +198,7 @@ JS 문법 기초
 			: 객체 == 사물의 속성과 동작을 묶어서 표현하는 기법
 			: js 에서는 클래스 없이도 생성 가능
 			: js 에서는 원래 객체라는 개념이 없지만, '딕셔너리' 를 이용하여 객체 기능을 지원한다.
-
-
+			
 		(3) String : 문자열
 			: 줄바꿈을 표현하는 방법
 				1. 웹 페이지 상 >> 문자열에 <br> 표기
@@ -316,16 +332,34 @@ JS 문법 기초
 
 
 	유명한 함수
-		prompt( "라벨" , "입력필드에디폴트로표시할값" ) 
+		window.prompt( "라벨" , "입력필드에디폴트로표시할값" ) 
 			: 라벨과 입력 필드가 있는 알림창을 띄워준다
 			: 리턴값 >> 입력 필드에 입력한 내용을 "문자열" 타입으로 리턴
+				: 입력 받은 값으로 숫자 연산을 하고 싶으면 parseInt( ) 처리는 필수다.
 			: 암기 tip >> 뭔가 티키타카가 있다. 프롬프트.
 
-		confirm( "라벨 ")
+		window.confirm( "라벨 ")
 			: 라벨만 있는 알림창을 띄워준다
 			: 리턴값 >> 알림창에서 사용자가 '확인' 버튼을 눌렀으면 true, '취소' 버튼 눌렀으면 false 를 반환한다.
 			: 암기 tip >> 일방적인 통보. confirm.
 
+		document.write( " html 형식의 문자열" ) 
+			: 요약 >> 페이지 로드를 마치기 이전에 읽힌 docuemnt.wirte 는 해당 HTML 페이지에, 페이지 로드를 완료한 이후 읽힌 document.write 는 새로운 HTML 페이지에 해당 내용을 추가한다.
+				: 페이지 로드 될 때 명시된 document.write(  ) 는 arg 를 해당 HTML 문서 내부에 주입한다
+					: f12 눌러서 확인해보면 실제로 wirte한 내용이 html 소스상에 추가되었음을 볼 수 있다
+					: <script /> 읽히는 시점에 js 가 fetch, excute 되고, 그떄 wirte( ) 도 실행되는 것이라 <script> 가 <head> 부분에 있으면 wirte( ) 내용은 해당 페이지의 가장 윗부분에 추가되고, <body> 의 가장 끝 부분에 있으면 해당 페이지의 가장 아랫 부분에 추가된다.
+
+				: 페이지가 다 로드된( js fetch, excute 까지 다 된) 후에 document.write( ) 하면,  기존 HTML 문서를 다 밀어버리고 arg 내용으로 덮는다. (그래서 이름이 append 이런게 아니라 write( ) 인가보다 )
+				: https://we-always-fight-with-code.tistory.com/39
+				: https://ko.javascript.info/modifying-document
+
+			: HTML 에 포함될 내용을 쓰는 것이라 '\n' 은 안먹히고 <br> 이 먹힌다
+
+
+
+
+		console.log( " 콘솔에 출력할 내용") 
+			: 주로 디버깅 용도로 많이 쓴다.
 
 
 	함수 
@@ -383,6 +417,23 @@ JS 문법 기초
 
 
 			
+	HTML 요소에서 정보 뽑기		
+		: HTML 요소를 구하는 법	
+			(1) document. getElementById(아이디);
+ 				:  Id 를 이용하여  접근
 
- 
+		: 구한 객체에서 정보 뽑고, 변경하는 법 >> 변수명.속성명	
+			: 주의 >> 변수.value 는 항상 String 타입을 반환한다. 
+				: 숫자 계산을 원하면 parseInt 필수다.
+			ex) 
+			// 요소 얻어옴
+				let x = document.getElementById(아이디); 
+				let y = document.getElementById(아이디);
+				let z = document.getElementById(아이디);
 
+			// 정보 뽑음
+				let a = x.value;
+				 let b = y.value;
+
+			// 정보 수정
+				z.value=a+b;		
