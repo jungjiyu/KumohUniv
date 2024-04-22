@@ -71,6 +71,12 @@
 
 48. id 기반 요소 정보 가져오는 법 ? >> docuemnt.getElementById()
 49. getElementById( ).value 의 반환형은 항상 문자열인가? (input 태그의 type 속성에 영향을 받지 않는가? )>> 그렇다.
+50. parseInt( ) 는 왜 이름이 이따구인가? >> parse. 문자열을 파싱해서 숫자를 찾아 숫자화 하겠다는 것.
+
+
+
+
+
 
 
 
