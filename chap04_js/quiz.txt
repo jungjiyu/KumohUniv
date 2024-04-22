@@ -69,7 +69,12 @@
 		: (기존 HTML 페이지 내용 다 밀어버리고 )새로 wirte 된다.
 
 
+48. id 기반 요소 정보 가져오는 법 ? >> docuemnt.getElementById()
 
+
+
+
+tip: prompt, confirm 뺴고는 죄다 documet 객체의 메서드
 
 
 
