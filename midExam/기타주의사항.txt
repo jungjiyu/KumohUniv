@@ -27,3 +27,8 @@
 
 7. 객체 자체를 출력했을 떄 자동으로 toString 이 적용된다ㅏ
 
+8. clone( ) 오버라이딩시
+	1. implements Cloneable
+	2. public 해당자료형 Clone( ) thorws CloneNotSuppotredException
+
+
