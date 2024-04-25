@@ -1,0 +1,9 @@
+이중포인터 매개변수일때, temp 역할 변수 선언이 단일 포인터 타입인거고, 활용할때는 변수만으로 활용하는거다 
+  : 씨발 temp 를 함수 밖으로 가져갈 일이 있냐고
+
+// 단일 포인터 간의 값을 swap
+void swapS(char**c1, char**c2) { // c1 == &arg , *c1 == arg
+	char* temp = *c1;  // temp == *c1 
+	*c1 = *c2;
+	*c2 = temp;
+}
