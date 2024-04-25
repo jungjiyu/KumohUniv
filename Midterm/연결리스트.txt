@@ -1,1 +1,175 @@
-s
+
+	
+Node *head 활용
+	: 메인에서 멤버접근 :  (*head).멤버명 == head ->멤버명
+
+	: 값 변경 적용하는 함수
+		: 호출 시 arg 로는 "&"head
+		: 함수에서 
+			: param 은 Node** pHead
+			: head 그 자체는 *pHead
+			: head 의 멤버접근은 *(*pHead).멤버명 == ( *pHead ) -> 멤버명
+				: 괄호 사용에 제발 유의
+			
+	: 값 읽기만 하는 함수
+		: 호출시 arg 로는 head
+		: 함수에서
+			: param 은 Node *pHead
+			: 멤버 접근은 (*head).멤버명 == head ->멤버명
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+습관적으로 free 시킨 변수엔 바로 NULL  값 넣는다.
+-------------------------------------------------------------------------------------------------------------------------------
+
+
+<main 함수>
+
+	int select = 1, val;
+	Node* head = NULL;
+	while (select) { 
+		printf("----------1.추가 2.출력 3.삭제---------\n\n");
+		scanf("%d", &select);
+		switch (select) {
+		case 1:
+			printf("값입력:");
+			scanf("%d", &val);
+			insert(&head, val);
+			break;
+		case 2:
+			display(head);
+			break;
+
+		case 3:
+			printf("삭제하고 싶은 값입력:");
+			scanf("%d", &val);
+
+			delete(&head, val);
+			break;
+
+
+		}
+	}
+
+
+	1. select: 계속 할지 말지 여부 결정, val : 삭제 혹은 입력 값 	
+	2. 본격 시작전 Node 포인터 타입의 head 초기화
+	3. switch 문에서 0 인 경우는 다루지 않고 있으나 while 문 조건문에 있어서 0 누르면 자동 종료
+******4. 아무리 타입이 포인터 일 지라도 변경을 반영하기 위해서 arg는 '&'연산자 써서 넘겨줘야됨 . (insert 문과 delete 함수)
+
+-------------------------------------------------------------------------------------------------------------------------------
+<노드 구조체>
+
+typedef struct Node {
+	int data;
+	struct Node* next;
+}Node;
+
+	1. head 와 노드 들은 모두 Node* 타입이다  <-- malloc 가 포인터 타입 반환해서 그렇다
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+<맨 앞 삽입 함수>
+
+void insert(Node** head, int val) {
+	Node* newNode = (Node*)malloc(sizeof(Node));
+	newNode->data = val;
+	newNode->next = NULL;
+
+	if (*head == NULL) { // 비어있는 경우
+		*head = newNode;
+	}
+	else {
+		newNode->next = *head;
+		*head = newNode;
+	}
+}
+
+	1. 단일포인터주소가 arg --> 매개변수는 이중포인터타입
+	2. * 하나만 붙인게 main에서의 head 그자체.
+	3. 새 노드 생성하고 NULL 로 일단 초기화 해두기.
+	4. 단계
+		(1) 새 노드 생성
+		(2) 빈 리스트인지 검사  (*head == NULL )
+			--> 맞으면 : 단순 head 를 새 노드로 업데이트만 함.
+			--> 아니면 : 
+				1. 새 노드가 이전 head 를 가리키게 함
+				2. head 를 새 노드로 업데이트
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+< 출력함수> 
+
+void display(Node* head) {
+	Node* cur = head;
+	while (cur != NULL) { 
+		printf("%d ", cur->data);
+		cur = cur->next;
+	}
+	printf("\n");
+
+}
+
+	1. 순회 위해 current 포인터 도입 : 현재 "노드" 를 가리킴
+	2. current 가 누군가를 가리키고 있는 동안 반복문 돌림
+		: 내부적으로 current = current ->next; 로 업뎃
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+<값을 기준으로 삭제하는 함수>
+
+
+void delete(Node** head, int val) {
+	Node* delNode, * prevNode;
+
+	if (*head == NULL) {
+		printf("해당 리스트에 노드가 하나도 없습니다\n");
+		return;
+	}
+	
+	if ((*head)->data == val) {
+		delNode = *head;
+		*head = (*head)->next;
+		free(delNode);
+		return;
+	}
+
+
+	delNode = prevNode = *head;
+	while (delNode->next != NULL) {
+			delNode = delNode->next;
+			if (delNode->data == val) {
+				prevNode->next = delNode->next;
+				free(delNode);
+				return;
+			}
+			prevNode = delNode;
+		}
+
+		printf("해당값이 존재하지 않습니다\n");
+	
+}
+
+	1. 단일포인터주소가 arg --> 매개변수는 이중포인터타입
+	2. * 하나만 붙인게 main에서의 head 그자체.
+	3. 삭제대상노드를 가리킬 delNode  , 그의바로앞노드를 가르킬 prevNode 도입 
+	4. 단계
+		if 빈 리스트 :  리턴+메시지
+
+		else if 헤드값의 데이터와 일치
+			(1) delNode에 head 임시저장
+			(2) head 업뎃
+			(3) free delNode
+			(4) return
+
+		else 
+			(1) delNode, prevNode 를 모두 "*"head 로 초기화 
+			(2) delNode->next 가 NULL 이기 전까지 반복  <--- while 문 들어가자마자 delNode 업뎃 해주기 때문에 delNode 자체가 NULL 인단계까지 하면 ㅈ된다
+				1. delNode 업데이트
+				2. delNode 값과 일치하는지 확인 
+					>> 일치하면 
+						1. prevNode 의 다음을 delNode 의 다음으로 함
+						2. free delNode
+						3. return
+				3. prevNode 를 delNode 로 업뎃
+
