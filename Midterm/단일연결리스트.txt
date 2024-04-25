@@ -98,6 +98,45 @@ void insert(Node** head, int val) {
 
 -------------------------------------------------------------------------------------------------------------------------------
 
+<맨 끝 삽입 함수>
+void insertLast(Node** head, int val) {
+	Node* newNode = (Node*)malloc(sizeof(Node));
+	newNode->data = val;
+	newNode->next = NULL;
+
+	if (*head == NULL) { // 비어있는 경우
+		*head = newNode;
+		return;
+	}
+	Node* curNode = *head;
+	while (curNode->next != NULL) {
+		curNode = curNode->next;
+	}
+	curNode->next = newNode;
+	
+
+}
+
+	1. 단일포인터주소가 arg --> 매개변수는 이중포인터타입
+	2. * 하나만 붙인게 main에서의 head 그자체.
+	3. 새 노드 생성하고 NULL 로 일단 초기화 해두기.
+	4. 단계
+		(1) 새 노드 생성
+		(2) 빈 리스트인지 검사  (*head == NULL )
+			--> 맞으면 : 단순 head 를 새 노드로 업데이트만 함.
+			--> 아니면 :  
+				1. curNode 를 head 로 초기화
+				2. curNode 가 마지막 노드 가리키게 바복문 타고 이동
+				3. curNode 의 다음을 새 노드로 함
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
 < 출력함수> 
 
 void display(Node* head) {
