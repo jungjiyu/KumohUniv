@@ -1,1 +1,140 @@
-d
+원형연결리스트의 경우 마지막 노드를 가리키고 있는 게 더 편하기 때문에 head 보다 tail 을 쓴다.
+
+https://shitandcomputer.tistory.com/72
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+struct {  Node *head }List ; 이나 struct {  Node *tail }List ; 을 활용
+	: 메인함수에서 
+		선언은 >> List list;  <-- 그냥 구조체 변수 그 자체. 리스트 자체엔 동적할당 안한다
+		멤버변수활용은 >> list.멤버명
+
+	: 값 변경하는 함수의 경우
+		호출시 arg >> &list
+		함수 내부에서
+			param >> List* list 
+			tail 노드 >> (*list).tail == list->tail 
+			tail 노드의 멤버 >> (*list).tail == list->tail->next
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+<main 함수 부분>
+
+int main(void) {
+	List list;
+	list.tail = NULL;
+	for (int i = 1; i <= 5; i++) {
+		insert(&list,i);
+	}
+	display(list.tail);
+	return 0;
+}
+
+	1. List 자체는 동적할당 사용안하고 구조체 변수 그대로 씀
+	2. 본격 활용 이전에 tail 을 NULL 초기화
+	3. 변경 적용을 위해 insert(  )의 arg 로 list 의 "주소" 를 넘김
+	4. 단순 출력은 읽기만 하면 되서 list.tail 그 자체를 보냄.
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+<구조체>
+
+typedef struct Node {
+	int data;
+	struct Node* next;
+}Node;
+
+typedef struct List {
+	Node* tail;
+}List;
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+<맨 끝 삽입 >
+
+void insert(List* list, int k) {
+	Node* newNode = (Node*)malloc(sizeof(Node));
+	newNode->data = k;
+	newNode->next = NULL;
+
+	if (list->tail == NULL) {
+		list->tail = newNode;
+		newNode->next = newNode;
+	}
+	else {
+		newNode->next = list->tail->next;
+		list->tail->next = newNode;
+		list->tail = newNode;
+	}
+}
+
+	1. 변경대상이 일반 구조체 변수라 param 은 포인터 변수
+	2. 멤버 접근 시 -> 사용
+	3. 단계
+		(1) 새 노드 생성
+		(2) 리스트에 노드가 없나?
+			--> 맞으면: 
+				1. 새 노드를 tail 로 함
+				2. 자기 자신을 next 로 함
+
+			--> 아니면: 
+				1. 새 노드의 다음 노드를 기존tail 의 다음 노드, 즉 첫째 노드로함
+				2. 기존 tail 노드의 다음 노드를 새 노드로 함	
+				3. tail 노드를 새 노드로 업뎃
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+
+<맨 앞 삽입 >
+
+void insertFirst(List* list, int val) {
+	Node* newNode = (Node*)malloc(sizeof(Node));
+	newNode->data = val;
+	newNode->next = NULL;
+
+	if (list->tail == NULL) {
+		list->tail = newNode;
+		newNode->next = newNode;
+	}
+	else {
+		newNode->next = list->tail->next;
+		list->tail->next = newNode;
+
+	}
+}
+
+
+	1. 마지막단계인 tail 자체 업데이트만 없는 것 빼곤 맨 끝 삽입과 같음 >> 맨 끝 삽입이나 맨 앞 삽입이나 어쨌건 기존 tail 의 앞에 들어가는 건 같기 때문.
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+
+void display2(List list) {
+	Node* curNode = list.tail;
+
+	while (curNode != list.tail) {
+		curNode = curNode->next;
+		printf("%d ", curNode->data);
+
+	} 
+	printf("%d ", curNode->data);
+
+}
+-------------------------------------------------------------------------------------------------------------------------------
+
+void display(Node* cur) {
+	Node* temp = cur;
+	cur = cur->next;
+
+	while (temp != cur) {
+		printf("%d -> ", cur->data);
+		cur = cur->next;
+	} 
+	printf("%d -> ", cur->data);
+
+}
+
+-------------------------------------------------------------------------------------------------------------------------------
+
