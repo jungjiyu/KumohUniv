@@ -1,0 +1,138 @@
+< main 함수 >
+
+    int pre;
+    int a;
+    printf("인원 수 입력: ");
+    scanf("%d", &pre);
+    Stu* stu_p = (Stu*)malloc(pre * sizeof(Stu));
+
+    Insert(stu_p, 0, pre);
+    Sort(stu_p, pre);
+    Display(stu_p, pre);
+
+    int fin;
+    printf("인원 수 입력: ");
+    scanf("%d", &fin);
+    stu_p = (Stu*)realloc(stu_p, (pre + fin) * sizeof(Stu));
+    Insert(stu_p, pre, pre + fin);
+    Sort(stu_p, pre + fin);
+    Display(stu_p, pre + fin);
+
+(1)
+	1. stu_p ==  Stu 타입 변수를 요소로 하는 배열같은 동적할당포인터변수
+	2. pre == stu_p 의 요소 갯수
+	3. insert( )  >> 
+		: 시작 인덱스 >>  처음부터 저장할꺼니까  0 
+		: 종료 인덱스 >> 시작인덱스가 0 부터 이니까 걍 요소 갯수 그 잡채
+			: 시작 인덱스가 n 이면 , 종료 인덱스는 n+요소갯수
+
+	4. sort( ) ,dipslay >> 배열과 pre
+
+(2)
+	1. fin = 추가사이즈
+	2. (Stu*)realloc(stu_p, (pre + fin) * sizeof(Stu));
+		: 이전 크기 + 추가 크기 만큼 재할당
+	3. insert( ) 
+		>> start : pre
+			: 사이즈 인덱스 직전까지 저장됬었으니까 사이즈 인텍스 부터 저장
+		>> end : pre + fin
+			: 사이즈 인덱스 부터 저장하고, fin 개 추가 저장하는 거니까
+	4. . sort( ) ,dipslay >> 걍 배열과 pre+fin
+		: 이제 요소 갯수는 pre+fin 이니까.
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+<구조체>
+typedef struct Student
+{
+    int no;
+    char name[20];
+    int m;
+    int f;
+}Stu;
+
+	1. 이름 빼곤 일반 타입
+-------------------------------------------------------------------------------------------------------------------------------
+
+
+< 배열용 동적할당변수에 요소 추가하는 함수>
+
+void Insert(Stu* stu_p, int start, int end)
+{
+    printf("---입력---\n");
+    for (int k = start; k < end; k++)
+    {
+        printf("---%d번 학생___\n", k + 1);
+        printf("학번 : ");
+        scanf("%d", &stu_p[k].no); //scanf("%d", &(stu_p + k) <- no);
+        printf("이름 : ");
+        scanf("%s", stu_p[k].name);
+        printf("중간 : ");
+        scanf("%d", &stu_p[k].m);
+        printf("기말 : ");
+        scanf("%d", &stu_p[k].f);
+    }
+}
+
+	1. arg
+		배열 받는 param: 1차원 배열이 arg 므로 걍 1차원  
+		start : 저장 시작 인덱스  (보통 0 고정)
+		end : 저장 종료 인덱스+1.
+			: 그러니까 >> end - start == 요소 갯수.
+			: 그러니까 >> start 에 0 주면 걍 end 에는 배열 사이즈 줌 됨.
+
+	2. 반복 : 이터레이션변수 k 는 start 인덱스 부터 , end 인덱스 직전까지.
+		: 학번 , 중간, 기말 입력 받기 >>&stu_p[k].멤버명
+			&(배열의 k 번째 요소의 멤버) == k번째요소의멤버의 주소
+
+		: 이름 입력 받기 >> stu_p[k].멤버명
+			해당 멤버는 배열이라 굳이 & 까지 붙여서 scanf 할 필요 없음.
+			
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+
+<정렬 함수>
+
+void Sort(Stu* stu_p, int n)
+{
+    for (int k = n - 1; k > 0; k--)
+    {
+        for (int w = 0; w < k; w++)
+        {
+            if ((stu_p[w].m + stu_p[w].f)
+                < (stu_p[w + 1].m + stu_p[w + 1].f))
+            {
+                Stu temp = stu_p[w];
+                stu_p[w] = stu_p[w + 1];
+                stu_p[w + 1] = temp;
+            }
+        }
+    }
+}
+
+	1. arg 
+		(1) 대상 배열
+		(2) 대상 배열의 요소 갯수
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+<출력 함수>
+
+void Display(Stu* stu_p, int n)
+{
+    printf("\n성적순위\n");
+    for (int k = 0; k < n; k++)
+    {
+        printf("%d등 : %d\n", k + 1, stu_p[k].no);
+    }
+    printf("----끝----\n");
+}
+
+
+	1. arg 
+		(1) 대상 배열
+		(2) 대상 배열의 요소 갯수
+
+	2. 반복: k 는 0번째 부터 요소갯수-1 까지
+		
