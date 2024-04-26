@@ -1,1 +1,255 @@
-s
+반복문 내부에서 update 하는 과정 있으면, 그의 조건문은 한 발 빠져야되는거 주의
+	: 내부에서 조건부보다 update 한 번 더 하게 되니까 , 조건문에서 null 이었는데 내부에서 또 업데트 시도시 nullpointerexcpeiton 발생
+
+왜 귀찮게 display 를 Node* cur 로 하실까
+-------------------------------------------------------------------------------------------------------------------------------
+
+<main 함수>
+
+	List list;
+	list.head = NULL;
+	
+	Node* temp;
+	temp = New(5); 
+	list.head = temp; 
+	
+	for (int k = 6; k > 0; k--) {
+		temp = New(k);
+		temp->next = list.head;
+		list.head->prev = temp;
+		list.head = temp;
+	}
+	
+	display(list.head);
+	insert(&list, 6, 3); 
+	display(list.head);
+
+
+
+	printf("\n\n");
+	delete(&list, 0); 	display(list.head);
+	delete(&list, 1); 	display(list.head);
+	delete(&list, 2); 	display(list.head);
+	delete(&list, 2); 	display(list.head);
+
+
+
+	1. list 자체는 구조체 변수로 선언 (list 의 멤버 head 는 가리키기만 하지, 직접적으로 값을 저장하진 않아서 별도로 동적할당 필요 없음. )
+	2. temp 노드를 포인터 변수로 선언해 동적할당 받음 (데이터 저장해야되니까)
+	3. 본격 시작 전 list 의 멤버 head 를 temp 노드로 초기화 (== 첫 노드 집어넣음)
+	
+	4. 노드에 직접 insert 해보기
+		(1) 새 노드 생성한걸 temp 노드로 받음
+			: temp 가 가리키고 있는 대상을 변경한다고 이전에 가리키던 영역이 없어지는건 아니니까 이전 head 는 멀쩡한 것. 진짜 말 그대로 temp 는 temp 임.
+		(2) head 노드의 앞에 새 노드 연결
+			1.  temp 가 다음으로 head 를 가르키게 함
+			2. head 가 앞으로 temp 를 가리키게 함
+			3. 헤드를 temp 로 업뎃.
+
+	5. insert( ) 를 활용해 insert 하기
+		: list를 변경해야하므로 &list 를 arg 로 함
+		: 그 다음 arg는 저장할 값 , 그 다음은 저장 위치 입력.
+
+	6. display( ) 활용해 출력하기
+		:"list" 스케일이 아니라 Node 스케일이고 단순 읽기라서 list.head 를 arg 로 함.
+		
+	7. delete( ) 를 활용해 삭제하기
+		: list 를 변경해야하므로 &list 를 arg 로 함
+		: 그 다음 arg는 삭제 할 값.
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+<구조체>
+
+typedef struct Node {
+	int data;
+	struct Node* next;
+	struct Node* prev;
+}Node;
+
+
+
+typedef struct List {
+	Node* head;
+}List;
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+<새 노드 생성 및 초기화 함수>
+Node* New(int data) {
+	Node* newNode = (Node*)malloc(sizeof(Node));
+	newNode->prev = newNode->next = NULL;
+	newNode->data = data;
+	return newNode;
+}
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+<k 번쨰 노드 다음에 isnert 하는 함수>
+
+void insert(List* list, int val, int k) {
+	Node* newNode = New(val);
+
+	if (list->head == NULL) { 
+		list->head = newNode;
+	}
+
+	if (k == 0) {
+		newNode->next = list->head;
+		list->head->prev = newNode;
+		list->head = newNode;
+	}
+
+	else {
+		
+		Node* curNode = list->head; // 0번째 노드 
+	
+		for (int i = 0; i < k-1; i++) {//"k-1" 번 이동
+			curNode = curNode->next;
+		}
+
+
+		if (curNode->next != NULL) {  // 중간 삽입이면
+			// newNode 뒤쪽 수정
+			curNode->next->prev = newNode;
+			newNode->next = curNode->next;
+
+			// newNode 앞쪽 연결
+			curNode->next = newNode;
+			newNode->prev = curNode;
+		}
+
+		else {// 마지막 삽입이면
+			curNode->next = newNode;
+			newNode->prev = curNode;
+
+		}
+
+	}
+
+}
+
+	1. 새 노드 생성
+	2. 단계
+		if 리스트가 빈 상태 : 메세지+리턴
+		if 0번째 노드로 삽입 : head 값 업뎃 필요
+			1. newNode 가 head 를 next 로 함
+			2. head 가 newNode 를 prev 로 함
+			3. head 를 NewNode 로 업뎃
+			4. 리턴
+
+		else : 중간 혹은 마지막 삽입
+			1. 순회용 curNode 생성 및 head 로 초기화
+			2. 반복문으로 curNode 를 k-1  번 업뎃 >> 종료하면 curNode 는 k 번째 노드 가리킴.
+			3. 
+				if curNode 가 마지막 노드가 아니라면 (==중간 삽입)
+					: 반드시 (1) 이후에 (2) 를 해야함. curNode 의 원본 next 를 수정하면 원본 노드는 참조를 잃어버리기 때문.
+					(1) newNode 뒷쪽 연결
+						1. newNode 의 next 를 curNode의 next 로 함
+						2. curNode 의 next 노드의 prev 를 newNode 로 함
+					(2) newNode 앞쪽 연결
+						1. newNode 의 prev 를 curNode 로 함
+						2. curNode 의 next 를 newNode 로 함
+
+				else (== 마지막 삽입)
+					1. curNode 의 next 를 newNode 로
+					2. newNode 의 prev 를 curNode 로			
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+
+void display(Node*cur) {
+	printf("\n오른쪽: ");
+	while(cur->next !=NULL){
+		printf("%d -> ", cur->data); // 현재 노드 출력
+		cur = cur->next; // 업뎃
+	}
+	printf("%d \n", cur->data); // 마지막 노드 출력
+
+	printf("\n왼쪽:"); // 왼쪽뱡향으로 간다
+	while(cur->prev != NULL) { // 젤 앞 노드 가리키고 종료 (출력은 못함) 
+		printf("%d -> ", cur->data); // 현재 노드 출력
+		cur = cur->prev; // 업뎃
+	}
+	printf("%d \n", cur->data); // 첫 노드 출력
+
+}
+
+	1. arg 로 단일 포인터타입인 head 노드 가 날라오고, 읽기 전용이라 Node 단일 포인터로 param 설정하고. 입력 받은걸로 직접 순회 한다.
+
+	2. 오른쪽 방향( 앞 --> 끝) 순회
+ 		: 반복문에서 마지막 노드 출력은 안되고 끝나서, 별도로 print 한 번 더 해줘야하는거 주의
+		(1) 입력 노드가 마지막 노드를 가리킬 때 까지 반복문 돌면서 출력
+			1. print
+			2. 입력노드 업데이트
+		(2) 반복문 종료후 마지막 노드 print
+
+	3. 왼쪽 방향( 끝 --> 앞 ) 순회
+		: 오른쪽 방향 순회 후에 진행하는거라  curNode 가 마지막 노드여서 별도로 curNode 업데이트 없이 할 수 있는거 주의
+ 		: 마찬가지로 반복문에서 첫째 노드 출력은 안되고 끝나서, 별도로 print 한 번 더 해줘야하는거 주의
+
+		(1) 입력 노드가 첫째 노드를 가리킬 때 까지 반복문 돌면서 출력
+			1. print
+			2. 입력노드 업데이트
+		(2) 반복문 종료후 첫째 노드 print
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+<특정 값 삭제 함수>
+
+void delete(List* list, int target) {
+	if (list->head == NULL) {
+		printf("해당 리스트에 노드가 하나도 없습니다\n");
+		return;
+	}
+
+	Node* delNode, * prevNode;
+	delNode =prevNode= list->head;
+	
+	if (delNode->data == target) { // 0번째 노드 삭제
+		list->head = list->head->next;
+		list->head->prev = NULL;
+		free(delNode);
+		return;
+	}
+
+	while (delNode->next !=NULL) { 
+		delNode = delNode->next;// 1번째 노드 ~ 마지막 노드 검사
+		if (delNode->data == target) {
+			prevNode->next = delNode->next;
+			delNode->next->prev = prevNode;
+			free(delNode);
+			return;
+		}
+	}
+	
+	printf("일치 노드 없음ㅗ\n");
+}
+
+	1. list 수정 위해 주소 넘겼으므로 리스트 포인터 타입 arg
+	2. 단계
+		if 리스트가 빈 경우 : 메세지 + return;
+		else :
+			1. delNode 와 prevNode 생성
+			2. delNode 와 prevNode 를 head 로 초기화
+			
+			3. if 첫번째 노드에서 값 일치 :
+				(1) head 를 다음 노드로 업데이트
+				(2) 바뀐 head 의 prev 를 null 로 수정
+				(3) delNode free
+				(4) 리턴
+
+			4.  delNode 가 마지막 노드를 가리킬 떄까지 반복문
+				1. delNode 를 업뎃
+				2. if delNode 의 값과 일치
+					1. prevNode 의 next 값을 delNode 의 next 값으로 수정
+					2. delNode 의 next 노드의 prev 값을 prevNode 로 수정
+					3. free delNode
+					4. 리턴
+
+			5. 메세지+리턴
+
+
+
