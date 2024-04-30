@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Web shop Page</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />    
+        <link rel="stylesheet" href="pjStylesheet.css" />
+        <link rel="stylesheet" href="loginStylesheet.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+        <style>
+@keyframes move {
+  from { left:30%; bottom: 150px;}
+  /* 애니메이션 종료 시점 */
+  to   { left:30%; bottom: 50px; }
+}
+
+.startMove{
+  position: absolute;
+      animation-name: move;
+      animation-duration: 2s;
+      animation-fill-mode: forwards;
+
+}
+ 
+          
+              </style>
+       
+    </head>
+    <body>
+        <header>
+            <h1>
+      <!--   <img src="images/logo.png"/>-->       
+                <a href="main.html">Web Shop</a>
+                <span class="icons">
+                  <!-- <a href="#">logo</a>--> 
+                    <ul>
+                      <li><a href="shopcart.html"><span class="material-symbols-outlined" >shopping_cart</span></a></li>
+                      <li><a href="login.html"><span class="material-symbols-outlined">person</span></a></li>
+                    </ul>
+                </span>
+    
+            </h1>
+        </header>
+      
+        <aside class="side-bar">
+          <section class="side-bar__icon-box">
+            <section class="side-bar__icon-1">
+              <div></div>
+              <div></div>
+              <div></div>
+            </section>
+          </section>
+          <ul>
+            <li>
+              <a href="#">Shopping</a>
+              <ul>
+                <li><a href="computer.html">Computer</a></li>
+                <li><a href="clothing.html">Fashion</a></li>
+                <li><a  href="music.html">Music</a></li>
+                <li><a href="movie.html">Movie</a></li>
+                <li><a href="comming.html">Sports</a></li>
+                <li><a href="comming.html">Home/Kitchen</a></li>
+                <li><a href="comming.html">Food</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="https://www.kumoh.ac.kr/ko/index.do">About Us</a>
+            </li>
+            <li>
+              <a href="comming.html">News</a>
+            </li>
+          </ul>
+        </aside>
+        
+      <div id="wrap">
+        <div class="loginBody startMove" style="  transition: transform 10s linear; transform: translate(0px,100px);">
+        <div class="container" id="container">
+            <div class="form-container sign-up-container">
+              <form action="#">
+                <h1>Create Account</h1>
+                <div class="social-container">
+                  <a href="https://myaccount.google.com/" title="Google"><i class="fab fa-google-plus-g"></i></a>
+                  <a href="https://www.facebook.com/?locale=ko_KR" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                  <a href="https://kr.linkedin.com/" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+              <span>or use your email for registration</span>
+                <input type="text" placeholder="Name" />
+                <input type="email" placeholder="Email" />
+                <input type="password" placeholder="Password" />
+                <button>Sign Up</button>
+              </form>
+            </div>
+            <div class="form-container sign-in-container">
+              <form action="#">
+                <h1>Sign in</h1>
+                <div class="social-container" >
+                    <a href="https://myaccount.google.com/" title="Google"><i class="fab fa-google-plus-g"></i></a>
+                    <a href="https://www.facebook.com/?locale=ko_KR" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://kr.linkedin.com/" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                  </div>
+                <span>or use your account</span>
+                <input type="email" placeholder="Email" />
+                <input type="password" placeholder="Password" />
+                <a class="loginA" href="#">Forgot your password?</a>
+                <button>Sign In</button>
+              </form>
+            </div>
+            <div class="overlay-container">
+              <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                  <h1>Welcome Back!</h1>
+                  <p>To keep connected with us please login with your personal info</p>
+                  <button class="ghost" id="signIn">Sign In</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                  <h1>Hello, Friend!</h1>
+                  <p>Enter your personal details and start journey with us</p>
+                  <button class="ghost" id="signUp">Sign Up</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <footer class="footer">
+      <div class="footer_container">
+          <div class="footer_menu">
+              <ul class="footer_content">
+                  <li><b>서비스</b></li>
+                  <li><a href="#">공지사항</a></li>
+                  <li><a href="#">자주 묻는 질문</a></li>
+                  <li><a href="#">계정 일시잠금</a></li>
+                  <li><a href="#">고객센터</a></li>
+                  <li><a href="#">브랜드 리소스센터</a></li>
+                  <li><a href="#">웹샵의 개인정보 보호</a></li>
+              </ul>
+              <ul class="footer_content">
+                  <li><b>회사</b></li>
+                  <li><a href="#">회사 소개</a></li>
+                  <li><a href="#">웹샵 페이먼츠</a></li>
+                  <li><a href="#">웹샵 인슈어런스</a></li>
+                  <li><a href="#">웹샵 증권</a></li>
+                  <li><a href="#">채용</a></li>
+                  <li><a href="#">블로그</a></li>
+                  <li><a href="#">공고</a></li>
+              </ul>
+              <ul class="footer_content">
+                  <li><b>문의</b></li>
+                  <li><a href="#">사업 제휴</a></li>
+                  <li><a href="#">공동구매 입점문의</a></li>
+                  <li><a href="#">광고 문의</a></li>
+                  <li><a href="#">인증 사업문의</a></li>
+                  <li><a href="#">마케팅 PR</a></li>
+                  <li><a href="#">IR</a></li>
+              </ul>
+              <ul class="footer_content">
+                  <li><b>고객센터</b></li>
+                  <li><a href="#">전화: 1599-8282(24시간 연중무휴)</a></li>
+                  <li><a href="#">이메일(고객전용): support@webshop.im</a></li>
+                  <li><a href="#">이메일(외부기관전용): safe@webshop.im</a></li>
+                  <li><a href="#">민원 접수</a></li>
+              </ul>
+          </div>
+
+          <div class="footer_information">
+              <h5><strong>(주)웹샵리퍼블리카</strong></h5>
+              <p>사업자 등록번호 : 123-45-67890 | 대표 : 정지유<br>
+                  호스팅 서비스 : 주식회사 웹샵리퍼블리카 | 통신판매업 신고번호 : 2017-서울강남-03377<br>
+                  06236 서울특별시 강남구 테헤란로 142, 4층, 10층, 11층, 12층, 13층, 22층, 23층 (역삼동, 아크플레이스)<br>
+                  고객센터 : 서울특별시 강남구 테헤란로 133, 9층 (역삼동, 한국타이어빌딩)
+              </p>
+              <div class="footer_term">
+                  <ul>
+                      <li><a href="#">서비스 이용약관</a></li>
+                      <li><a href="#"><b>개인정보 처리방침</b></a></li>
+                      <li><a href="#">가맹점 고지사항</a></li>
+                  </ul>
+                  <ul>
+                      <li><a href="#">통합 정보 서비스 약관</a></li>
+                      <li><a href="#"><b>채용팀 개인정보 처리방침</b></a></li>
+                      <li><a href="#">웹샵 전자서명인증업무준칙</a></li>
+                  </ul>
+                  <ul>
+                      <li><a href="#">마이데이터 서비스 이용약관</a></li>
+                      <li><a href="#">영상정보처리기기 운영 관리 방침</a></li>
+                      <li><a href="#">웹샵 전자인증서비스 약관</a></li>
+                  </ul>
+                  <ul>
+                      <li><a href="#">이용자의 권리 및 유의사항</a></li>
+                      <li><a href="#">위치기반서비스 이용약관</a></li>
+                  </ul>
+              </div>
+              <div class="footer_imgcontainer">
+                  <a href="#"><img src="images/safety/icn-facebook.svg" alt="facebook"></a>
+                  <a href="#"><img src="images/safety/icn-blog.svg" alt="blog"></a>
+                  <a href="#"><img src="images/safety/icn-naver.svg" alt="naver"></a>
+                  <a href="#"><img src="images/safety/icn-twitter.svg" alt="twitter"></a>
+                  <a href="#"><img src="images/safety/icn-instagram.svg" alt="instagram"></a>
+              </div>
+              
+
+          </div>
+      </div> 
+  </footer>
+      
+     <script>
+        const signUpButton = document.getElementById('signUp');
+        const signInButton = document.getElementById('signIn');
+        const container = document.getElementById('container');
+        
+        signUpButton.addEventListener('click', () => {
+          container.classList.add("right-panel-active");
+        });
+        
+        signInButton.addEventListener('click', () => {
+          container.classList.remove("right-panel-active");
+        });</script>
+</body>
+</html>

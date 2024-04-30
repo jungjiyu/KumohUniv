@@ -1,0 +1,373 @@
+﻿<html>
+<head>
+
+    <title>Web shop Page</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />    
+    <link rel="stylesheet" href="pjStylesheet.css" />
+    <link rel="stylesheet" href="cartStyleSheet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
+    <style>
+@keyframes move {
+  from { left:200px;top: 20px;}
+  /* 애니메이션 종료 시점 */
+  to   { left:200px;top: 130px; }
+}
+
+.startMove{
+  position: absolute;
+      animation-name: move;
+      animation-duration: 1s;
+      animation-fill-mode: forwards;
+
+}
+.scroll_wrap {overflow: hidden; }
+.scroll_on {transition: all 2s;}
+.scroll_on.active {opacity: 1 !important;transform: translate(0, 0) !important;}
+.scroll_on.type_top {transform: translate(0, -50px);}
+.scroll_on.type_bottom {transform: translate(0, 50px);}
+.scroll_on.type_left {transform: translate(-50px, 0);}
+.scroll_on.type_right {transform: translate(50px, 0);}
+.cartBody{
+  padding-left: 100px;
+  padding-right: 50px;
+  padding-top: 90px;  
+}
+
+.infoCart{
+    background-color: black;
+    color:white;
+    padding: 30 20;
+    width:80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 70px;
+}
+    </style>
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+    // 클래스가 "scroll_on"인 모든 요소를 선택합니다.
+    const $counters = $(".scroll_on");
+    
+    // 노출 비율(%)과 애니메이션 반복 여부(true/false)를 설정합니다.
+    const exposurePercentage = 100; // ex) 스크롤 했을 때 $counters 컨텐츠가 화면에 100% 노출되면 숫자가 올라갑니다.
+    const loop = true; // 애니메이션 반복 여부를 설정합니다. (true로 설정할 경우, 요소가 화면에서 사라질 때 다시 숨겨집니다.)
+
+    // 윈도우의 스크롤 이벤트를 모니터링합니다.
+    $(window).on('scroll', function() {
+        // 각 "scroll_on" 클래스를 가진 요소에 대해 반복합니다.
+        $counters.each(function() {
+            const $el = $(this);
+    
+            // 요소의 위치 정보를 가져옵니다.
+            const rect = $el[0].getBoundingClientRect();
+            const winHeight = window.innerHeight; // 현재 브라우저 창의 높이
+            const contentHeight = rect.bottom - rect.top; // 요소의 높이
+            
+            // 요소가 화면에 특정 비율만큼 노출될 때 처리합니다.
+            if (rect.top <= winHeight - (contentHeight * exposurePercentage / 100) && rect.bottom >= (contentHeight * exposurePercentage / 100)) {
+                $el.addClass('active');
+            }
+            // 요소가 화면에서 완전히 사라졌을 때 처리합니다.
+            if (loop && (rect.bottom <= 0 || rect.top >= window.innerHeight)) {
+                $el.removeClass('active');
+            }
+        });
+    }).scroll();
+});
+
+    </script>
+    
+    </head>
+    <body>
+        <header>
+            
+            <h1>
+      <!--   <img src="images/logo.png"/>-->       
+                <a href="main.html">Web Shop</a>
+                <span class="icons">
+                  <!-- <a href="#">logo</a>--> 
+                    <ul >
+                      <li><a href="shopcart.html"><span   style="padding-top: 20px;" class="material-symbols-outlined" >shopping_cart</span></a></li>
+                      <li ><a href="login.html"><span style="padding-top: 20px;" class="material-symbols-outlined">person</span></a></li>
+                    </ul>
+                </span>
+    
+            </h1>
+        </header>
+       
+
+        <aside class="side-bar">
+            <section class="side-bar__icon-box">
+              <section class="side-bar__icon-1">
+                <div></div>
+                <div></div>
+                <div></div>
+              </section>
+            </section>
+            <ul>
+              <li>
+                <a href="#">Shopping</a>
+                <ul>
+                  <li><a href="computer.html">Computer</a></li>
+                  <li><a href="clothing.html">Fashion</a></li>
+                  <li><a  href="music.html">Music</a></li>
+                  <li><a href="movie.html">Movie</a></li>
+                  <li><a href="comming.html">Sports</a></li>
+                  <li><a href="comming.html">Home/Kitchen</a></li>
+                  <li><a href="comming.html">Food</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="https://www.kumoh.ac.kr/ko/index.do">About Us</a>
+              </li>
+              <li>
+                <a href="comming.html">News</a>
+              </li>
+            </ul>
+          </aside>
+    <div id="wrap">
+        <div class="cartBody">
+
+            <div class="infoCart startMove">
+                <ul>
+                    <li>장바구니 상품은 최대 30일간 저장됩니다.</li>
+                    <li>가격, 옵션 등 정보가 변경된 경우 주문이 불가할 수 있습니다.</li>
+                    <li>오늘출발 상품은 판매자 설정 시점에 따라 오늘출발 여부가 변경될 수 있으니 주문 시 꼭 다시 확인해 주시기 바랍니다.</li>
+                </ul>
+            </div>
+            <div style="height: 150px;"></div>
+    
+    
+        <form name="orderform" id="orderform" method="post" class="orderform" action="/Page" onsubmit="return false;">
+    
+            <input type="hidden" name="cmd" value="order">
+            <div class="basketdiv" id="basket">
+                <div class="row head">
+                    <div class="subdiv">
+                        <div class="check">선택</div>
+                        <div class="img"></div>
+                        <div class="pname">상품명</div>
+                    </div>
+                    <div class="subdiv">
+                        <div class="basketprice">가격</div>
+                        <div class="num">수량</div>
+                        <div class="sum">합계</div>
+                    </div>
+                    <div class="subdiv">
+    
+                        <div class="basketcmd">삭제</div>
+                    </div>
+                    <div class="split"></div>
+                </div>
+        
+                <div class="row data">
+                    <div class="subdiv">
+                        <div style="line-height: 40px;"  class="check"><input    type="checkbox" name="buy" value="260" checked="" onclick="javascript:basket.checkItem();">&nbsp;</div>
+                        <div class="img"></div>
+                        <div class="pname">
+                            <span>컴퓨터 세트</span>
+                        </div>
+                    </div>
+                    <div class="subdiv">
+                        <div style="line-height:40px;" class="basketprice"><input  type="hidden" name="p_price" id="p_price1" class="p_price" value="2000000">2,000,000원</div>
+                        <div class="num">
+                            <div style="line-height: 40px;" class="updown">
+                                <input style="font-size: 25px;" type="text" name="p_num1" id="p_num1" size="2" maxlength="4" class="p_num" value="2" onkeyup="javascript:basket.changePNum(1);">
+                                <span onclick="javascript:basket.changePNum(1);"><i class="fas fa-solid fa-caret-up up"></i></span>
+                                <span onclick="javascript:basket.changePNum(1);"><i class="fas fa-solid fa-caret-down down"></i></span>
+                            </div>
+                        </div>
+                        <div style="line-height:40px;" class="sum">4,000,000원</div>
+                    </div>
+                    <div  class="subdiv">
+                        <div style="line-height:40px;" class="basketcmd"><a href="javascript:void(0)" class="abutton" onclick="javascript:basket.delItem();">삭제</a></div>
+                    </div>
+                </div>
+                <div class="row data">
+                    <div class="subdiv">
+                        <div style="line-height: 40px;"  class="check"><input    type="checkbox" name="buy" value="261" checked="" onclick="javascript:basket.checkItem();">&nbsp;</div>
+                        <div class="img"></div>
+                        <div class="pname">
+                            <span>티셔츠</span>
+                        </div>
+                    </div>
+                    <div class="subdiv">
+                        <div style="line-height:40px;" class="basketprice"><input  type="hidden" name="p_price" id="p_price2" class="p_price" value="50000">50,000원</div>
+                        <div class="num">
+                            <div style="line-height: 40px;" class="updown">
+                                <input style="font-size: 25px;" type="text" name="p_num2" id="p_num2" size="2" maxlength="4" class="p_num" value="1" onkeyup="javascript:basket.changePNum(2);">
+                                <span onclick="javascript:basket.changePNum(2);"><i class="fas fa-solid fa-caret-up up"></i></span>
+                                <span onclick="javascript:basket.changePNum(2);"><i class="fas fa-solid fa-caret-down down"></i></span>
+                            </div>
+                        </div>
+                        
+                        <div style="line-height:40px;" class="sum">50,000원</div>
+                    </div>
+                    <div class="subdiv">
+                        <div style="line-height:40px;" class="basketcmd"><a href="javascript:void(0)" class="abutton" onclick="javascript:basket.delItem();">삭제</a></div>
+                    </div>
+                </div>
+                <div class="row data">
+                    <div class="subdiv">
+                        <div style="line-height: 40px;"  class="check"><input    type="checkbox" name="buy" value="262" checked="" onclick="javascript:basket.checkItem();">&nbsp;</div>
+                        <div class="img"></div>
+                        <div class="pname">
+                            <span>음악파일</span>
+                        </div>
+                    </div>
+                    <div class="subdiv">
+                        <div style="line-height:40px;" class="basketprice"><input  type="hidden" name="p_price" id="p_price3" class="p_price" value="1000">1,000원</div>
+                        <div class="num">
+                            <div style="line-height: 40px;" class="updown">
+                                <input style="font-size: 25px;" type="text" name="p_num3" id="p_num3" size="2" maxlength="4" class="p_num" value="1" onkeyup="javascript:basket.changePNum(3);">
+                                <span onclick="javascript:basket.changePNum(3);"><i class="fas fa-solid fa-caret-up up"></i></span>
+                                <span onclick="javascript:basket.changePNum(3);"><i class="fas fa-solid fa-caret-down down"></i></span>
+                            </div>
+                        </div>
+                        
+                        <div style="line-height:40px;" class="sum">1,000원</div>
+                    </div>
+                    <div class="subdiv">
+                        <div style="line-height:40px;" class="basketcmd"><a href="javascript:void(0)" class="abutton" onclick="javascript:basket.delItem();">삭제</a></div>
+                    </div>
+                </div>
+
+                <div class="row data">
+                    <div class="subdiv">
+                        <div style="line-height: 40px;"  class="check"><input    type="checkbox" name="buy" value="263" checked="" onclick="javascript:basket.checkItem();">&nbsp;</div>
+                        <div class="img"></div>
+                        <div class="pname">
+                            <span>영화파일</span>
+                        </div>
+                    </div>
+                    <div class="subdiv">
+                        <div style="line-height:40px;" class="basketprice"><input  type="hidden" name="p_price" id="p_price4" class="p_price" value="5000">5,000원</div>
+                        <div class="num">
+                            <div style="line-height: 40px;" class="updown">
+                                <input style="font-size: 25px;" type="text" name="p_num4" id="p_num4" size="2" maxlength="4" class="p_num" value="1" onkeyup="javascript:basket.changePNum(4);">
+                                <span onclick="javascript:basket.changePNum(4);"><i class="fas fa-solid fa-caret-up up"></i></span>
+                                <span onclick="javascript:basket.changePNum(4);"><i class="fas fa-solid fa-caret-down down"></i></span>
+                            </div>
+                        </div>
+                        
+                        <div style="line-height:40px;" class="sum">5,000원</div>
+                    </div>
+                    <div class="subdiv">
+                        <div style="line-height:40px;" class="basketcmd"><a href="javascript:void(0)" class="abutton" onclick="javascript:basket.delItem();">삭제</a></div>
+                    </div>
+                </div>
+
+
+
+        
+            </div>
+    
+            <div  class="right-align basketrowcmd">
+                <a href="javascript:void(0)" class="abutton" onclick="javascript:basket.delCheckedItem();">선택상품삭제</a>
+                <a href="javascript:void(0)" class="abutton" onclick="javascript:basket.delAllItem();">장바구니비우기</a>
+            </div>
+    
+            <div style="padding-top: 10px;" class="bigtext right-align sumcount" id="sum_p_num">상품갯수: 5개</div>
+            <div class="bigtext right-align box blue summoney" id="sum_p_price">합계금액: 4,056,000원</div>
+    
+            <div id="goorder" class="">
+                <div class="clear"></div>
+                <div class="buttongroup center-align cmd">
+                    <a href="javascript:void(0);">선택한 상품 주문</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+
+
+
+</div>
+
+
+<footer class="footer">
+    <div class="footer_container">
+        <div class="footer_menu">
+            <ul class="footer_content">
+                <li><b>서비스</b></li>
+                <li><a href="#">공지사항</a></li>
+                <li><a href="#">자주 묻는 질문</a></li>
+                <li><a href="#">계정 일시잠금</a></li>
+                <li><a href="#">고객센터</a></li>
+                <li><a href="#">브랜드 리소스센터</a></li>
+                <li><a href="#">웹샵의 개인정보 보호</a></li>
+            </ul>
+            <ul class="footer_content">
+                <li><b>회사</b></li>
+                <li><a href="#">회사 소개</a></li>
+                <li><a href="#">웹샵 페이먼츠</a></li>
+                <li><a href="#">웹샵 인슈어런스</a></li>
+                <li><a href="#">웹샵 증권</a></li>
+                <li><a href="#">채용</a></li>
+                <li><a href="#">블로그</a></li>
+                <li><a href="#">공고</a></li>
+            </ul>
+            <ul class="footer_content">
+                <li><b>문의</b></li>
+                <li><a href="#">사업 제휴</a></li>
+                <li><a href="#">공동구매 입점문의</a></li>
+                <li><a href="#">광고 문의</a></li>
+                <li><a href="#">인증 사업문의</a></li>
+                <li><a href="#">마케팅 PR</a></li>
+                <li><a href="#">IR</a></li>
+            </ul>
+            <ul class="footer_content">
+                <li><b>고객센터</b></li>
+                <li><a href="#">전화: 1599-8282(24시간 연중무휴)</a></li>
+                <li><a href="#">이메일(고객전용): support@webshop.im</a></li>
+                <li><a href="#">이메일(외부기관전용): safe@webshop.im</a></li>
+                <li><a href="#">민원 접수</a></li>
+            </ul>
+        </div>
+
+        <div class="footer_information">
+            <h5><strong>(주)웹샵리퍼블리카</strong></h5>
+            <p>사업자 등록번호 : 123-45-67890 | 대표 : 정지유<br>
+                호스팅 서비스 : 주식회사 웹샵리퍼블리카 | 통신판매업 신고번호 : 2017-서울강남-03377<br>
+                06236 서울특별시 강남구 테헤란로 142, 4층, 10층, 11층, 12층, 13층, 22층, 23층 (역삼동, 아크플레이스)<br>
+                고객센터 : 서울특별시 강남구 테헤란로 133, 9층 (역삼동, 한국타이어빌딩)
+            </p>
+            <div class="footer_term">
+                <ul>
+                    <li><a href="#">서비스 이용약관</a></li>
+                    <li><a href="#"><b>개인정보 처리방침</b></a></li>
+                    <li><a href="#">가맹점 고지사항</a></li>
+                </ul>
+                <ul>
+                    <li><a href="#">통합 정보 서비스 약관</a></li>
+                    <li><a href="#"><b>채용팀 개인정보 처리방침</b></a></li>
+                    <li><a href="#">웹샵 전자서명인증업무준칙</a></li>
+                </ul>
+                <ul>
+                    <li><a href="#">마이데이터 서비스 이용약관</a></li>
+                    <li><a href="#">영상정보처리기기 운영 관리 방침</a></li>
+                    <li><a href="#">웹샵 전자인증서비스 약관</a></li>
+                </ul>
+                <ul>
+                    <li><a href="#">이용자의 권리 및 유의사항</a></li>
+                    <li><a href="#">위치기반서비스 이용약관</a></li>
+                </ul>
+            </div>
+            <div class="footer_imgcontainer">
+                <a href="#"><img src="images/safety/icn-facebook.svg" alt="facebook"></a>
+                <a href="#"><img src="images/safety/icn-blog.svg" alt="blog"></a>
+                <a href="#"><img src="images/safety/icn-naver.svg" alt="naver"></a>
+                <a href="#"><img src="images/safety/icn-twitter.svg" alt="twitter"></a>
+                <a href="#"><img src="images/safety/icn-instagram.svg" alt="instagram"></a>
+            </div>
+            
+
+        </div>
+    </div> 
+</footer>     
+
+<script src="cart.js"></script>
+</body>
+</html>
