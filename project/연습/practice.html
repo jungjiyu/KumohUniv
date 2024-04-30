@@ -1,0 +1,1691 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+
+			.container{
+			}
+			.header{
+				height: 30%;
+				width: 100%;
+				background-color: black;
+				color:red;
+			}
+			.nav{
+				height: 10%;
+				width:100%;
+				background-color: green;
+				color:black;
+			}
+			.aside{
+				height:40%; /* 30 10 20  */
+				width:20%;
+				background-color: orange;
+				float: left;
+				display: inline-block;
+
+			}
+			.section{
+				width: 60%;
+				height: 40%;
+				background-color: aqua;
+				display: inline-block;
+				float: left;
+
+			}
+			.footer{
+				height:20%;
+				width: 100%;
+				background-color: palevioletred;
+				display: inline-block;
+
+			}
+
+			.justBox{
+				background-color: red;
+			}
+			.justBox .justBox1{
+				background-color: green;
+			}
+
+			.justBox > .justBox2{
+				background-color: blueviolet;
+			} 
+
+			.broBox1 + .broBox2{
+				background-color: aqua;
+			}
+
+			
+			.broBox3 ~ .broBox4{
+				background-color: deeppink;
+			}
+
+			.pesudoClass1{
+				background-color: rgb(22, 255, 177);
+			}
+			.pesudoClass1::first-letter{
+				background-color: blue;
+				color:red;
+				font-size: 30px;
+			}
+			.pesudoClass1::before{
+				content:"의사클래스1_before사용:";
+				font-weight: bold;
+				color:palevioletred;
+				background-color: orange;
+			}
+			.pesudoClass1::after{
+				content:":의사클래스1_after사용";
+				font-weight: bold;
+				color:purple;
+				background-color: yellowgreen;
+			}
+
+			.parentContainer{
+				background-color: crimson;
+			}
+
+			.parentContainer p:last-child:first-child{
+				background-color: rgb(0,255,0);
+			}
+
+			.parentContainer p:nth-child(2n+3){
+				background-color: black;
+				color: white;
+			}
+			.parentContainer1:nth-child(2n){
+				background-color: orange;
+				color: white;
+			}
+
+			.btn1{
+				width: 50px;
+				height: 50px;
+				background-color: palevioletred;
+				text-align: center;
+			}
+
+
+			.btn1:hover{
+				background-color: yellowgreen;
+			}
+			.btn1:active{
+				background-color: purple;
+			}
+
+			.lk1{
+				color:red;
+			}
+			
+			.lk1:link{
+				color:rgb(12, 90, 8);
+				font-size: 20px;
+				text-decoration: none;
+			}
+
+			.lk1:visited{
+				color:palevioletred;
+	
+			}
+
+			.parentContainer2{
+				background: blueviolet;
+			}
+
+			.parentContainer2 h1:only-child, .parentContainer2 p:only-child:hover{
+				background:salmon;
+			}
+			
+			p.apple{
+				background-color: aquamarine;
+			}
+
+			.pineapple:nth-last-child(3){
+				background-color: yellow;
+			}
+			
+			.pineapple:nth-child(1){
+				background-color: orangered;
+			}
+		
+			p:first-child{
+				background-color: darkblue;
+				font-weight: bold;
+			}
+
+			.justBox3{
+				border:2px solid red;
+				width: 600px;
+				text-decoration: line-through palevioletred dotted 4px; /* lcst : line color style thickness */
+				text-align:start;
+				padding-left: 100px;
+				margin-left: 100px;
+				font:italic 100px 궁서체,serif; /* swsf : style weight size family */
+				text-indent: 800em;
+				text-transform: capitalize;
+				text-shadow:1rem 1rem 1rem black;
+			}
+
+			.jb1{
+				border-top:1px solid red;
+				border-right:2px dotted green;
+				border-bottom:10px dashed rgba(0%,10%,20%,50%);
+				border-left:4px solid #00000088;
+
+				width: 400px;
+				word-break: break-all;
+				word-wrap:break-word; 
+				column-count: 3;
+				column-rule: 10px double red;
+				column-gap: 10px;
+				border-radius: 20px;
+			}
+
+			.bgBox{
+				background-image: url("과제3/images/blackshirt1.png");
+				background-attachment: local; 
+				background-repeat: repeat-x;
+				background-size:cover;
+				background-color: aquamarine;
+			}
+
+			.outerLyot1{
+				/* content: 500px, border: 700px*/
+				/* content: 300px, border: 500px*/
+
+				display: box;
+				box-sizing: content-box;
+				border:3px solid black;
+				padding: 100px 100px;
+				width: 500px;
+				height: 300px;
+				background-color: rgba(255, 0, 0, 0.248);
+				text-align: center;
+
+			}
+
+			.innerLyot1{
+				display: inline;
+				border:2px solid black;
+				background-color: rgba(0, 0, 255, 0.31);
+				line-height: 300px;
+			}
+			.outerLyot2{
+				/* content: 500px, border: 700px*/
+				/* content: 300px, border: 500px*/
+
+				display: box;
+				box-sizing: border-box;
+				border:3px solid black;
+				padding: 100px 100px;
+				width: 500px;
+				height: 300px;
+				background-color: rgba(255, 0, 0, 0.248);
+				text-align: center;
+
+			}
+
+			.innerLyot2{
+				display: inline;
+				border:2px solid black;
+				background-color:  rgba(0, 0, 255, 0.31);
+				line-height: 100px; /* height - (padding-top + padding-bottom) */
+			}
+
+			.innerLyot3{
+				/* content: 500px, border: 700px*/
+				/* content: 300px, border: 500px*/
+
+				display: box;
+				box-sizing: content-box;
+				border:3px solid black;
+				width: 500px;
+				height: 300px;
+				background-color: rgba(55, 255, 0, 0.547);
+			/*	margin-right: auto;
+				margin-left: auto; */
+				/* margin: 0 auto; */
+				margin: auto auto;
+				text-align: center;
+				line-height: 300px;
+
+			}
+
+			.outerBox1{
+				box-sizing: content-box;
+				display: block;
+				background-color: cadetblue;
+				width: 500px;
+				height: 500px; /* 컨텐츠 영역 자체의 높이*/
+				border:3px solid black;
+			}
+
+			.innerBox1{
+				box-sizing: border-box;
+				display: block;
+				width: 200px; 
+				height: 200px; /* border 영역의 높이 */
+				border:3px solid black;
+				margin: 150px auto ; /* (500 - 200)/2 == 150  */
+				background-color: darkolivegreen;
+
+
+			}
+			.outerBox2{
+				box-sizing: border-box;
+				display: block;
+				background-color: cadetblue;
+				width: 500px;
+				height: 500px; 
+				border:3px solid black;
+			}
+
+			.innerBox2{
+				box-sizing: border-box;
+				display: block;
+				width: 50%; 
+				height: 50%; /* border 영역의 높이 */
+				border:3px solid black;
+				background-color: darkolivegreen;
+
+
+			}
+
+			.navContainer{
+				border-top: 1px solid red;
+				border-bottom: 1px solid red;
+				height: 50px;
+				text-align: center;
+			}
+
+			.navContainer ul{
+				list-style-type: none;
+			}
+
+			.navContainer ul li{
+				display: inline;
+				letter-spacing: 10px;
+				padding-left: 2%;
+				padding-right: 2%;
+				text-transform: uppercase;
+
+			}
+			li a{
+				text-decoration-line: none;
+			}
+			li a:hover{
+				text-decoration: underline solid red 2px;
+			}
+
+			.table1{
+				border-collapse: collapse;
+				background-color: rgba(226, 43, 195, 0.297);
+				opacity:0.9; /* 작을 수록 안보인다 */
+			}
+
+
+			.table1 th{
+				text-align: center;
+				background-color: rgba(226, 43, 195, 0.873);
+
+			}
+
+			.table1 td{
+				border-bottom: 1px solid purple;
+
+			}
+
+			.table1 tr:nth-child(2n){
+				background-color: rgba(113, 226, 43, 0.873);
+
+			}
+
+			.formCont1{
+
+			}
+
+			.formCont1 input[type="text"]{
+				border: 1px solid blue;
+			}
+			.formCont1 input[type="text"]:hover{
+				background-color: rgba(0, 0, 255, 0.312);
+				font-size: 1.2em
+			}
+
+
+			.transBox1{
+				width:100px;
+				height:100px;
+				background-color: darkorchid;
+				transition-timing-function: linear;
+				transition-duration: 2s;
+			}
+
+			.transBox1:hover{
+				width:300px;
+				height:300px;
+				transition-property: width, background-color;
+				background-color: rgb(89, 14, 126);
+
+			}
+
+			.transBox2{
+				width:100px;
+				height:100px;
+				background-color: darkorchid;
+
+		
+			}
+
+			.transBox2:hover{
+				width:300px;
+				height:300px;
+				transition: all 2s;
+				-webkit-transition: all 2s;
+				background-color: rgb(89, 14, 126);
+
+			}
+
+			.transformBox0{
+				box-sizing: border-box;
+				width:100px;
+				height:100px;
+				transition: all 2s;
+				background-color: olivedrab;
+			}
+
+			.transformBox0:hover{
+				transform: scale(1.5,1.5);
+			}
+
+			.transformBox1{
+				box-sizing: border-box;
+				width:100px;
+				height:100px;
+				transition: all 2s;
+				background-color: rgb(35, 142, 83);
+			}
+
+
+
+			.transformBox1:hover{
+				transform: skewX(10deg);
+
+			}
+
+			.transformBox2{
+
+				box-sizing: border-box;
+				width:100px;
+				height:100px;
+				transition: all 2s;
+				background-color: rgb(126, 35, 142);
+			}
+
+
+
+			.transformBox2:hover{
+				visibility: hidden;
+
+				transform: skew(45deg,45deg);
+				/* transform:  rotate(10deg) translateX(200px) ; */
+				/* transform:  translateX(800px); */
+			}
+
+
+
+
+			.clickMe{
+				float: inline-start;
+				z-index: -100;
+				display: inline-block;
+				width:500px;
+				height:500px;
+				background-color: rgb(142, 35, 103);
+
+			}
+			.clickMe:hover{
+				background-color: rgb(63, 35, 142);
+
+			}
+
+			.compDi{
+				box-sizing: border-box;
+				width:100px;
+				height:100px;
+				background-color: rgb(126, 35, 142);
+				display: none;
+			}
+
+			.compVi{
+				box-sizing: border-box;
+				width:100px;
+				height:100px;
+				background-color: rgb(35, 142, 90);
+				visibility: hidden;
+			}
+
+			.compOpa{
+				z-index: 100;
+				box-sizing: border-box;
+				width:100px;
+				height:100px;
+				background-color: rgb(142, 35, 44);
+				opacity: 1;
+			}
+
+
+			.compDi:hover , .compVi:hover, .compOpa:hover{
+				background-color: rgb(142, 35, 35);
+				visibility: visible;
+				opacity: 1;
+				display: block;
+			}
+
+	
+			.inlineBlock1{
+				display: inline-block;
+				width: 300px;
+				height: 300px;
+				background-color: green;
+			}
+
+			.jb2{
+				box-sizing: border-box;
+				width: 300px;
+				height: 300px;
+				background-color: black;
+				border: 2px solid red;
+				color:white;
+				text-align: center;
+				padding: 100px;
+			}
+
+			.jb3{
+				box-sizing: content-box;
+				width: 300px;
+				height: 300px;
+				background-color: black;
+				border: 2px solid red;
+				color:white;
+				text-align: center;
+				padding: 100px;
+			}
+
+			.positionArea{
+				box-sizing: border-box;
+				display: block;
+				width:100%;
+				height: 700px;
+				text-align: center;
+				border: 3px dashed grey;
+			}
+
+			.parentBox1{
+				width: 300px;
+				height: 300px;
+				background-color: rgba(255, 0, 0, 0.46);
+				border: 2px solid red;
+				margin-left: auto; margin-right: auto;
+			}
+
+			.parentBox2{
+				width: 200px;
+				height: 200px;
+				background-color: rgba(0, 64, 255, 0.46);
+				border: 2px solid blue;
+				margin-left: auto; margin-right: auto;
+			}
+
+			.childBox{
+				width: 100px;
+				height: 100px;
+				background-color: rgba(0, 255, 26, 0.447); 
+				border: 2px solid green;
+				margin-left: auto; margin-right: auto;
+
+			}			
+
+			.positionRel{
+				position:relative;
+
+			}
+
+			.positionAbs{
+				position:absolute;
+				left:200px;
+				top:200px;
+			}
+
+			.positionFixed{
+				position:fixed;
+				left:200px;
+				top:200px;
+			}
+
+			.positionstick{
+				position:sticky;
+				top: 100px;
+			}
+
+
+			.overflowArea{
+				box-sizing: border-box;
+				display: block;
+				width:100%;
+				height: 700px;
+				text-align: center;
+				background-color: rgba(25, 169, 192, 0.504);
+				border: 3px dashed red;
+			}
+			.overflowOuterBox1{
+				width: 200px;
+				height: 200px;
+				background-color: rgba(0, 64, 255, 0.46);
+				border: 2px solid blue;
+				margin-left: auto; margin-right: auto;
+
+			}
+			.overFlowHidden{ overflow: hidden;}
+			.overFlowAuto{ overflow: auto; }
+			.overFlowScroll{overflow:scroll ;}
+
+			.floatArea{
+				box-sizing: border-box;
+				display: block;
+				width:100%;
+				height: 1000px;
+				background-color: rgba(192, 164, 25, 0.504);
+				border: 3px dashed rgb(0, 72, 255);
+			}
+
+			.floatTargetBox{
+
+				width: 200px;
+				height: 200px;
+				background-color: rgba(247, 0, 255, 0.186);
+				border: 2px solid rgb(255, 0, 93);
+
+			}
+
+			.floatAfterBox{
+
+				width: 200px;
+				height: 200px;
+				background-color: rgba(0, 255, 51, 0.46);
+				border: 2px solid rgb(10, 56, 8);
+
+			}
+
+			.floatR{ float:right;	}
+			.floatL{ float:left;	}
+
+			.layoutContainer{
+				box-sizing: border-box;
+				display: block;
+				width:100%;
+				height: 800px;
+				background-color: rgba(192, 25, 170, 0.504);
+				border: 3px dashed rgb(255, 0, 30);
+
+			}
+
+			.layoutContainer header{
+				box-sizing: border-box;
+
+				width:100%;
+				height: 20%;
+				background-color: rgba(56, 5, 50, 0.504);
+				border: 3px solid rgb(85, 3, 12);
+
+			}
+
+			.layoutContainer footer{
+				box-sizing: border-box;
+
+				width:100%;
+				height: 30%; /* 50% */
+				background-color: rgba(5, 56, 25, 0.504);
+				border: 3px solid rgb(1, 27, 20);
+
+			}
+
+			.layoutContainer nav{
+				box-sizing: border-box;
+
+				width:100%;
+				height: 10%; /* 40% */
+				background-color: rgba(202, 233, 26, 0.658);
+				border: 3px solid rgb(255, 132, 0);
+
+			}
+
+			.layoutContainer aside{
+				box-sizing: border-box;
+				width:20%;
+				height: 40%;
+				background-color: rgba(5, 48, 56, 0.504);
+				border: 3px solid rgb(0, 4, 255);
+
+			}
+
+			.newsContainer{
+				box-sizing: border-box;
+				display: block;
+				width:100%;
+				height: 600px;
+				background-color: rgba(108, 93, 106, 0.504);
+				border: 3px dashed rgb(0, 0, 0);
+
+
+			}
+
+			.newsContainer img{
+				float:left;
+			}
+
+			.newsContainer .spann::after{ /* 개꿀팁 */
+				content:"";
+				clear:both;
+				display: block;
+			}
+
+			.jbjb{
+				background-color: rgba(5, 48, 56, 0.504);
+				border: 3px solid rgb(0, 4, 255);
+			}
+
+
+			.imgContainer{
+				box-sizing: border-box;
+				display: block;
+				width:100%;
+				height: 600px;
+				background-color: rgba(108, 93, 106, 0.504);
+				border: 3px dashed rgb(0, 0, 0);
+
+			}
+			.imgContainer img{
+				float:left;
+				width:200px;
+				height:200px;
+				padding: 10px;
+			}
+
+
+			.zArea{
+				box-sizing: border-box;
+				display: block;
+				width:100%;
+				height: 800px;
+				text-align: center;
+				border: 3px dashed grey;
+				background-color: rgb(0, 0, 0);
+			}
+
+
+			.BzBox1{ /*Block z-index Box */
+				z-index: 1;
+				background-color: rgb(74, 116, 32);
+				width:100px;
+				height:100px;
+				display: block;
+				position:relative;  
+			}
+
+			.BzBox2{
+				z-index: 0;
+				background-color: rgb(255, 230, 0);
+				width:100px;
+				height:100px;
+				display: block;
+				position:relative;  
+				 left:50px;top:-80px;
+			}
+
+			.iBzBox2{ /*inner Block z-index Box*/
+				z-index: 999;
+				background-color: rgb(0, 149, 255);
+				width:100px;
+				height:100px;
+				display: block;
+				position:relative;  
+				left:-10px;
+			}
+
+
+
+			.BzBox3{
+				z-index: 2;
+				background-color: rgba(212, 0, 255, 0.977);
+				width:100px;
+				height:100px;
+
+				display: block;
+				position:relative;  
+				left:40px;top:-150px;
+
+			}
+
+
+			.minuszBox{
+				z-index: -1;
+				background-color: rgba(255, 136, 0, 0.977);
+				width:100px;
+				height:100px;
+
+				display: block;
+				position:relative;  
+				left:40px;top:-150px;
+
+			}
+
+			.zBox1{
+				z-index: 1;
+				background-color: chartreuse;
+				display: inline;
+				position:relative;  
+			}
+
+			.zBox2{
+				z-index:0;
+				background-color: rgb(0, 132, 255);
+				display: inline;
+				position:relative;  
+				 left:-10px;top:10px;
+			}
+
+			.zBox3{
+				z-index: 2;
+				background-color: rgb(212, 0, 255);
+				display: inline;
+				position:relative;  
+				left:-20px;top:5px;
+
+			}
+
+		</style>
+	
+	</head>
+<body >
+	
+	<button onClick='document.write("bing sin")'>새 write 하기</button>
+
+	<form action='me.html' >
+		이름:<input type="text" id="name">
+		<!-- <input type="button" value="입력" onclick="sayF();"> -->
+		<button type="submit" onclick="sayF()" >입력2</button>
+	</form>
+	<a href="#f">hyper link</a>
+	<form action="#" method="post">
+	<label>a:	<input type="number" id="a" ></label><br>
+	<label>b:	<input type="number" id="b" ></label> <br>
+	<input type="button" value="덧셈" onclick="calc();">
+
+	결과:<span id="c">&nbsp;</span>
+	</form>
+
+	<!-- static -->
+	<div class="positionArea">
+		<div class="parentBox1">parent 1
+			<div class="parentBox2">parent 2
+				<div class="childBox">child
+
+				</div>	
+			</div>
+		</div>
+	</div>
+
+	<!-- 조상 중에 position 속성을 가지는 얘가 없어 뷰 포트가 기준이 됨-->
+		<!-- 그렇다고 fixed 와 같이 스크롤 한다고 함께 움직이는게 아님-->
+	<div class="positionArea" id="f">
+		<div class="parentBox1">parent 1
+			<div class="parentBox2 ">parent 2
+				<div class="childBox positionAbs">child
+
+				</div>	
+			</div>
+		</div>
+	</div>
+
+	<!-- rel 값 가지는 부모를 기준으로 함-->
+	<div class="positionArea">
+		<div class="parentBox1">parent 1
+			<div class="parentBox2 positionRel">parent 2
+				<div class="childBox positionAbs">child
+
+				</div>	
+			</div>
+		</div>
+	</div>
+
+	<!-- rel 값 가지는 조상을 기준으로 함-->
+	<div class="positionArea">
+		<div class="parentBox1 positionRel">parent 1
+			<div class="parentBox2 ">parent 2
+				<div class="childBox positionAbs">child
+
+				</div>	
+			</div>
+		</div>
+	</div>
+
+	<!-- abs 값 가지는 부모을 기준으로 함-->
+		<!-- 부모는 body를 기준으로 함-->
+	<div class="positionArea">
+		<div class="parentBox1">parent 1
+			<div class="parentBox2 positionAbs">parent 2
+				<div class="childBox positionAbs">child
+
+				</div>	
+			</div>
+		</div>
+	</div>
+
+	<!-- 걍 body를 기준으로 함-->
+	<div class="positionArea">
+		<div class="parentBox1">parent 1
+			<div class="parentBox2 ">parent 2
+				<div class="childBox positionFixed">child
+
+				</div>	
+			</div>
+		</div>
+	</div>
+
+	<!-- sticky 가 fixed 로 전환되는거 확인1 -->
+	<div class="positionArea">
+		<div class="parentBox1">parent 1
+			<div class="parentBox2 " style="height: 600px;">parent 2
+				<div class="childBox positionstick">sticky child
+
+				</div>	
+			</div>
+		</div>
+	</div>
+
+		<!-- sticky 가 fixed 로 전환되는거 확인2 -->
+		<div class="positionArea">
+			<div class="parentBox1">parent 1
+				<div class="parentBox2 positionstick" style="top:100px;height: 600px;">parent 2
+					<div class="childBox positionstick" style="top:0px;">sticky child
+	
+					</div>	
+				</div>
+			</div>
+		</div>
+	
+
+	
+		<!-- sticky 가 fixed 로 전환되는거 확인3 -->
+		<div class="positionArea">
+			<div class="parentBox1">parent 1
+				<div class="parentBox2 positionstick" style="top:100px;height: 600px;">parent 2
+					<div class="childBox">just child1</div>	
+					<div class="childBox">just child2</div>	
+					<div class="childBox positionstick" style="top:0px;">sticky child</div>
+					<div class="childBox">just child3</div>	
+
+			</div>
+		</div>
+		
+	<!-- 자리 차지 여부확인-->
+	<div class="positionArea  positionRel" style="height: 1500px;background-color: rgba(0, 0, 0, 0.31);">
+		<div class="parentBox2">1</div>
+		<div class="parentBox2 positionAbs">2-abs</div>
+		<div class="parentBox2">3</div>
+		<div class="parentBox2 positionRel" style="left:100px; top:50px;">4-rel</div>
+		<div class="parentBox2">5</div>
+		<div class="parentBox2 positionStick">6-sticky</div>
+		<div class="parentBox2">7</div>
+
+
+	</div>
+
+	<div class="overflowArea">
+		
+		<div class="overflowOuterBox1">
+			Blueberry is a widely distributed and widespread group of perennial flowering plant with blue or purple berries. They are classified in the section Cyanococcus within the genus Vaccinium. Vaccinium also includes cranberries, bilberries, huckleberries and Madeira blueberries.[1] Commercial blueberries—both wild (lowbush) and cultivated (highbush)—are all native to North America. The highbush varieties were introduced into Europe during the 1930s.[2]
+		</div>
+
+	</div>
+
+	<!-- 오버플로우 -->
+	<div class="overflowArea">
+		<div class="overflowOuterBox1 overFlowHidden">
+			Blueberry is a widely distributed and widespread group of perennial flowering plant with blue or purple berries. They are classified in the section Cyanococcus within the genus Vaccinium. Vaccinium also includes cranberries, bilberries, huckleberries and Madeira blueberries.[1] Commercial blueberries—both wild (lowbush) and cultivated (highbush)—are all native to North America. The highbush varieties were introduced into Europe during the 1930s.[2]
+		</div>
+	</div>
+	<div class="overflowArea">
+		<div class="overflowOuterBox1 overFlowAuto">
+			Blueberry is a widely distributed and widespread group of perennial flowering plant with blue or purple berries. They are classified in the section Cyanococcus within the genus Vaccinium. Vaccinium also includes cranberries, bilberries, huckleberries and Madeira blueberries.[1] Commercial blueberries—both wild (lowbush) and cultivated (highbush)—are all native to North America. The highbush varieties were introduced into Europe during the 1930s.[2]
+		</div>
+	</div>
+	<div class="overflowArea">
+		<div class="overflowOuterBox1 overFlowScroll">
+			Blueberry is a widely distributed and widespread group of perennial flowering plant with blue or purple berries. They are classified in the section Cyanococcus within the genus Vaccinium. Vaccinium also includes cranberries, bilberries, huckleberries and Madeira blueberries.[1] Commercial blueberries—both wild (lowbush) and cultivated (highbush)—are all native to North America. The highbush varieties were introduced into Europe during the 1930s.[2]
+		</div>
+	</div>
+
+	<!-- 플로우 설정-->
+
+	<div class="floatArea">
+		<div class="floatTargetBox">미적용</div>
+		<div class="floatAfterBox"></div>
+		<div class="floatAfterBox"></div>
+	</div>
+
+	<div class="floatArea">
+		<span class="floatTargetBox floatL">왼쪽 기준- -5</span>
+		<span class="floatTargetBox floatL">왼쪽 기준</span>
+		<span class="floatTargetBox floatL">왼쪽 기준</span>
+		<span class="floatTargetBox floatL">왼쪽 기준</span>
+	</div>
+
+
+	<div class="floatArea">
+		<span class="floatTargetBox floatL">왼쪽 기준- -4</span>
+		<span class="floatAfterBox"> inline 1</span>
+		<span class="floatAfterBox" >inline 2</span> 
+		<span class="floatAfterBox" >inline 3</span> 
+	</div>
+
+	<div class="floatArea">
+		<span class="floatTargetBox floatL">왼쪽 기준- -3</span>
+		<span class="floatAfterBox">inline- 1</span>
+		<div class="floatAfterBox">block1</div>
+		<div class="floatAfterBox" >block2</div>
+		<div class="floatAfterBox" >block3</div> 
+	</div>
+
+	<div class="floatArea">
+		<span class="floatTargetBox floatL">왼쪽 기준- -2</span>
+		<div class="floatAfterBox">block1</div> <!-- block 요소는 float 된 요소를 인지하지 못한다-->
+		<!-- <div class="floatAfterBox" >block2</div> -->
+		<!-- <div class="floatAfterBox" >block3</div>  -->
+	</div>
+
+	<div class="floatArea">
+		<span class="floatTargetBox floatL">왼쪽 기준- -1</span>
+		<div class="floatAfterBox">block1</div>
+		<div class="floatAfterBox" >block2</div>
+		<div class="floatAfterBox" >block3</div> 
+	</div>
+
+	<div class="floatArea">
+		<div class="floatTargetBox floatL">왼쪽 기준0</div>
+		<div class="floatAfterBox" style="clear:both;">block1-clear</div>
+		<div class="floatAfterBox" >block2</div> 
+		<div class="floatAfterBox" >block3</div> 
+
+	</div>
+
+	<div class="floatArea">
+		<div class="floatTargetBox floatL">왼쪽 기준1</div>
+		<div class="floatAfterBox">block1</div>
+		<div class="floatAfterBox" >block2</div> <!-- clear 안시켜줘서 겹친다.-->
+		<div class="floatAfterBox" >block3</div> 
+	</div>
+
+	<div class="floatArea" style="position: relative;">
+		<div class="floatTargetBox floatL" style="position:absolute;">왼쪽 기준2-absolute</div> <!-- absolute 는 유령이니까 아예 자리 차지를 안한다-->
+		<div class="floatAfterBox">block1</div>
+		<div class="floatAfterBox" >block2</div> 
+		<div class="floatAfterBox" >block3</div> 
+
+	</div>
+	<div class="floatArea">
+		<span class="floatTargetBox float R">오른쪽 기준- -3</span>
+		<span class="floatAfterBox"> inline 1</span>
+		<span class="floatAfterBox" >inline 2</span> 
+		<span class="floatAfterBox" >inline 3</span> 
+	</div>
+
+	<div class="floatArea">
+		<span class="floatTargetBox floatR">오른쪽 기준- -2</span>
+		<span class="floatAfterBox">inline- 1</span>
+		<div class="floatAfterBox">block1</div>
+		<div class="floatAfterBox" >block2</div>
+		<div class="floatAfterBox" >block3</div> 
+	</div>
+
+
+	<div class="floatArea">
+		<span class="floatTargetBox floatR">오른쪽 기준- -1</span>
+		<div class="floatAfterBox">block1</div>
+		<div class="floatAfterBox" >block2</div>
+		<div class="floatAfterBox" >block3</div> 
+	</div>
+
+	<div class="floatArea">
+		<div class="floatTargetBox floatR">오른쪽 기준0</div>
+		<div class="floatAfterBox" style="clear:both;">block1-clear</div>
+		<div class="floatAfterBox" >block2</div> 
+		<div class="floatAfterBox" >block3</div> 
+
+	</div>
+
+	<div class="floatArea">
+		<div class="floatTargetBox floatR">오른쪽 기준1</div>
+		<div class="floatAfterBox">block1</div>
+		<div class="floatAfterBox" >block2</div> 
+		<div class="floatAfterBox" >block3</div> 
+
+	</div>
+	<div class="floatArea" style="position: relative;">
+		<div class="floatTargetBox floatR" style="position:absolute;">오른쪽 기준2-absolute</div>
+		<div class="floatAfterBox">block1</div>
+		<div class="floatAfterBox" >block2</div> 
+		<div class="floatAfterBox" >block3</div> 
+
+	</div>
+
+
+
+	<div class="layoutContainer" style="position:relative;">
+		<header>헤더</header>
+		<nav> 네비 바</nav>
+		<aside> 어사이드</aside>
+		<aside style="position:absolute; top: 30%; left:80%;"> 어사이드- position 사용</aside>
+		<footer>푸터</footer>
+	</div>
+
+	<div class="newsContainer">
+		<img width="200px" height="200px" src="https://media.healthyfood.com/wp-content/uploads/2017/03/Why_we_like_blueberries.jpg">
+		<span>
+			Blueberry is a widely distributed and widespread group of perennial flowering plant with blue or purple berries. They are classified in the section Cyanococcus within the genus Vaccinium. Vaccinium also includes cranberries, bilberries, huckleberries and Madeira blueberries.[1] Commercial blueberries—both wild (lowbush) and cultivated (highbush)—are all native to North America. The highbush varieties were introduced into Europe during the 1930s.[2]
+
+		</span>
+		<div class="jbjb">
+			Blueberry is a widely distributed and widespread group of perennial flowering plant with blue or purple berries. They are classified in the section Cyanococcus within the genus Vaccinium. Vaccinium also includes cranberries, bilberries, huckleberries and Madeira blueberries.[1] Commercial blueberries—both wild (lowbush) and cultivated (highbush)—are all native to North America. The highbush varieties were introduced into Europe during the 1930s.[2]
+			Blueberries are usually prostrate shrubs that can vary in size from 10 centimeters (4 inches) to 4 meters (13 feet) in height. In commercial production of blueberries, the species with small, pea-size berries growing on low-level bushes are known as "lowbush blueberries" (synonymous with "wild"), while the species with larger berries growing on taller, cultivated bushes are known as "highbush blueberries". Canada is the leading producer of lowbush blueberries, while the United States produces some 40% of the world supply of highbush blueberries.
+		</div>
+	</div>
+
+	<div class="newsContainer">
+		<img width="200px" height="200px" src="https://media.healthyfood.com/wp-content/uploads/2017/03/Why_we_like_blueberries.jpg">
+		<span class="spann"> <!-- clear 속성을 이후에 적용 시킨 인라인 요소-->
+			Blueberry is a widely distributed and widespread group of perennial flowering plant with blue or purple berries. They are classified in the section Cyanococcus within the genus Vaccinium. Vaccinium also includes cranberries, bilberries, huckleberries and Madeira blueberries.[1] Commercial blueberries—both wild (lowbush) and cultivated (highbush)—are all native to North America. The highbush varieties were introduced into Europe during the 1930s.[2]
+
+		</span>
+		<div class="jbjb">
+			Blueberry is a widely distributed and widespread group of perennial flowering plant with blue or purple berries. They are classified in the section Cyanococcus within the genus Vaccinium. Vaccinium also includes cranberries, bilberries, huckleberries and Madeira blueberries.[1] Commercial blueberries—both wild (lowbush) and cultivated (highbush)—are all native to North America. The highbush varieties were introduced into Europe during the 1930s.[2]
+			Blueberries are usually prostrate shrubs that can vary in size from 10 centimeters (4 inches) to 4 meters (13 feet) in height. In commercial production of blueberries, the species with small, pea-size berries growing on low-level bushes are known as "lowbush blueberries" (synonymous with "wild"), while the species with larger berries growing on taller, cultivated bushes are known as "highbush blueberries". Canada is the leading producer of lowbush blueberries, while the United States produces some 40% of the world supply of highbush blueberries.
+		</div>
+	</div>
+
+	<div class="imgContainer">
+		<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSu6c4T0s3KurirynmEBuJ4CYj_XhXygaNVTDu-4Q9Gzw&s">
+		<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTv6zQhYvIzP0EiX_r1gArP3fCS2jR5wx4EJp-7GvKXQA&s">
+		<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTv6zQhYvIzP0EiX_r1gArP3fCS2jR5wx4EJp-7GvKXQA&s">
+		<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTv6zQhYvIzP0EiX_r1gArP3fCS2jR5wx4EJp-7GvKXQA&s">
+		<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTv6zQhYvIzP0EiX_r1gArP3fCS2jR5wx4EJp-7GvKXQA&s">
+		<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTv6zQhYvIzP0EiX_r1gArP3fCS2jR5wx4EJp-7GvKXQA&s">
+	</div>
+	<div class="zArea">
+		<div class="zBox1">11111</div>
+		<div class="zBox2">22222</div>
+		<div class="zBox3">33333</div>
+
+		<div class="BzBox1">11형제블럭11</div>
+		<div class="BzBox2">22형제블럭22</div>
+		<div class="iBzBox2">22형제블럭22</div>
+		<div class="BzBox3">33형제블럭33</div>
+
+		<div class="BzBox1">11형제블럭11</div>
+		<div class="BzBox2" style="left:80px;">22형제블럭22
+			<div class="iBzBox2" style="left:40px;">22자식블럭22
+				<div class="iBzBox2" style="left:60px;background-color: red;">22후손블럭22</div>
+
+			</div>
+		</div>
+		<div class="BzBox3" style="left:100px;top:-100px;">33형제블럭33</div>
+		<div class="minuszBox">마이너스 박스</div>
+
+	</div>
+
+	<div class="jb2">border-box</div>
+	<div class="jb3">content-box</div>
+	<div class="inlineBlock1"></div>
+	<span class="clickMe">d</span>
+	<div class="compDi"></div>
+	<div class="compVi"></div>
+	<div class="compOpa"></div>
+
+	<!-- <div class="transBox1"/> -->
+	<div class="transformBox0"></div>
+	<div class="transformBox1"></div>
+	<div class="transformBox2"></div>
+
+	<div class="transBox2"></div>
+
+
+	<form class="formCont1">
+		<fieldset>
+			<legend>상품평</legend>
+			<label for="fname">이름</label>
+			<input type="text" id="fname"><br>
+			<label for="fEmail">이메일</label>
+			<input type="email" id="fEmail"><br>
+		</fieldset>
+	</form>
+	<table class="table1">
+		<tr>
+			<th>학번</th>
+			<th>이름</th>
+			<th>성적</th>
+			<th>학점</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>bill</td>
+			<td>98</td>
+			<td>A-</td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>bill</td>
+			<td>98</td>
+			<td>A-</td>
+		</tr>
+		
+		<tr>
+			<td>1</td>
+			<td>bill</td>
+			<td>98</td>
+			<td>A-</td>
+		</tr>
+	</table>
+	<div class="navContainer">
+		<ul>
+			<li><a href="#">HOME</a></li>
+			<li><a href="#">blog</a></li>
+			<li><a href="#">about</a></li>
+			<li><a href="#">contact</a></li>
+		</ul>
+	</div>
+
+	<div class="outerBox1">
+		<div class="innerBox1">dks</div>
+	</div>
+	<div class="outerBox2">
+		<div class="innerBox2">dks</div>
+	</div>
+
+
+	<div class="outerLyot1">
+		<span class="innerLyot1">box-sizing:content-box</span>
+	</div>
+
+	<div class="outerLyot2">
+		<span class="innerLyot2">box-sizing:border-box</span>
+	</div>
+
+
+	<div class="outerLyot1">
+		<div class="innerLyot3">box-sizing:border-box</div>
+	</div>
+
+
+
+
+
+
+	<ul style="list-style: decimal;">
+		<li>dfdsfd</li>
+		<li>dfdsfd</li>
+		<li>dfdsfd</li>
+		<li>dfdsfd</li>
+		<li>dfdsfd</li>
+		<li>dfdsfd</li>
+	</ul>
+	<p style="text-transform: capitalize;text-indent: 100px;"class="pineapple">pineapple</p>
+	<span class="justBox3">d f d f d
+		sdfsdf
+		sfdsfsdf
+		sdfdf
+	</span>
+	<div class="jb1 bgBox ">
+		한중일(CJK) 텍스트에서는 단어단위로 잘려 아래로 줄바꿈된다
+		( 단어 단위로 끊어져 있는게 나을 것 같다면 이걸 쓰자ㅏㅏ )
+		 
+		
+		비슷한 속성으론
+		
+		word-wrap이 있다
+		
+		word-wrap은 너비와 높이가 지정된 인라인 요소, 또는 블록요소에 적용가능하며,긴 텍스트를 강제로 자를때 사용한다ㅏㅏ	</div>
+		<span class="jb1">
+			e Inc. (formerly Apple Computer, Inc.) is an American multinational corporation and technology company headquartered in Cupertino, California, in Silicon Valley. It designs, develops, and sells consumer electronics, computer software, and online services. Devices include the iPhone, iPad,</span>	<p class="pineapple">pineapple</p>
+	
+		<p class="pineapple">pineapple</p>
+	<span style="letter-spacing: -0.6em;font-size: 100px;">dfdfd</span>
+	<p class="pineapple">pineapple</p>
+	<p class="apple" >apple</p>
+	<a href="https://wer.com/"  class="lk1">다른 페이지 방문하기</a>
+	<a href="https://www.naver.com/"  class="lk1">다른 페이지 방문하기</a>
+
+	
+	<div class="parentContainer2">
+		<p class="pineapple">pineapple</p>
+		<p>gkgk</p>
+		<p class="pineapple">pineapple</p>
+		<p class="pineapple">pineapple</p>
+		<p class="pineapple">pineapple</p>
+
+		<p>gkgk</p>
+	</div>
+
+	<p class="pineapple">pineapple</p>
+	<p class="pineapple">pineapple</p>
+	<p class="pineapple">pineapple</p>
+
+	<div class="parentContainer2">
+		<p class="pineapple">pineapple</p>
+		<p class="pineapple">pineapple</p>
+		<p class="pineapple">pineapple</p>
+		<p>gkgk</p>
+	</div>
+	<div class="btn1">
+		click me
+	</div>
+
+	<div class="parentContainer">
+		<p>하하</p>
+	</div>
+	<div class="parentContainer">
+		<p>하하</p>
+		<p>하하</p>
+		<p>하하</p>
+		<p>하하</p>
+		<p>하하</p>
+		<p>하하</p>
+		<p>하하</p>
+		<p>하하</p>
+		<p>하하</p>
+		<p>하하</p>
+	</div>
+	<div class="parentContainer1">
+		<p>하하</p>
+		<p>하하</p>
+		<p>하하</p>
+		<p>하하</p>
+		<p>하하</p>
+		<p>하하</p>
+		<p>하하</p>
+		<p>하하</p>
+		<p>하하</p>
+		<p>하하</p>
+	</div>
+	<div class="parentContainer1">
+		<p>하하</p>
+		<p>하하</p>
+		<p>하하</p>
+		<p>하하</p>
+		<p>하하</p>
+		<p>하하</p>
+		<p>하하</p>
+		<p>하하</p>
+		<p>하하</p>
+		<p>하하</p>
+	</div>
+	<div>
+		<div class="pesudoClass1">안녕하세요</div>
+		<div class="pesudoClass1">안녕하세요</div>
+		<div class="pesudoClass1">안녕하세요</div>
+		<div class="pesudoClass1">안녕하세요</div>
+	</div>
+		<div class="justBox">
+			ak47 ak47 ak47 ak47 ak47
+			<div class="justBox1">자식선택자1</div>
+			<div class="justBox1">자식선택자1</div>
+
+			<div class="justBox2">자식선택자2</div>
+			<div class="justBox2">자식선택자2</div>
+
+			<div class="broBox1">형재선택자1</div>
+			<div class="broBox2">형재선택자2</div>
+			<div class="broBox2">형재선택자2</div>
+
+			<div class="broBox1">형재선택자1</div>
+			<div class="broBox2">형재선택자2</div>
+
+			<div class="broBox4">형재선택자4</div>
+			<div class="broBox3">형재선택자3</div>
+			<div class="broBox4">형재선택자4</div>
+			<div class="broBox4">형재선택자4</div>
+			
+			<div>
+				<div class="justBox1">다른 태그 내부의 자식 선택자1</div>
+			</div>
+			<div>
+				<div class="justBox2">다른 태그 내부의 자식 선택자2</div>
+			</div>
+		</div>
+
+		<form name="input" action="#" method="get">
+			아이디: <input type="text" name="user"> <br />
+			패스워드: <input type="password" name="pass"> <br />
+			<lable for="localDateTime">현지날짜와시간</lable>
+			<lable for="DateTime">utc날짜와시간</lable>
+			<input type="datetime-local" id="localDateTime"><br>
+			<input type="datetime-local" value="2024-01-17T11:24"><br>
+			주:<input type="week" ><br>
+			월:<input type="month" ><br>
+			시간:<input type="time" ><br>
+			색:<input type="color"><br>
+			숫자:<input type="number" step="100" min="-100" max="100"><br>
+			전화번호:<input type="tel" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"><br>
+			<input type="submit" value="제출출">
+			<input type="reset" value="초기화">
+			<select name="동물">
+				<option>고릴라</option>
+				<option>침팬지</option>
+				<option  selected>킹콩</option>
+			</select>
+
+		</form>
+
+		
+	<form enctype="multipart/form-data" action="#" method="post">
+		<input name="sagin" type="file" accept="image/png">
+	</form>	
+
+	
+	<form action="https://www.tcpschool.com/html-input-types/image">
+		<input type="text" name="name">
+		<input type="file" name="file">
+		<textarea name="memo" cols="60" rows="40">여기에 값을입력</textarea>
+		<input type="image" width="90px" src="과제3/images/elonReal.ong.png" value="제출">
+
+	</form>
+
+
+	<div id="layout" style="border: 2px solid black; height: 650px;">
+		<div class="header">헤더입니다</div>
+		<div class="nav">네비게이션 바 입니다</div>
+		<div class="aside">어사이드 입니다</div>
+	<div class="section">섹션입니다</div>	
+	<div class="aside">어사이드 입니다</div>
+
+		<div class="footer">푸터입니다</div>
+	</div>
+
+	<div style="background: red;height: 200px;">
+	<span style="line-height: 200px; background:red;font-size:20px;border:2px solid black;background-color: yellow;width: 2000px;padding-left: 200px;padding-right:200px;margin-left:200px;margin-top: 400px;">“divide“ division의 약자로서 페이지를 논리적인 섹션으로 분리하는데 사용되는 태그</span>
+</div>
+<iframe src="include.html" width="300px" height="900px" ></iframe>
+<a href="include.html" width="600px" height="600px">하하하하</a>
+<a href="https://lily-im.tistory.com/6" target="_top">클릭하면 프레임1 에서 열린다</a>
+<a href="https://www.google.com/search?gs_ssp=eJzj4tDP1TcwTzY3MmD0Yi_OzC0ozs8DADGgBZw&q=simpson&oq=simmpson&gs_lcrp=EgZjaHJvbWUqDwgBEC4YChiDARixAxiABDIGCAAQRRg5Mg8IARAuGAoYgwEYsQMYgAQyCQgCEAAYChiABDIJCAMQABgKGIAEMgkIBBAAGAoYgAQyCQgFEAAYChiABDIJCAYQABgKGIAEMgkIBxAAGAoYgAQyCQgIEAAYChiABNIBCDMyMTJqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8" target="_top">심슨</a>
+
+</p>
+	<div id="tableContainer">
+		<video width="100px" src="과제3/video/mac15.mp4" muted autoplay loop controls></video>
+		<audio width="1000px" src="과제3/audio/1.mp3"   controls></audio>
+		<table border=1 style="border:10px dotted red; border-collapse:collapse;margin: 50% 50%;">
+			<tr style="border:10px solid green;">
+				<th style="background-color: blueviolet;" rowspan="2" colspan="2">구분</th>
+				<th colspan="5">2018년</th>
+				<th colspan="5">2019년</th>
+				<th colspan="5">2020년</th>
+			</tr>
+			<tr>
+				<th>1Q</th>
+				<th>2Q</th>
+				<th>3Q</th>
+				<th>4Q</th>
+				<th>전체</th>
+				<th>1Q</th>
+				<th>2Q</th>
+				<th>3Q</th>
+				<th>4Q</th>
+				<th>전체</th>
+				<th>1Q</th>
+				<th>2Q</th>
+				<th>3Q</th>
+				<th>4Q</th>
+				<th>전체</th>
+			</tr>
+			<tr  style="border:10px solid orange;">
+				<th rowspan="7">매출</th>
+				<th>계</th>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<th>CE부분</th>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+			<tr>
+				<th>IM부분</th>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+			<tr>
+				<th>DS부분</th>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+			<tr>
+				<th>반도체</th>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+			<tr>
+				<th>DP</th>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+			<tr>
+				<th>하만</th>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+		</table>
+		<table border="1px" style="border-spacing: 0px;">
+			<caption>테이블</caption>
+			<tr style="height: 90px;">
+				<td colspan="2" style="width: 90px;">헤헤</td>
+				<td rowspan="3">호호</td>
+				<td style="padding-left: 60px;">헤헤</td>
+				<td>헤헤</td>
+				<td>헤헤</td>
+			</tr>
+
+			<tr>
+				<td style="width: 20px;">헤헤</td>
+				<td>헤헤</td>
+				<td>헤헤</td>
+				<td style="width: 80px;">헤헤</td>
+				<td>헤헤</td>
+			</tr>
+			<tr>
+				<td>헤헤</td>
+				<td>헤헤</td>
+				<td>헤헤</td>
+				<td>헤헤</td>
+				<td>헤헤</td>
+			</tr>
+		</table>
+	</div>
+	<div class="container"></div>
+	<div class="container">
+
+		<a style="font-size: 200px; color:red;" href="#hehe">이동</a>
+		<a style="font-size: 100px; color:blueviolet;" href="/과제3/clothing.html">이동</a>
+		<a style="font-size: 100px; color:greenyellow;text-decoration-line: none;" href="tel:010-0000-0000">이동</a>
+		<a style="text-decoration:overline;text-decoration-color:orange;font-size: 200px;" href="tel:010-0000-0000">이동</a>
+		<a style="  text-decoration: line-through red dotted 5px ;" href="tel:010-0000-0000">이동</a>
+<span style="border: 2px solid yellow;"> 요호호</span>
+<pre>
+아주 먼 옛날 바닷가 어느 왕국에
+<hr>
+애나벨리라는 이름을 가진 >
+<hr>
+한 소녀가 살고 있었지요.
+그 소녀는 날 사랑했었지요.
+</pre>
+dkdkdkd &
+< <>
+<p style="text-decoration-line: line-through;">안녕하세요 호호호 
+	11<sup>2</sup> = 121
+</p>
+&amp;
+&lt;헤헤헤 &gt;  &quot;
+
+앰퍼샌드: &amp;
+큰따옴표: &quot;
+왼쪽 꺽쇄: &lt;
+오른쪽 꺽쇄: &gt;<br>
+
+<p name="pp">
+<ul style="list-style-type:upper-roman;">
+	<li>바나나</li>
+	<li>우동</li>
+	<li>초콜릿</li>
+	<li>딸기</li>
+</ul>
+
+<a href="#uu" style="text-decoration: line-through red dotted 2px;">glglgl</a>
+<ol>
+	<li>바나나</li>
+	<li>우동</li>
+	<li>초콜릿</li>
+	<li>딸기</li>
+</ol>
+
+<dl>
+	<dt>banana</dt>
+	<dd id="hehe">바나나</dd>
+	<dd>빠나나</dd>
+
+	<dt>lol</dt>
+	<dd>하하하</dd>
+</dl>
+</p>
+
+<div id='uu' style="height: 1000px;">
+	으에엑
+
+</div>
+
+
+</div>
+<script  src="me.js"></script>
+
+</body>
+</html>
