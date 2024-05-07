@@ -42,7 +42,6 @@ vhdl 기본 문법
 :https://m.blog.naver.com/ansdbtls4067/221249221793
 
 
-: https://m.blog.naver.com/ansdbtls4067/221249220831
 : https://blog.naver.com/r2adne/120155040778
 
 
@@ -106,12 +105,21 @@ componet ?
 
 					variable a : std_logic := '0' ; 
 					와 같다
-		: 객체의 종류
-			: 주의 ) component 의 instance 는 object 로 안쳐준다 (값을 저장하진 않으니까)
+
+		: 객체의 종류 >> 객체의 성질( 선 , 단순임시저장용, 상수저장용 ) 을 결정하는 것.
+			: 주의 ) 객체의 종류와 자료형은 다른거다. 
 
 			1. signal
 				: VHDL 합성시 Wire(선) 로 구현되며, Component 의 연결에 사용되는 외적 변수이다.
+					: 선이란 ? >> 하드웨어의 선(버스) 같은거. 회로도에 표시되는 선.
+ 
 				: 선언 위치 >> architecture 의 begin 윗 부분
+
+					1) Entity Declaration Section
+					2) Architecture의 Declaration Section (architecture문과 begin문 사이)
+					3) Package Declaration Section
+					4) port signal에서 선언
+
 				: 대입기호 
 					: 초기값을 대입할때만 " := " 을 사용한다
 						: 그래야 오름차순하든 내림차순하든 할꺼니까
@@ -140,20 +148,71 @@ componet ?
 	(1) 속성 attribute
 		: 객체의 추가적인 정보. 
 		: ' 표시로 접근 >> 객체명'속성명
+		: 주로 배열 객체를 대상으로 쓰인다
+
 		: 종류
 			1. 사전 정의 attributes
-				(1) 값 vlaue 관련 >> 특정 값을 반환
-					: 주로 배열 객체를 대상으로 쓰인다
-					1. 'Left , 'Right : 제일 왼쪽(처음)  오른쪽(끝) || 값 반환
-					2. 'High , 'Low: 가장 큰 | |작은 값 반환
-					3. 'Length: 배열객체의 사이즈(요소 갯수) 반환
+				(1) 값 vlaue 관련 >> 단순히 특정 값을 반환하는 속성
+				******1. 'Left , 'Right : 제일 왼쪽(처음)  오른쪽(끝) || 값 반환
+				******2. 'High , 'Low: 가장 큰 | |작은 값 반환
+				******3. 'Length: 배열객체의 사이즈(요소 갯수) 반환
 					4. 'Ascending : 해당 객체가 오름차순이면 true, 아니면 false 를 반환
 
-					5. 'Structure
-					6. 'Behavior
+					5. 'Structure, 'Behavior : 해당 객체가 다른 객체에게 참조 당하고 있으면 true, 아니면 false 를 반환
 
-				(2) 함수 function
+					6. 'Simple_name, 'Instance_name , 'Path_name : 경로를 String 으로 반환
+
+				(2) 함수 function >> 함수와 같은 속성
+					: 일부는 arg 를 필요로 하고, 일부는 arg 를 필요로 하지 않는다
+					: 배열 객체 , 시그널 객체를 대상으로 쓰인다
+				******1. 'Pos( 특정값 ) : 해당 값이 배열의 몇번째 인덱스인지 반환
+						: 인덱스는 0 부터 시작하는거 주의 
+						type state_type is (Init, Hold, Strobe, Read, Idle);
+						variable P: integer := state_type’pos(Read); --  Read 는 3 번쨰 값이므로 3 을 반환한다
+ 
+				******2. 'Val( 인덱스값 ) : 배열의 해당 인덱스에 저장한 값을 반환
+						type state_type is (Init, Hold, Strobe, Read, Idle);
+						variable P: integer := state_type’val( 3 ); --  3 번째 값은 Read 이므로 Read 를 반환	
+					3. 'Succ( 특정값 ) : 현재 배열을 오름차순으로 정리했을 때( 숫자가 아니라면 원본 배열이 오름차순으로 여겨진다. 그러니까 이미 존재하는 배열을 reverse 한 배열은 내림차순이 되는 것이다 )의 해당 값의 바로 다음의 위치한 값을 반환
+						type state_type is (Init, Hold, Strobe, Read, Idle);
+						variable P: integer := state_type’succ( read ); -- read 바로 다음의 Idle 를 반환
+
+					4. 'Pred( 특정값 ) : 현재 배열을 오름차순으로 정리했을 떄의 해당 값의 바로 이전의 값을 반환
+						type state_type is (Init, Hold, Strobe, Read, Idle);
+						variable P: integer := state_type’pred( read ); -- read 바로 앞의 Hold 를 반환
+
+					5. 'leftof( 특정값 ) :  현재 배열 그 자체에서 해당 값의 바로 이전의 값을 반환
+						: 현재 배열이 오름차순일 때는 >> 'Pred( 특정값 ) ==  'leftof( 특정값 )
+						: 현재 배열이 내림차순일 때는 >> 'Succ( 특정값 ) ==  'leftof( 특정값 )
+
+
+					6. 'rightof( 특정값 ) :  현재 배열 그 자체에서 해당 값의 바로 다음의 값을 반환
+
+					7. 'left ( 범위 ) : 해당 범위의 시작값을 반환
+						: 아래에서 써놨지만 배열 객체의 범위는 배열명'range 하면 구해진다.
+					8. 'right( 범위 ) : 해당 범위의 끝 값을 반환
+					9. 'High( 범위 ) : 해당 범위의 가장 높은 값을 반환
+						: 오름차순 범위이면 >> 'right( 범위 ) == 'high( 범위 )
+						: 내림차순 범위이면 >> 'left( 범위 ) ==  'high( 범위 )
+
+					10 'Low( 범위 ) : 해당 범위의 가장 낮은 값을 반환
+					
+
+				******11. 'Event :  대상 "시그널" 의 값이 변경되면 true 를 , 아니면 false 를 반환
+						
+					12. 'Active : 대상 "시그널"이 유효하면(== U 가 아니면) true , 아니면 false 반환
+						: 'Event 와 다르게 값의 변화가 없어도 값이 유효하면 true 인거임
+
+					13. 'last_event : 이전에 값이 변경됬던 시간 반환
+					14. 'last_active: 이전에 값이 유효했던 시간 반환
+					15. 'last_value: 이전 값 반환
+
 				(3) 신호 signal
+					1. 'Delayed( 시간 )
+					2. 'Stable
+					3. 'Quiet
+					4. 'Transaction
+
 				(4) 타입 type
 				(5) 범위 range
 
@@ -169,12 +228,10 @@ componet ?
 			: 코드 내부에 쓰인 "" 없는 문자열은 문자열리터럴 이 아니라 이미 존재하는 객체나 ㅋ워드 같은거임
 
 		: Character 리터럴>>  '문자'
-		: Bit 리터럴>> '0' , '1'
 		: Bit String 리터럴
 			2진 >> B"값"
 			8진 >> O"값"
 			16진 >> X"값"
-
 
 		: Numeric 리터럴 
 			1.정수(Integer) 리터럴
@@ -190,22 +247,22 @@ componet ?
 				: 12ft 같은거
 
 
-	(-1) 부분 타입 subtype ) Type 의 부분 Type
 
 	(-2) 타입 Type
 :https://prosigi.tistory.com/83
-:https://m.blog.naver.com/ansdbtls4067/221249221793
 
 		: 있는거 그대로 쓸수도 있고. 사용자가 직접 만들어 쓸수도 0.
+		: 암기 tip >> 범위 지정하는데 RANGE 라는 키워드가 있으면 괄호 없이, RANGE 라는 키워드가 없으면 괄호 있이 쓰는거다
 		: 타입 종류
 			(1) Scalar Type 숫자형 :  숫자(0 , 1, 2, 3 .. 등)로 순서를 정의할 수 있는 자료형
-				1. 열거형 Enumeration Type : STD_LOGIC, BOOLEAN , CHARACTER, BIT
-					: 가장 많이 쓰이는 type
+				1. 열거형 Enumeration Type : STD_LOGIC, BOOLEAN , CHARACTER 
 					: STD_LOGIC >>
+						: 주의 ) STD_LOGIC_1164라이브러리 사용 시 BIT 타입은 따로 안쓰고  STD_LOGIC 타입을 쓴다
+
 						'U': uninitialized
 						'X': unknown. Impossible to determine this value/result.
-						'0': 논리적 0 ,그러니까 false
-						'1': 논리적 1, 그러니까 true
+					******'0': 논리적 0 ,그러니까 false
+					******'1': 논리적 1, 그러니까 true
 						'Z': High Impedance. 그러니까 저항이 매우 높은 상태, 그러니까 전류가 거의 흐르지 않는 상태
 							: High Impedance vs Weak signal 
 								: High Impedance == 전류가 거의 안흐른다
@@ -216,14 +273,40 @@ componet ?
 						'H': Weak signal 인데 아마도 1 인 상태(==High)
 						'-': Don't care.
 
-				2. 정수형 Integer Type : INTEGER , NATURAL
-				3. 실수형 Real Type : REAL
-				4. 물리형 Physical Type : DISTANCE, UNIT : TIME 
+					: BOOLEAN >> true 혹은 false 할당
+					
+
+
+				2. 정수형  : INTEGER 
+					: (정수형 자체의 범위가 넓어서 기본적으로는 32 비트를 차지하는데, 쓸만큼만 비트를 할당하기 위해서 ) 범위를 특정하여 쓸 수도 있다 >> INTEGER RANGE 시작값 TO 끝값;
+					: ex ) SIGNAL inputA : INTEGER RANGE 3 to 19;
+
+				3. 실수형  : REAL
+				4. 물리형  :  UNIT : TIME, DISTANCE
 
 			(2) Composite Type 복합형 : Scalar Type을 조합하여 사용할 때 사용하는 자료형. 
 				1. 배열형 Array Type : 같은 Scalar Type 의 원소로만 이뤄져야됨. 주로 Scalar type 의 범위를 좀더 좁히기 위해 사용한다
 					(1) 제한형 Constraint Type  : TO, DOWNTO
-					(2) 무제한형 Unconstraint Type: STD_LOGIC_VECTOR, STRING , BIT_VECTOR
+						: 각각 "숫자1<= <= 숫자2" (이상 이하)가  된다 
+						작은숫자 TO 큰숫자 
+						큰숫자 DOWNTO 작은숫자
+
+					(2) 무제한형 Unconstraint Type: STD_LOGIC_VECTOR, STRING , BIT_VECTOR				: STD_LOGIC_VECTOR >> std_logic 데이터 타입을 여러개 묶어놓은 데이터 타입
+							: 쌩으로 쓰지 않고 STD_LOGIC_VECTOR( 값1 TO||DOWNTO 값2 ) 이런식으로 쓴다.
+							: 사실 array (n downto 0) of std_logic 과 같은 소리다.
+
+
+						******1. STD_LOGIC_VECTOR( n DOWNTO 0 ) : "내림차순"으로 n+1 개를 묶은 것
+								: 0번쨰 비트는 오른쪽에서 시작하므로 DOWNTO 를 써야된다  
+								ex)  A <= "11001100" 했을 때 A(0) == 젤 뒤 '0'
+
+
+
+							2. STD_LOGIC_VECTOR( 0 TO n )  : "오름차순"으로 n+1 개를 묶은 것
+								ex)  A <= "11001100" 했을 때 A(0) == 젤 앞 '1'
+
+
+
 				2. 집합형 Record Type: 다양한 Scalar Type 의 Object 를 묶는 Type. 
 					: 내부적으로 다른 scalar타입의 Field 들을 가짐. 
 					: Record Type 로 선언된 객체의 field 를 참조하기 위해 '.' 연산자를 사용.
@@ -242,26 +325,23 @@ constant vv : Person := ("kim",19);
 				
 		: 사용자 타입 선언 방법>> Type 타입명 is 타입명세;
 			(1) Scalar Type
-				(1) Enumeration Type
+				(1) Enumeration 
 					: Type 타입명 is (값1, 값2 , ... );
-					: ex )
-					Type bit is ( '0' , '1');
+					: ex ) Type bitbit is ( '0' , '1');
 
-				(2) Integer Type , Real Type , Phisycal Type
-					: Type 타입명 is range 최소숫자 ~ 최대 숫자;
-					: ex) 
-						Type byte is range -128 ~ 128;
+				(2) Integer  , Real  
+					: Type 타입명 is range 최소숫자 to 최대 숫자;
+					: ex) Type byte is range -128 to 128;
 	
 			(2) Composite Type
 				1. Array Type
 					(1) 제한형 Constraint Type  : 
-						: Type 타입명 is array( 숫자1 to혹은downto 숫자2) of 특정scalarType;
-							: to 를 쓰는 경우 해당 Type 의 범위는 "숫자1<= <= 숫자2" 가  된다 
-							: downto 를 쓰는 경우 해당 Type 의 범위는 "숫자1>= >=숫자2" 가  된다 
+						: Type 타입명 is array( 숫자1 to||downto 숫자2) of 특정scalarType;
+						ex) Type byte is array( 7 downto 0 ) of STD_LOGIC;
 
 					(2) 무제한형 Unconstraint Type: 
 						: Type 타입명 is array( 특정scalarType range<>) of  특정scalarType;
-
+						ex) Type yayaya is array( Integer range<> ) of STD_LOGIC;
 
 				2. Record Type
 					Type 타입명 is record 필드명1: scalar타입 ; 필드명2: scalar타입 ; 필드명3: scalar타입 ;  end record;
@@ -270,7 +350,11 @@ constant vv : Person := ("kim",19);
 
 
 
-	
+	(-1) 부분 타입 subtype : 특정 데이터 타입의 일부만 사용하고 싶을 때 사용
+		SUBTYPE 부분타입명 IS 특정타입명 range 시작점 to||downto 종료지점
+		ex) 
+			TYPE aa IS INTEGER RANGE -100 TO 200 ;
+			SUBTYPE bb IS aa RANGE 0 TO 100;
 
 	(1) 연산자 Operator	
 		: 괄호를 사용하여 우선순위 조절 가능
@@ -448,6 +532,5 @@ STD_LOGIC_1164의 모든 것을 사용하겠다 : use IEEE STD_LOGIC_1164.ALL
 	end 아키텍처명;
 
 		: 논블락킹
-
 
 
