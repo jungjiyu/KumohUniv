@@ -1,1 +1,453 @@
+모듈 == 하나의 독립적인 시스템. 부분.
+
+RTL Register-transfer level :  레지스터와 로직회로를 이용하는 "디지털 회로 설계" 수준.
+	: vhdl 을 이용하여 design 한 결과물을 RTL 이라 봄 된다
+
+design source : 우리가 실제로 디자인한 로직, 코드.
+	: vhdl 의 언어로 작성
+	: @@@@.vhd 
+		:  헷갈리지 않게 하기 위해 모듈명과 파일명을 일치하게 해라
+	: DUT 를 만드는 거임
+
+testbench == simulation source : 작성한 design source를 검증하는 코드.
+	: 가상으로 만들어진 파일이지, 실제로 존재하진 않는다.
+		: https://www.youtube.com/watch?v=HmlJ7DFMwOM
+	: 테스트 밴치엔 port 존재 안한다
+	: 보통 다음의 모듈을 추가한다
+		- DUT Design Under Test : 설계한 모듈. 테스트 중인 장치
+		- clock & reset gen : degital logic 을 동작시키기 위해 필요한 clock 과 reset 을 만들어주는 모듈
+		- stimulus : DUT 의 input 을 gen 하는 역할을 한다. 자극을 주면 output 이 나오는게 digital logic,
+		- checker : DUT 의 output 이 원하는 결과에 맞는지 check 하는 모듈
+
+Behavioral simulation : cell 및 wire 의 delay 정보가 들어가지 않은 코드 자체의 functional simulation
+
+
+
+https://rubber-tree.tistory.com/28
+메뉴바
+	simulation>> 작성된 코드를 rtl 시뮬레이션 (테스트벤치적용) 할때 사용. 제대로 설계되었나 확인
+	RTL_ANALYSIS >> (시뮬레이션 후) 생성된 도식 확인
+	synthesis >> 시뮬레이션까지 다 했으면 synthesis, 즉 합성을 함
+	implementation > 합성이 완료되면 실제로 물리적 소자와 맵핑을  함
+
+
+보라색 코드 >> 예약어 : 식별자 명으로 사용 불가
+
+------------------------------------------------------------------------------------------------------------
+
+vhdl 기본 문법
+
+
+:https://prosigi.tistory.com/83
+:https://m.blog.naver.com/ansdbtls4067/221249221793
+
+
+: https://m.blog.naver.com/ansdbtls4067/221249220831
+: https://blog.naver.com/r2adne/120155040778
+
+
+field ? attribute? 
+
+proccess ?
+
+componet ? 
+
+
+
+
+1. 기본 문법
+	- VHDL 은 대소문자 구분을 하지 않는다.
+	- VHDL 에서 문장간의 구별은 세미콜론(;) 으로 표시 한다.
+		: 가독성을 위해 엔터 무한대로 칠 수 있다
+
+	- '--' 로 한 줄 주석처리 가능.
+	- '/* */' 로 여러줄 주석처리 가능
+	- 논리적 '0' 과 '1'
+		: '0' == 논리적 거짓 >> 거짓. 비활성. 꺼짐
+		: '1' == 논리적 참 >> 참. 활성. 켜짐.
+			: 따로 false, true 는 없음 주의
+
+		: 0 과 '0' , 1과 '1' 은 다르다
+			:0,1 은 계산할때 쓰이는 Numeral Literal 이고 '0' 과 '1' 은 논리적 0 과 1 을 나타내는 character Literal 이다
+
+이게 뭐임?? vHdl 에서 field ?? >>- Field 와 Attribute
+		: Field  >> 레코드 또는 객체 내부 데이터
+			: 주로 레코드 또는 객체의 "구성 요소"를 나타내는데 사용
+			: 외부 코드에서는 '직접'은 접근 불가해서 getter 와 setter 메서드 사용 필요
+
+		: Attribute >> 레코드 또는 객체 외부 데이터
+			: 주로 레코드 또는 객체의 "상태"를 나타내는데 사용
+			: 외부 코드에서는 '직접'은 접근 가능 && getter 와 setter 메서드도 사용 가능
+
+
+
+2. VHDL 의 기본 구성
+	(-3) 대입 연산자
+		1.  <= 
+			: 값이 즉시 할당되는 것이 아니고, 다음 사이클에 적용될 신호 할당을 해준다
+				:  Process문 내의 '<=' 의 경우 Process문이 끝나는 End process를 만날 때 비로써 그 값이 대입된다. 즉 시간이 지남에 따라 변한 값을 가진다.
+
+			: "=>"는 대입연산자가 아니다
+				: port map 에서 형식포트명과 실제 포트명을 mapping 하는데 사용된다.
+
+		2.  :=
+			: 값이 즉시 대입된다.
+			: 변수나 상수를 초기화하는데 사용된다
+
+
+	(0) 객체 object
+		: 값을 가질 수 있는 것을 말한다. 
+		: 객체는 " 객체종류 객체명 : 타입; " 의 꼴로 선언된다
+			: 선언과 동시에 초기화 가능
+				ex) 
+					variable a : std_logic;
+					a:='0';
+					은
+
+					variable a : std_logic := '0' ; 
+					와 같다
+		: 객체의 종류
+			: 주의 ) component 의 instance 는 object 로 안쳐준다 (값을 저장하진 않으니까)
+
+			1. signal
+				: VHDL 합성시 Wire(선) 로 구현되며, Component 의 연결에 사용되는 외적 변수이다.
+				: 선언 위치 >> architecture 의 begin 윗 부분
+				: 대입기호 
+					: 초기값을 대입할때만 " := " 을 사용한다
+						: 그래야 오름차순하든 내림차순하든 할꺼니까
+						: ex)      signal temp : std_logic_vector(3 downto 0) := "1000";
+	
+					: 이외의 모든 값을 대입할땐 "  <= " 를 사용한다
+
+
+
+			2. variable
+				: 단지 중간 연산단계에 주로 이용되고, (Wire로 구현되진 않음), process나 부프로그램( function,  procedure) 에서 사용되며 그 내부에서만 유효한 내적 변수이다
+				: 선언위치 >> process ~  begin 사이이다.
+					: ex )
+					process(a, b)
+   					  variable temp1, temp2 :  std_logic;
+     					begin
+ 
+				: 대입기호는 ":=" 만 사용한다
+
+			3. constant
+				: 상수를정의하는데 사용된다
+				: 선언 && 초기화 위치 >> architecture 의 begin 윗 부분.
+				: 대입기호는 ":=" 만 사용한다
+
+
+	(1) 속성 attribute
+		: 객체의 추가적인 정보. 
+		: ' 표시로 접근 >> 객체명'속성명
+		: 종류
+			1. 사전 정의 attributes
+				(1) 값 vlaue 관련 >> 특정 값을 반환
+					: 주로 배열 객체를 대상으로 쓰인다
+					1. 'Left , 'Right : 제일 왼쪽(처음)  오른쪽(끝) || 값 반환
+					2. 'High , 'Low: 가장 큰 | |작은 값 반환
+					3. 'Length: 배열객체의 사이즈(요소 갯수) 반환
+					4. 'Ascending : 해당 객체가 오름차순이면 true, 아니면 false 를 반환
+
+					5. 'Structure
+					6. 'Behavior
+
+				(2) 함수 function
+				(3) 신호 signal
+				(4) 타입 type
+				(5) 범위 range
+
+			2. 사용자 정의 attributes
+
+			
+		: http://pldworld.info/_hdl/2/_ref/acc-eda/language_overview/objects__data_types_and_operators/understanding_vhdl_attributes.htm
+		: https://dad-rock.tistory.com/444
+
+	
+	(-1) 리터럴 Literal
+		: String 리터럴 >> "어쩌구"
+			: 코드 내부에 쓰인 "" 없는 문자열은 문자열리터럴 이 아니라 이미 존재하는 객체나 ㅋ워드 같은거임
+
+		: Character 리터럴>>  '문자'
+		: Bit 리터럴>> '0' , '1'
+		: Bit String 리터럴
+			2진 >> B"값"
+			8진 >> O"값"
+			16진 >> X"값"
+
+
+		: Numeric 리터럴 
+			1.정수(Integer) 리터럴
+				: 10진수 정수 >> 그냥 숫자 (ex: 1234 ) 
+				: 2,8,16 진수 정수 >> 진수#숫자 (ex: 8#132 )
+					: 가독성을 위해 '_' 사용 가능하ㅏ다
+					: ex) 2#1110_0000 == 2#11100000
+
+			2. 실수(real) 리터럴
+				: 소수점있는숫자(ex: 19.32) 혹은 E 들어간 숫자(ex: 1E6)
+
+			3. 물리 리터럴
+				: 12ft 같은거
+
+
+	(-1) 부분 타입 subtype ) Type 의 부분 Type
+
+	(-2) 타입 Type
+:https://prosigi.tistory.com/83
+:https://m.blog.naver.com/ansdbtls4067/221249221793
+
+		: 있는거 그대로 쓸수도 있고. 사용자가 직접 만들어 쓸수도 0.
+		: 타입 종류
+			(1) Scalar Type 숫자형 :  숫자(0 , 1, 2, 3 .. 등)로 순서를 정의할 수 있는 자료형
+				1. 열거형 Enumeration Type : STD_LOGIC, BOOLEAN , CHARACTER, BIT
+					: 가장 많이 쓰이는 type
+					: STD_LOGIC >>
+						'U': uninitialized
+						'X': unknown. Impossible to determine this value/result.
+						'0': 논리적 0 ,그러니까 false
+						'1': 논리적 1, 그러니까 true
+						'Z': High Impedance. 그러니까 저항이 매우 높은 상태, 그러니까 전류가 거의 흐르지 않는 상태
+							: High Impedance vs Weak signal 
+								: High Impedance == 전류가 거의 안흐른다
+								: Weak signal == 논리적 수준이 불확실하다
+
+						'W': Weak signal, 0인지 1인지 판별불가상태
+						'L': Weak signal 인데 아마도 0 인 상태(==Low)
+						'H': Weak signal 인데 아마도 1 인 상태(==High)
+						'-': Don't care.
+
+				2. 정수형 Integer Type : INTEGER , NATURAL
+				3. 실수형 Real Type : REAL
+				4. 물리형 Physical Type : DISTANCE, UNIT : TIME 
+
+			(2) Composite Type 복합형 : Scalar Type을 조합하여 사용할 때 사용하는 자료형. 
+				1. 배열형 Array Type : 같은 Scalar Type 의 원소로만 이뤄져야됨. 주로 Scalar type 의 범위를 좀더 좁히기 위해 사용한다
+					(1) 제한형 Constraint Type  : TO, DOWNTO
+					(2) 무제한형 Unconstraint Type: STD_LOGIC_VECTOR, STRING , BIT_VECTOR
+				2. 집합형 Record Type: 다양한 Scalar Type 의 Object 를 묶는 Type. 
+					: 내부적으로 다른 scalar타입의 Field 들을 가짐. 
+					: Record Type 로 선언된 객체의 field 를 참조하기 위해 '.' 연산자를 사용.
+					: Record Type 로 선언된 객체의 field 를 한번에 초기화 하는 것도 가능	
+						ex) 
+
+Type Person is record 
+        name : string;
+        age : integer;
+    end record Person;
+constant vv : Person := ("kim",19);
+
+
+						
+					
+				
+		: 사용자 타입 선언 방법>> Type 타입명 is 타입명세;
+			(1) Scalar Type
+				(1) Enumeration Type
+					: Type 타입명 is (값1, 값2 , ... );
+					: ex )
+					Type bit is ( '0' , '1');
+
+				(2) Integer Type , Real Type , Phisycal Type
+					: Type 타입명 is range 최소숫자 ~ 최대 숫자;
+					: ex) 
+						Type byte is range -128 ~ 128;
+	
+			(2) Composite Type
+				1. Array Type
+					(1) 제한형 Constraint Type  : 
+						: Type 타입명 is array( 숫자1 to혹은downto 숫자2) of 특정scalarType;
+							: to 를 쓰는 경우 해당 Type 의 범위는 "숫자1<= <= 숫자2" 가  된다 
+							: downto 를 쓰는 경우 해당 Type 의 범위는 "숫자1>= >=숫자2" 가  된다 
+
+					(2) 무제한형 Unconstraint Type: 
+						: Type 타입명 is array( 특정scalarType range<>) of  특정scalarType;
+
+
+				2. Record Type
+					Type 타입명 is record 필드명1: scalar타입 ; 필드명2: scalar타입 ; 필드명3: scalar타입 ;  end record;
+						: 마지막 필드 선언할때도 ';' 붙이고, 마지막엔 end record ; 해주는거 잊지 x
+
+
+
+
+	
+
+	(1) 연산자 Operator	
+		: 괄호를 사용하여 우선순위 조절 가능
+		: 종류 
+			1. 논리연산자 Logical Operator : or , and , nor, nand , xor , xnor , not
+			2. 관계연산자 Relational Operator :  = , /= , < , <= , > , >=
+				'=' : 같다
+				'/=' : 다르다 
+
+			3. 산술연산자 Arithmetic Operator : + , - , * , / , abs , ** , mod , rem 
+				/ : 나눗셈
+				abs : 절댓값
+					: ex) abs(-18)
+				** : n승
+				mod : modulo 연산	
+				rem : 나머지 연산자
+
+			4. 연결연산자 Concatenation Operator : &
+				: 이어준다. (각 위치별로 더하는게 아니라 끝에 붙이는거다)
+				: ex) ('0', '1', '1') & ('0', 'Z', '1') = ('0', '1', '1', '0', 'Z', '1')
+				: ex)  "Hello" & "World" =  "HelloWorld" ; 
+					
+
+			5. 시프트 연산자 Shift Operator :  sll, srl , sla , sra , rol , ror
+			
+
+
+	(1) Entity
+		: VHDL 설계의 기본 단위. 전반적인 시스템.
+		: 구성
+			1.  Entity Declaration >> 엔티티의 인터페이스( 외적연결 그러니까 port , generic) 정의하는 부분
+				: generic 과 port 는 모두 component 에서도 (새로) 선언 가능하다
+				: generic >> 설계를 일반화하는데 사용되는 매개변수
+					: https://m.blog.naver.com/go_forever/220235957694
+
+				: port >> 입구, 출입구 라고 보면된다. "인터페이스" 이다.
+					: 주의 ) port( ); 내부의 마지막 줄엔 ';'안붙인다
+
+
+			: 형식 ) 
+				entity 엔티티명 is
+					generic( 어쩌구 );
+					port( 
+						포트명1 : 모드 타입;
+						...
+						포트명n : 모드 타입 );
+				end 엔티티명;
+
+					: 모드 >> 특정 포트의 데이터 흐름 방향 을 정의한다 
+						: 종류 )  in , out , inout, buffer 
+
+					: 주의 ) end entitiy; 가 아니라 end 엔티티명 이다
+
+			2.  Architecture Body>> 엔티티 내부 동작을 정의하는 부분.  실제로 실행되는 부분.
+			: 형식 ) 
+				architecture 아키텍쳐명 of 엔티티명 is
+					객체선언부
+				begin
+					실행사항
+				end 아키텍쳐명;
+	
+					: 아키텍쳐명은 대부분 Behavioral 을 사용한다
+
+
+	(2) VHDL 모델링 방법
+		: https://effectiveresource.tistory.com/m/70
+		: (논리)회로의 추상화 >> 회로의 구성 요소를 단순하게 표현하는것
+		: 캡술화 >> 내부 구현 정보를 숨기고 인터페이스만 노출하는 설계 기법
+			: 엔티티, 컴포넌트 , 패키지 등을 이용해 가능
+
+		1. Behavioral Description 동작적 표현
+			: 논리회로의 동작을 알고리즘적으로 표현하는 것
+			: 논리회로에 대한 최상위 추상화 레벨( == 그러니까 젤 간단하게 표현하는 방법이란 뜻 )
+
+			: 주로 Process 문을 사용하여 표현
+				: Process문
+					: 시스템을 모듈별로 기술하는데 쓰인다
+						: 시스템은 하드웨어 모듈로 구성되어 있고, 각 모듈은 병행처리를 하면서 서로간의 통신을 통해 관계를 유지한다.   
+					: Architecture내 begin ~ end 사이에 선언된다. 여러 개의 Process문이 있을 수 있으다.
+					:  각 Process문은 병행처리를 하지만, Process문 내부는 순차처리를 한다. 
+					:  감지신호가 변화 할때 동작(실행)한다.
+					: 선언 형식
+						process( 감지신호1, 감지신호2 .. )               
+							begin
+							. . .	
+						end process;
+
+
+
+		2. Data Flow Descrption 데이터 흐름 표현 
+			: 부울 대수식을 이요하여 입출력 관계를 기술하는 설계방식
+			: 논리회로에 대한 중간정도의 추상화 레벨
+			: 문장 순서는 무관, 주로 병행처리문을 사용
+			: 입력과 출력사이의 관계를 나타내는 것을 말한다. 자료흐름적 표현은 주로 병행처리문에서 사용되며, 문장의 순서에 무관하게 동시에 수행된다.
+ 
+
+		2. Structural Descrption 구조적 표현
+			: 구성요소( Component) 및 구성요소간의 연결( port map 문 )까지 표현하는 설계방식
+			: 가장 하드웨어적 표현에 가까운 표현 방법
+
+			Component 문
+				: 시스템의 구성 요소를 설계하는문
+					: Component 는 클래스처럼 붕어빵틀 느낌임. (아래에 써놨지만) 실제로 사용할땐 instance 를 만들어 사용.
+				
+				: 선언은 architecture 의 begin 이전 부분에서  한다
+
+
+				: 선언 형식
+					component 컴포넌트명 is
+						port(
+							형식포트명1: 모드 타입;
+							형식포트명2 : 모드 타입;
+							. . .
+							형식포트명n : 모드 타입 ); 
+						end component;
+						
+							: 형식포트명==  파라미터
+								: '형식' 이란 표현에서 알 수 있듯이 '형식적'인거라, 모드와 타입이 그러한 입력을 받아들이겠다는 거지 실제로 Component 가 그 port 를 사용한단 소리가 아니다.  실제로 사용하는 port 는 port map 에서 정의한다
+
+				:  Component Instantiation 컴포넌트 인스턴스화 >> port map 문 사용
+					: 사실 component 는 약간 클래스 느낌이다. component 를 통해서 인스턴스를 여러개 생성 가능하고, 생성할때 사용되는 key word 가 port map( )  인거다
+					: port map 문은 Archtecture 의 begin ~ end 사이에 서술한다
+						: 반복문이나 조건문에서 서술하는 것도 가능하다
+
+					: 형식 >> 인스턴스명 : 대상컴포넌트명 port map( 어쩌구 ) ;
+						: 인스턴스명은 생략이 가능하다. 근데 대부분 인스턴스명 지어준다
+							: 인스턴스명을 쓰지 않아도 잘 실행되고, 인스턴스는 생성되면 띡 끝이지 생성이후 그 인스턴스명으로 또 뭔갈 하진 않는다. 하지만 디버깅적인 측면에서 장점이 있다고 한다
+							: 인스턴스명을 잘 안쓰는 상황도 있다 >> 반복문에서 반복적으로 인트선스화 하는 경우.
+					
+
+						case1 : 위치 결합 positional association
+							: (별도로 이름을 명시하지 않고) Port 문 내의 siganl 의 위치순서대로 나열하는것
+							: 형식 >> 인스턴스명 : 대상컴포넌트명 port map( 실제포트1, 실제포트2 , ... ) ;
+
+
+						case2 : 이름 결합 named association
+							: (Port 문 내의 signal 의 위치 순서와 상관 없이) 이름을 밝혀 결합하는 것
+							: 형식 >> 인스턴스명 : 대상컴포넌트명 port map( 형식포트1=>실제포트1, 형식포트2=>실제포트2 , ... ) ;
+
+
+
+		(3) Generic 문
+			: Generic. 일반화. 
+			: 
+
+
+------------------------------------------------------------------------------------------------------------
+
+design source 의 구조
+
+라이브러리 선언 : library IEEE; 
+STD_LOGIC_1164의 모든 것을 사용하겠다 : use IEEE STD_LOGIC_1164.ALL
+
+
+모듈을 정의: entity
+	entity 엔티티명 is
+		포트정의
+	end 엔티티명;
+
+		: port 정의 >>회로  설계의 기본은 입력과 출력. 즉 port 를 정의하는 것.
+			port(
+				입력포트명1 , 입력포트명2 ..  : in||out 데이터타입; 
+				입력포트명n : in||out 데이터타입
+			); 
+
+				:port 의 괄호 내부의 마지막 포트정의문장에는 ; 붙이지 않는거 주의
+				:port 문 자체의 맨 끝에 ; 를 붙여야되는거 주의
+
+
+ 동작을 정의: architecture 
+	architecture 아키텍처명 of 엔티티명 is
+		정의내용
+	begin
+		실행내용
+	end 아키텍처명;
+
+		: 논블락킹
+
+
 
