@@ -695,4 +695,319 @@ VHDL 모델링 방법
 
 ------------------------------------------------------------------------------------------------------------
 
+회로도 기호
+
+	 MUX 멀티플렉서 〔| 
+		: 제어선 따라서 여러 입력값 중 하나를 선택하여 출력값으로 내보낸다
+		: m * n MUX == 입력이 m 개이고 출력이 n 개인 MUX
+		: 실습 내역 >> 4bit mask
+		: https://blog.naver.com/tb_elec_engineer/221033922130
+		: https://dad-rock.tistory.com/420
+
+
+
+https://community.element14.com/technologies/fpga-group/b/blog/posts/systemverilog-study-notes-rtl-combinational-circuit-operators
+
+	: = >> 내부에 선언된 거 집어넣는다 , <= : 외부에 선언된 거 집어넣는다
+
+
+
+
+
+
+----------------------------------------------------------------------------------------------------------
+
+    Port ( X,Y,Z : in STD_LOGIC;
+           F : out STD_LOGIC);
+end gates;
+
+architecture Behavioral of gates is
+    signal f1,f2:STD_LOGIC;
+begin
+    or_gate:process(X,Y)
+        begin 
+            if X='1' or Y='1' then f1<='1';
+            else f1<='0';
+             end if;
+    end process;
+    
+      nand_gate:process(Y,Z)
+        begin 
+        if(Y='0') or (Z='0') then f2 <='1';
+        else f2 <= '0';
+        end if;
+
+    end process;  
+    
+    xor_gate : process(f1, f2)
+    begin
+    if(f1=f2) then F <='0';
+    else F <= '1';
+    end if;
+    end process;
+
+
+----------------------------------------------------------------------------------------------------------
+
+
+architecture Behavioral of gates_tb is
+    component gates
+        Port ( X,Y,Z: in STD_LOGIC;
+           F : out STD_LOGIC);
+    end component;
+    signal X,Y,Z : STD_LOGIC;
+    signal  F :  STD_LOGIC;
+
+begin
+    uut : gates port map(X,Y,Z,F);
+        stimulus: process
+
+    begin
+    
+        wait for 100ns;
+        X <= '0';
+        Y <= '0';
+        Z <= '0';
+
+
+        wait for 100ns;
+        X <= '0';
+        Y <= '0';
+        Z <= '1';
+
+
+
+        wait for 100ns;
+        X <= '0';
+        Y <= '1';
+        Z <= '0';
+
+        
+        wait for 100ns;
+        X <= '0';
+        Y <= '1';
+        Z <= '1';
+        
+        
+       wait for 100ns;
+        X <= '1';
+        Y <= '0';
+        Z <= '0';
+        
+        
+       wait for 100ns;
+        X <= '1';
+        Y <= '0';
+        Z <= '1';
+
+
+       wait for 100ns;
+        X <= '1';
+        Y <= '1';
+        Z <= '0';
+        
+
+        wait for 100ns;
+        X <= '1';
+        Y <= '1';
+        Z <= '1';
+             
+        wait for 100ns;
+
+
+
+
+wait;
+end process;
+end;
+
+
+
+----------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+
+
+entity gates is
+    Port ( X,Y,Z : in STD_LOGIC;
+           F : out STD_LOGIC);
+end gates;
+
+architecture Behavioral of gates is
+    signal f1,f2:STD_LOGIC;
+begin
+    or_gate:process(X,Y)
+        begin 
+            if X='1' or Y='1' then f1<='1';
+            else f1<='0';
+             end if;
+    end process;
+    
+      nand_gate:process(Y,Z)
+        begin 
+        if(Y='0') or (Z='0') then f2 <='1';
+        else f2 <= '0';
+        end if;
+
+    end process;  
+    
+    xor_gate : process(f1, f2)
+    begin
+    if(f1=f2) then F <='0';
+    else F <= '1';
+    end if;
+    end process;
+
+
+
+end Behavioral;
+----------------------------------------------------------------------------------------------------------
+entity gates_tb is
+--  Port ( );
+end gates_tb;
+
+architecture Behavioral of gates_tb is
+    component gates
+        Port ( X,Y,Z: in STD_LOGIC;
+           F : out STD_LOGIC);
+    end component;
+    signal X,Y,Z : STD_LOGIC;
+    signal  F :  STD_LOGIC;
+
+begin
+    uut : gates port map(X,Y,Z,F);
+        stimulus: process
+
+    begin
+    
+        wait for 100ns;
+        X <= '0';
+        Y <= '0';
+        Z <= '0';
+
+
+        wait for 100ns;
+        X <= '0';
+        Y <= '0';
+        Z <= '1';
+
+
+
+        wait for 100ns;
+        X <= '0';
+        Y <= '1';
+        Z <= '0';
+
+        
+        wait for 100ns;
+        X <= '0';
+        Y <= '1';
+        Z <= '1';
+        
+        
+       wait for 100ns;
+        X <= '1';
+        Y <= '0';
+        Z <= '0';
+        
+        
+       wait for 100ns;
+        X <= '1';
+        Y <= '0';
+        Z <= '1';
+
+
+       wait for 100ns;
+        X <= '1';
+        Y <= '1';
+        Z <= '0';
+        
+
+        wait for 100ns;
+        X <= '1';
+        Y <= '1';
+        Z <= '1';
+             
+        wait for 100ns;
+
+
+
+
+wait;
+end process;
+end;
+
+----------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+
+
+
+entity mask_dg is
+    Port ( input : in STD_LOGIC_VECTOR(3 downto 0);
+           sel : in STD_LOGIC;
+           F : out STD_LOGIC_VECTOR(3 downto 0));
+end mask_dg;
+
+architecture Behavioral of mask_dg is
+constant mask0 : std_logic_vector := "0000"; -- off
+constant mask1 : std_logic_vector := "1111";	--on
+
+begin
+
+process(sel, input)
+begin
+if (sel ='1') then
+F <=  input and mask1;
+else
+F <= input and mask0;
+end if;
+end process;
+
+end Behavioral;
+
+----------------------------------------------------------------------------------------------------------
+
+
+entity mask_tb is
+end mask_tb;
+
+
+
+architecture Behavioral of mask_tb is
+    component mask_dg
+        Port ( input : in STD_LOGIC_VECTOR(3 downto 0);
+               sel : in STD_LOGIC;
+               F : out STD_LOGIC_VECTOR(3 downto 0));
+    end component;
+
+    signal input: STD_LOGIC_VECTOR(3 downto 0);
+    signal sel: STD_LOGIC;
+    signal F: STD_LOGIC_VECTOR(3 downto 0);
+
+begin
+
+    uut: mask_dg port map (input=>input, sel=>sel, F=>F);
+
+    stimulus: process
+    begin
+        wait for 100ns;
+        input <= "0000";
+        sel <= '1';
+
+        wait for 100ns;
+        input <= "0011";
+        sel <= '1';
+
+        wait for 100ns;
+        input <= "0101";
+        sel <= '1';
+
+        wait for 100ns;
+        input <= "1000";
+        sel <= '1';
+        wait;
+
+
+
 
