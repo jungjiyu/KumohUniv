@@ -1,0 +1,294 @@
+--- 9장 복습 ---
+
+
+[ ] vs { } 
+	 {}는 객체(Object)를 생성
+	 []는 배열(Array)을 생성
+
+
+
+BOM Browser Object Model
+	: 웹 브라우저를 객체로 표현한 것
+	: 얘도 DOM 처럼 트리구조
+	: 최상위 노드는 "window"
+		: 그 밑으로 "document" , history 등등이 있다
+
+
+
+DOM(Document Object Model) 
+	: 자바스크립트로 간편하게 HTML 문서에 접근하여 수정할 수 있도록 HTML 요소를 "객체화"해놓은것
+		: 자바스크립트가 조리도구, DOM/BOM 은 요리재료
+	: HTML 문서의 계층적 구조를 트리로 표현한 것
+	: 웹 페이지가 로드 >> DOM 생성 >> DOM 을 순회하며 렌더링
+	: DOM 트리를 순회하는 법 > "여러가지"가 있다
+		(1)자식 노드와 부모노드 관계를 이용하여 한 노드씩 방문 :  childNodes, nextSibling, parentNode 을 이용
+			childNode"s" : 한 요소의 모든 자식 요소에 접근 가능
+				: "배열" 이 반환된다
+
+			firstChild : childNodes 배열의 0번째 요소가 반환된다. (== childNodes[0] )
+			lastChild : lastChild 배열의 가장 마지막 요소가 반환된다 (== childNodes[ childNodes.length - 1 ] )
+			parentNode : 현재 노드의 부모노드를 반환
+			nextSibling : 현재 노드의 "다음" 형제 노드를 반환
+			previousSibling : 현재 노드의 "이전" 형제 노드를 반환
+
+		
+	: 최상위 노드는 "document" << "<HTML>" 이 아님!
+		: 그 밑으로 <html> , <head>, <body>, <h1> 등의 요소를 나타내는 노드가 있음
+
+
+
+주의 >> window. 은 명시 안해도 되지만 document. 는 명시해야된다
+
+
+Truthy 값 : 참으로 간주되는 값. 
+	: 그러니까 if 문 내부 넣었을 때 해당 if 문이 실행되게 하는 값
+	: 0 아닌 숫자 << 음수도 ok
+	: 객체  << { } , [ ] 같은 빈 배열도 ok 
+******: 비어있지 않은 문자열 << 'false' 도 참이다
+
+
+
+falsy값 : 거짓간주값
+******: 빈 문자열  << null 이 아니라고 해서 true 가 아님 주의 . 자바스크립트에선 문자열 자체는 기본적으로 객체가 아니다 !!!!!
+	: 숫자 0
+
+
+
+
+JS 로 HTML 요소 찾는법
+	1. ID로 >> document.findeElementById("id명")
+	2. 태그명으로 >> document.getElement"s"ByTagName("찐태그명")
+		: 해당 태그를 사용하는 모든 요소를 "배열"에 넣어서 반환한다
+		: 받은 건 변수명[0] 과 같이 사용 가능하다
+	3. 클래스명으로 >> 
+	4. css 선택자로 >>찐으로 #아이디명, 태그명.클래스명 이런거 쓸 수 있다. 
+		: id 바꿀때 "#id명" 인거 잊지 x
+		(1)document.querySelector("css선택자") >> 해당 선택자를 만족하는 요소 단 하나만 반환. (여러개 있어도 첫번째 것만 get)
+		(2) document.querySelectorAll("css선택자") >> 해당 선택자 만족하는 요소 모두 가져옴. "배열" 형태로
+
+
+			
+
+
+
+
+form 데이터( 입력양식 ) 읽기 
+	: https://ko.javascript.info/form-elements
+
+******: 특정 form 객체 얻는 법 >> 어케해서 form 객체를 구하든, 구한 form 객체를 대상으로 .내부자식명 으로 자식요소를 얻어낼 수 있다. !  ( 일반 객체에선 자식 요소 이렇게 함부로 못구하는거 주의 )
+	sol(1) "input 요소"를 직접 id 로 읽어오기
+
+
+	sol(2) foms 객체 활용
+		: document 객체에는 form "태그", 즉 document 객체 내부 모든 form 요소"들"에 대응되는 form"s" 라는 "배열" 객체가 있다. 
+		sol1. 찐 배열처럼 사용 >> document.forms[ n ] 
+		sol2. 얼추 배열처럼 사용 >> document.forms[ '해당폼요소의name명' ]
+		sol3. form 의 "name"으로 접근 >> document.forms.폼네임
+			ex)  
+				<form name="my">
+					...
+				</form>
+
+	sol(3) 사실 form 의 name 을 직방으로 해서 구할 수도 있다
+		ex ) 
+			<form name="myform">
+			. . . 
+			</form>
+			
+			일때
+			
+			document.formname명으로 form 객체 얻을 수 있다
+
+
+
+	******: 구한 form 객체에서 내부 자식 요소 뽑아내는 법 >> 구한폼객체명.elements.자식name명 || 구한폼객체명.자식name명
+	
+
+
+
+기타 form 관련 
+	(1) textarea 의 요소 값 구할 때도 .value 쓴다
+		ex)  let s = document.getElementById('textArea').value
+	(2) 체크박스나 라디오의 경우 .checked 속성 사용가능
+		ex )
+		if (document.getElementById('myCheckBox').checked) {
+		document.getElementById('result').value = '동의하셨습니다.' } 
+
+
+	(3) selectedList에서 .selectedIndex 속성으로 체크된 인덱스를 구할 수 있다	
+		ex ) let selected = document.getElementById('myList').selectedIndex;
+
+
+	(4) selectedList 는 배열이고, 특정 요소에 .options[인덱스]로 접근 가능
+		: selectedList 는 드롭다운 박스임
+		ex) let s = elt.options[2].value
+
+
+
+
+
+HTML 요소 변경하기
+	: 변경 가능한 것 >> 주의 : 해당 HTML 문서 자체가 바뀌는게 아니라 "DOM"만 수정되는거다. 원본은 그대로다. 
+		(1) 요소 내부 내용 >>  .innerHTML , .innerText, .textContent 
+		.innerHTML vs .innerText vs .textContent
+			innerHTML >> 해당 요소 사이의 문자열을 HTML 문장 취급
+			innerText >>해당 요소 사이의 문자열을 일반 텍스트 문장 취급 && 사용자에게 보여지지 않으면 빈문자열 추출됨
+			textContent >> 해당 요소 사이의 문자열을 일반 텍스트 문장 취급 && 사용자에게 보여지지 않아도 해당 문자열 추출됨
+
+		(2) 요소의 속성 >> .속성명
+			ex ) .value : 해당 요소의 value 속성 값을 가져온다.
+
+		(3) 요소의 스타일 >> .style.스타일속성명
+			ex ) document.getElementById('hehe').style.color = 'blue';
+
+	******(4) 요소의 클래스 >> 
+			sol1. .className = "클래스명1 클래스명2 .. "
+				: 주의 >> 기존에 할당되었던 클래스는 삭제된다. wirte 느낌
+			******: 모든 클래스 한번에 없애기 >> .className = ''
+			sol2. classList.add("클래스명1 클래스명2 .. ")
+				: 이건 기존에 할당되었던걸 유지한다. append 느낌
+
+			sol3.classList.remove("특정클래스명")
+ 				: 특정 클래스 삭제
+
+			sol4. .classList.toggle("특정클래스명")
+				: 있으면 없애고 없으면 추가하고
+
+			
+
+유명한속성값
+	.length >> 배열, 문자열의 길이
+
+-----------------------------------------------------------------------------------------------------
+	
+헷갈릴만한 코드
+	(1) for 문 헤드 부분에 변수 여러개 선언 가능
+	    for ( let i = 0, length = allItems.length ; i < length; i++) {
+   	       alert( allItems[i].innerHTML )
+  	      }
+
+
+	(2) alert창이 "먼저" 뜨고 최종적으로 화면에 그려진다. (리스트가)
+<!DOCTYPE >
+<html>
+<body>
+  <ul>
+    <li>List item 1</li>
+    <li>List item 2</li>
+    <li>List item 3</li>
+    <li>List item 4</li>
+    <li>List item 5</li>
+  </ul>
+  <script>
+    let list = document.getElementsByTagName('ul')[0]
+    let allItems = list.getElementsByTagName('li')
+
+    for (let i = 0, length = allItems.length; i < length; i++) {
+      alert(allItems[i].innerHTML)
+    }
+  </script>
+</body>
+</html>
+
+
+	(2)  html 내부에 문자열을 주입 가능하다 && 요소 내부에 들어가는 문자열을 HTML 문장 취급하려면 .innerHTML 을 써야지, innerText 나 .textContent 를 쓰면 안된다.
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  </head>
+<body>
+  <h1>childNodes 사용법</h1>
+  <div id="container">
+    <p>First paragraph</p>
+    <p>Second paragraph</p>
+    <p>Third paragraph</p>
+  </div>
+
+  <button id="showChildren">Show childNodes</button>
+  <div id="output"></div>
+
+  <script>
+    function listChildNodes() {
+      const container = document.getElementById('container')
+      const output = document.getElementById('output')
+      let htmlContent = '<ul>' // 문자열 스따뚜
+
+      container.childNodes.forEach(node => {
+        let textContent = node.textContent.trim( ) // 이걸 textContent 가 아니라 innerHTML 로 해도되긴 한데 그럴 경우 innerHTML 은 아무 내용 없을 떄 빈 문자열이 아니라 아예 undfined 를 반환하므로 밑에 if 문 내부에 집어넣어야됨.
+        if (textContent) {
+          htmlContent += `<li>${node.textContent}</li>` // 문자열 연산
+        }
+      })
+
+      htmlContent += '</ul>' // 문자열 끝
+      output.innerHTML = htmlContent // 문자열 삽입 . 이떄 꼭 innerHTML 이어야됨 주의!
+    }
+
+    document
+      .getElementById('showChildren')
+      .addEventListener('click', listChildNodes)
+  </script>
+</body>
+</html>
+
+
+
+	(3) form 요소 객체에선 자식 요소name 명으로 쉽게 접근 가능하지만 일반 요소객체에선 자식요소 그렇게쉽게 못구한다
+<!DOCTYPE >
+<html>
+<head>
+  <script>
+    function process() {
+
+     let obj = document.getElementById('mymy'); // ==  document.myform.text1 == document.forms['myform'].text1;  == document.myform.text1; 
+     console.log(obj);
+    obj = obj.text1;
+      alert(obj.value);
+
+  //    obj = document.getElementById('hoho').jaja.value; 는 안된다.
+      alert(obj);
+    }
+  </script>
+</head>
+<body>
+  <form name="myform" id="mymy">
+    <input type="text" id="target" name="text1" />
+    <input type="submit" value="제출" onclick="process()" />
+  </form>
+
+  <div id="hoho">
+    <span id="jaja"></span>
+  </div>
+</body>
+</html>
+
+
+	(4) selectList (dropdownlist) 에는 selectedIndex 라는 속성이 있다
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script>
+      function getValue() {
+        let elt = document.getElementById('myList')
+
+        let selected = elt.selectedIndex
+        let s = elt.options[selected].value
+        document.getElementById('result').value = s
+      }
+    </script>
+  </head>
+  <body>
+    <select id="myList">
+      <option value="학생">학생</option>
+      <option value="직장인" SELECTED>직장인</option>
+      <option value="전문직">전문직</option>
+      <option value="무직">무직</option>
+    </select>
+    <input type="button" onClick="getValue()" value="클릭" />
+    <input type="text" id="result" value="" />
+  </body>
+</html>
+
+
+	
