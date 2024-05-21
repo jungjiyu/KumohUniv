@@ -1,0 +1,207 @@
+생성자 함수
+	: 일반적인 function 을 호출할 떄 new 키워드 앞에 붙이고 호출하면 그 함수는 생성자 함수 취급된다.	
+	: 생성자 함수는 되도록 첫 글자를 대문자로.
+
+	function Person(name) { this.name = name; }
+	var me = new Person('Lee'); // Person은 생성자 함수
+	console.log(me); // Person&nbsp;{name: "Lee"}
+
+
+
+자바스크립트에서의 this
+	: 함수의 블록 스코프내에서 사용 가능
+	: js 의 전역위치, 일반적인(메서드 혹은 생성자함수 혹은 이벤트 함수가 아닌) 함수 내에서 사용하면 >> window 객체를 가리킴
+		: doucmnet 아님 주의
+	: js 의 "메서드 내" 혹은 "생성자함수 내" 혹은 "이벤트 함수 내"에서 사용하면 >> 해당 인스턴스를 가리킴
+	******: 주의 >> 객체 내부의 함수에서 사용됬다고 해서 그게 다 메서드는 아닌 것처럼 this 도 항상 해당 인스턴스를 가리키는게 아니다. 메서드 내부의 arg로들어간 콜백함수에서의 this 는 해당 메서드의 객체를 가리키지 않고  window 객체를 가리킨다.
+
+	: this 바인딩 >> 함수 호출 방식에 따라 this 에 바인딩될 객체가 동적으로 결정된다
+		:  함수를 선언할 때 this에 바인딩할 객체가 정적으로 결정되는 것이 아니고, 함수를 호출할 때 함수가 어떻게 호출되었는지에 따라 this에 바인딩할 객체가 동적으로 결정된다.
+	******:  js의 메서드를 꺼내서 다른 변수에 할당하면 더이상 그 객체에 속한 함수가 아닌 일반함수가 되기 떄문에 다시 this 는 window 객체를 가리키게된다.
+		: https://inpa.tistory.com/entry/JS-%F0%9F%93%9A-this-%EC%B4%9D%EC%A0%95%EB%A6%AC
+​
+
+-----------------------------------------------------------------------------------------------------------
+
+이벤트 : 상호작용이 발생하는 것
+
+
+: event 와 그에 따른 event handler||event Listner 속성 의 종류
+	: tip >> 'on'+이벤트명== event handler||event Listner 속성
+	(1) 마우스 관련
+		2. mouseover && onmouseover : 마우스를 영역내에 위치
+			: mouseenter는 explore 전용임 주의
+		3. mouseout && onmouseout: 마우스를 영역 밖에 위치
+		1. click && onclick : 마우스로 딱 눌린 그 찰나
+		4. mousedown && onmousedown:  마우스를 클릭하고 떼지않은 상태
+		5. mouseup && onmouseup: 마우스를 똄
+		6. mousemove && onmousemove: 마우스를 움직임 
+
+	(2) 키보드 관련	
+		1. keydown && onkeydown : 사용자가 키를 눌렀을떄
+		2. keyup && onkeyup : 사용자가 누른 키 뗏을 때
+
+	(3) form 관련
+		1. focus && onfocus : 해당 필드에 입력을 시도할 때 (아직 누른건 아님)
+		2. submit && onsubmit : 사용자가 입력 양식을 제출할떄
+	******3. blur && onblur : 입력요소가 포커스를 잃었을떄
+		4. change && onchange: 사용자가 입력 요소의 값을 변경할때
+
+	(4) 페이지로딩관련
+		1. load && onload : 브라우저가 페이지 로드를 완료하면
+		2. unload && onunload: 사용자가 현재 웹 페이지를 떠날떄
+		3. resize && onresize : 사용자가 윈도우 크기를 조절할때 
+
+
+이벤트핸들러(이벤트 함수) : 특정요소의 이벤트핸들속성에 할당,추가되는 함수
+	: 꼭 일반적인 함수일 필요는 없고 익명함수여도 괜찮다
+	: 이벤트 함수의 경우 일반적인 함수와 다르게 내부적으로 this 를 이가 할당된 요소를 참조하게 해준다!!! 
+		: 일반적으로 할당된 함수는 window 객첼 가리킨다.
+	ex) document.body.onclick = function() { console.log(this);  }
+
+
+
+event handler , event listener >> 이벤트를 처리하는 코드. 특정 이벤트와 특정 함수를 맵핑하여 특정이벤트발생시 특정 기능을 수행하도록 하는 얘.
+	: https://developer-talk.tistory.com/884
+	: 대체로 둘이 혼용되어 불린다. 
+		: 근데  addEventListner( )를 사용하여 만든 경우 "event Listner" 이라고 하고, event handler 이라곤 못한다.
+
+	: 만드는 법
+		sol(1) 이벤트핸들러속성에 이벤트함수할당  >> 한번에 하나의 이벤트 함수만 가리킬 수 있다. 새로 할당하면 기존것은 참조를 잃어버린다
+
+			sol1 . HTML 요소의 이벤트핸들러속성에 코드를 직접 추가( 인라인 방식 ) 
+				: 태그 내부에서 this 를 사용하여 요소 자기자신을 쉽게 구할 수 있다
+				ex ) <div onmouseover='this.style.backgroundColor="blue"'>hehehehe</div>
+
+			sol 2. script문에서  요소 객체의 이벤트핸들러속성에 함수를 대입 : 
+				: 해당요소객체.이벤트핸들러속성명 = 이벤트함수"명" 혹은 익명함수;
+			******: 쥬의 >> 
+					1. "이벤트함수명( )" 을 할당하면 안된다 ! 이러면 함수를 할당하는게 아니라 함숫값을 할당하는게 된다!! >> arg 를 요구하는 이벤트함수를 할당하고 싶으면 미리 선언한걸 할당하는게 아니라 익명함수로 할당해야된다
+					2. 이벤트명을 대상으로 쓰는게 아니라 이벤트속성명( "on어쩌구") 에 할당하는거다
+				ex ) <div id="special"> Hello World! </div>
+				<script>
+				function changeColor() {
+ 				 document.getElementById("special").style.backgroundColor='blue';
+				}
+
+				document.getElementById("special").onmouseover = changeColor; 
+				// document.getElementById("special").mouseover하면안된다
+				// changeColor( ) 할당하면안된다. 
+
+				</script>
+
+
+		sol (2) script문에서 addEventListner( "이벤트명", 이벤트함수명||익명함수 ) 함수를 사용 >> 하나의 이벤트에 여러개의 이벤트함수를 맵핑할 수 있다. "추가"되는 개념이다. 
+		******: 주의 >>  
+				1. 이벤트명을 대상으로 쓰는거다 !!! ( "on어쩌구" 할당하는게아니다) 
+				2. "이벤트함수명( )" 을 할당하면 안된다 ! 이러면 함수를 할당하는게 아니라 함숫값을 할당하는게 된다!!
+
+			: ex ) 
+			let obj = document.getElementById("special");
+			obj.addEventListener("mouseover", func1 );
+			obj.addEventListener("mouseover", func2 );
+			obj.addEventListener("mouseover", func3 );
+
+
+
+이벤트 객체 event object : DOM과 관련된 모든 이벤트를 저장하고있는 객체
+	: 상속 구조
+		Object
+		      ▼ Event 
+				▼ AnimationEvent  
+				▼ UIEvent 
+					▼ FocusEvent
+					▼ MouseEvent
+						▼ DragEvent
+						▼ WheelEvent
+					▼ KeyboardEvent
+					▼ InputEvent
+
+				▼ ClipBoardEvent 
+				▼CustomEvent 
+
+	: 이벤트 함수가 가질 수 있는 파라미터는 event객체 하나뿐.
+	: 이벤트 핸들러 내부의 this는 항상 currentTarget와 값이 일치하며 target에는 이벤트의 실제 타깃만 포함
+	: Event 객체의 속성
+		: 공통적인 속성
+			(1) type : 발생한 이벤트 타입명. (String 값)
+			(2) target :  이벤트가 실제로 발생된 정확한 DOM 요소 (Object값)
+			(3) currentTarget  : 이벤트 핸들러가 바인딩된 DOM 요소  (Object값)
+				target vs currentTarget
+					: 아래의 경우 <li id="1">item1</li>를 클릭했을떄  e.tarage 으로는 딱 클릭했었던 <li id="1">item1</li> 이 나오고, e.currentTarget 으로는 이벤트 핸들러가 실제로 바인딩되어있는 <ul id="list"> 가 출력된다.
+
+					<body>
+ 					 <ul id="list">
+  					  <li id="1">item1</li>
+   				 	<li id="2">item2</li>
+ 					 </ul>
+  					<script>
+   					 const list = document.querySelector('#list');
+
+  					  list.addEventListener('click', (e) => {
+    					  console.log(e.target);
+    					  console.log(e.currentTarget);
+    					});
+ 					 </script>
+					</body>
+		
+			(4) bubbles : 이벤트가 버블링 떄문에 상위 요소로 전파되어 발생된건지 검사 (boolean 값)
+			(5) timeStamp  : 이벤트가 발생한 ,  "페이지 로드 시간"으로부터의 경과 시간값 (ms단위)
+
+
+		: 발생한 이벤트 따라 가지고, 안가지는 속성들도 있다
+
+	: Event 객체의 메서드 
+		: 공통 메서드 
+			stopPropagation( ) :  딱 이벤트 핸들러에 바인딩된 요소에서 이벤트가 일어나야 함수를 실행한다.
+		
+		******preventDefault( ) : 이벤트의 기본 동작을 취소
+				: 이 메소드는 cancelable 속성이 true일 때만 효과가 있다.
+
+-----------------------------------------------------------------------------------------------------------
+
+까먹지 말아야할것
+	: 단순 함수를 선언한다고 실행되는게 아니라 실제로 호출해야된다;;
+	function a() { console.log(this); };
+	a(); //이거 안하면 걍 쌩 난리친것
+
+-----------------------------------------------------------------------------------------------------------
+
+헷갈리는코드
+	(1) 이벤트속성에 이벤트함수 할당할떄 ' 함수명( ) ' 이 아닌 '함수명' 을 할당하는거고, addEventListener 의 arg 로 "이벤트속성명" 이 아닌 "이벤트명"이 들어가는거다
+
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id="ging">
+      마우스를 올려주세요!
+    </div>
+
+    <script>
+     let obj = document.getElementById("ging");
+      console.log(obj);
+
+      function mouseOver() {
+        this.innerHTML = '감사합니다.'
+      }
+      function mouseOut() {
+        this.innerHTML = '마우스를 올려주세요!'
+      }
+      obj.addEventListener('mouseover',mouseOver);
+      obj.addEventListener('mouseout',mouseOut);
+
+
+      function mouseClick() {
+        this.innerHTML = 'yyyyyyyyyyyyyy.'
+      }
+      function mouseOut2(jj) { // 이벤트함수로써 적절하지 않다. 이벤트속성에 함수명만 할당해야되는데 따로 arg 를 요구하는 함수이기 떄문
+        jj.innerHTML = 'tert tetrettret!'
+      }
+      obj.onmousedown = mouseClick; // 함수명을 할당해야된다. 함수명( ) 으로 하면 값이 할당되는거라 안된다.
+      obj.onmouseout = mouseOut2; 
+
+
+    </script>
+  </body>
+</html>
+
