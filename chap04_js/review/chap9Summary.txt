@@ -127,11 +127,12 @@ form 데이터( 입력양식 ) 읽기
 
 
 
-HTML 요소 변경하기
+HTML 요소 "변경"하기
 	: 변경 가능한 것 >> 주의 : 해당 HTML 문서 자체가 바뀌는게 아니라 "DOM"만 수정되는거다. 원본은 그대로다. 
 		(1) 요소 내부 내용 >>  .innerHTML , .innerText, .textContent 
 		.innerHTML vs .innerText vs .textContent
 			innerHTML >> 해당 요소 사이의 문자열을 HTML 문장 취급
+				: innerHTML은 요소 생성도 가능하다
 			innerText >>해당 요소 사이의 문자열을 일반 텍스트 문장 취급 && 사용자에게 보여지지 않으면 빈문자열 추출됨
 			textContent >> 해당 요소 사이의 문자열을 일반 텍스트 문장 취급 && 사용자에게 보여지지 않아도 해당 문자열 추출됨
 
@@ -154,7 +155,24 @@ HTML 요소 변경하기
 			sol4. .classList.toggle("특정클래스명")
 				: 있으면 없애고 없으면 추가하고
 
-			
+HTML 요소 생성하기 
+	(1) 특정 요소 껍데기만 생성: document.createElement('태그명');
+		ex ) let newNode=document.createElement('p'); // <p></p> 생성
+
+	(2) (요소 안에 들어갈 구체적인 내용까지)전체적으로 생성 : document.write('어쩌구')
+
+HTML 요소 추가하기 >> 특정요소1.appendChild( 특정요소2) 
+		: 특정요소1의 자식으로 arg 노드를 추가한다.
+		ex) 
+		let parent = document.getElementById('target');
+		parent.appendChild(newNode);
+ 
+기존 HTML 요소 삭제하기 >> 특정요소1.removeChild( 특정요소2 );
+	: 기존 특정요소1 내부에 있던 arg요소를 삭제한다
+
+기존 HTML 요소 대체하기 >> 특정요소1. replaceChild( 특정요소2, 새요소);
+	: 기존 특정요소1 내부에 있던 특정요소2 를 새요소로 대체한다
+	
 
 유명한속성값
 	.length >> 배열, 문자열의 길이
