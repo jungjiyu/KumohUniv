@@ -21,3 +21,103 @@ AWT 는 옛날 꺼 Swing 이 요즘꺼
 
 
 컨텐트 팬 윗부분은 운영체제 따라 다르고, 이걸 바꾸려면 직접 그리는 수밖에 없다.
+
+---------------------------------------------------------------------------------------------------------------
+
+
+Jframe 을 상속받은 클래스 내부서 초기화하는 메서드를 작성하고 그걸생성자에서 호출한다
+
+EXIT_ON_CLOSE >>> x 버튼 눌르면 종료된다
+
+
+상단 바 부분을 제목표시줄이라고 한다
+Container contentPane = this.getContentPane() 을 통해 제목표시줄 "아래"의 컨텐츠 영역의 참조를 얻어올 수 있다. getContentPane 은 상속받은 JFrame 의 메서드이다
+
+
+일일이 레이아웃 결정하기 귀찮으니 contentPane.setLayout(new FlowLayout()); 을 이용해 이미 있는 레이아웃 채택
+
+contentPane.add( 컴포넌트 ); 를 통해 추가한다.
+
+보통 버튼을 캡션이라고 한다.
+
+setVisible(true); 이거 해야 화면에 보인다.
+
+
+System.exit(0); >> OS 에게 반환하는 값. 운영 프로그램이 정상처리되었는지 안되었는지 알 수 있음
+
+
+▬ 프레임 종료버튼이 클릭될 때, 프레임과 함께 프로그램을 종료시키는 방법
+ >> frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
+퍼즐게임은 gridlayout 을 쓰는거다
+	: 테이블 느낌. 똑같은 크기의 칸. 
+******: 안타깝게도 몇행 몇열 이런 식으로 지정은 못함
+	: 퍼즐맞추기 의 레이아웃
+
+flowlayout >> 왼쪽부터 오른쪽 방향으로 차례대로
+	: 예제 8-2 의 버튼 레이아웃
+
+borderlayout >>  동 서 남 북 센터 위치에 집어넣을 수 있음
+cardlayout >> 차곡차곡
+
+
+기억할 필욘 없고 명시적으로 선택해줌된다.
+
+
+컴포넌트는 파일 정도.
+폴더 역할을 하는게 panel. 
+
+
+c.setLayout(new FlowLayout());  내부에는 항상 객체를 집어넣는다'
+	// c.setLayout(FlowLayout);  오류 . 내부엔 객체 필요
+
+
+29 페이지에서 꼭 버튼을 직접적으로 넣지 않고 (25페이지처럼 panel 을 만들고 )panel 안에 컴포넌트를 넣고 그 panel 을 집어넣을 수도 있다.
+container.setLayout(new BorderLayout());
+container.add(new JButton("div"), BorderLayout.WEST);
+container.add(new JButton("Calculate"), BorderLayout.CENTER);
+
+
+
+31 에서 contentPane.setLayout(new BorderLayout(30, 20));
+ 와 같이 간격을 지정해주지 않으면 다 다닥다닥 달라붙는다
+
+
+GridLayout 도 마찬가지로 component 를 직접적으로 넣지 않고 panel 을 넣을 수도 있다.
+• 4x3 == 4행 3열
+
+
+
+layout 을 정해주지 않고 싶으면 
+contentPane.setLayout(new GridLayout(1, 10)); 에서 
+contentPane.setLayout(null); 하면 된다. 
+
+ 
+null 로 설정하여 배치관리자를 제거하면 직접 위치 설정해야된다
+	: location 은 왼쪽 위 끝이 원점이다. 오른쪽으로 갈수록 x 커지고 , 아래쪽으로 갈수록 y 커진다
+	: ▬ void setSize(int width, int height) // 컴포넌트 크기 설정
+	▬ void setLocation(int x, int y) // 컴포넌트 위치 설정
+	▬ void setBounds(int x, int y, int width, int height) // 위치와 크기 동시 설정
+	
+	: add 한 이후에 size, location 을 결정해줘도 상관 없ㄷㅏ. 어쨌뜬 무조건 설정을 해줘야되긴 하다
+
+JPanel p = new JPanel();
+p.setLayout(null); // 패널 p의 배치관리자 제거
+JButton clickButton = new JButton("Click");
+clickButton.setSize(100, 40); // 버튼 크기를 100×40으로 지정
+clickButton.setLocation(50, 50); // 버튼 위치를 (50, 50)으로 지정
+p.add(clickButton); // 패널 내 (50, 50)에 100×40 크기의 버튼 출력
+
+
+
+JLable >> 글자만 출력하는 . 정적인 문자열.
+lable 도 button 과 마찬가지로 setSize ,setLocation, setBounds 로 서ㄹ정가능하다
+	: 이러한 이유는 공통된 조상인 Compoennet 에 있는 메서드이기 떄문이다.
+
+
+사진 찍은 예제 9 는 grid 쓴것처럼 보이지만 사실 아니고 개발자가 직접 개고생한거다.
+	: 2줄을 입력하는 방법 >> 1/2 로 높이 설정하고 이중 for문을 돈다.
+
+
+eventHanlder 에 의해 버튼의 클릭을 감지하게 된다. event 를 처리할 수 있는 Listner 를 등록해주는거다.
