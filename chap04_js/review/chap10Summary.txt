@@ -1,4 +1,11 @@
-생성자 함수
+
+
+
+JS 의 함수와 메서드 주의 >> 객체 내부에서 선언된 함수라고 해서 다 메서드인게 아니라, 직접적으로 객체 내부에서 선언된 함수만 메서드이다
+	: 메서드의 내부에서 선언된 함수는 메서드가 아니라 걍 함수이다.
+
+
+생성자 함수 constructor 
 	: 일반적인 function 을 호출할 떄 new 키워드 앞에 붙이고 호출하면 그 함수는 생성자 함수 취급된다.	
 	: 생성자 함수는 되도록 첫 글자를 대문자로.
 
@@ -7,30 +14,6 @@
 	console.log(me); // Person&nbsp;{name: "Lee"}
 
 
-
-자바스크립트에서의 this
-	: 함수의 블록 스코프내에서 사용 가능
-	: js 의 전역위치, 일반적인(메서드 혹은 생성자함수 혹은 이벤트 함수가 아닌) 함수 내에서 사용하면 >> window 객체를 가리킴
-		: doucmnet 아님 주의
-	: js 의 "메서드 내" 혹은 "생성자함수 내" 혹은 "이벤트 함수 내"에서 사용하면 >> 해당 인스턴스를 가리킴
-	******: 주의 >> 객체 내부의 함수에서 사용됬다고 해서 그게 다 메서드는 아닌 것처럼 this 도 항상 해당 인스턴스를 가리키는게 아니다. 메서드 내부의 arg로들어간 콜백함수에서의 this 는 해당 메서드의 객체를 가리키지 않고  window 객체를 가리킨다.
-
-	: this 바인딩 >> 함수 호출 방식에 따라 this 에 바인딩될 객체가 동적으로 결정된다
-		:  함수를 선언할 때 this에 바인딩할 객체가 정적으로 결정되는 것이 아니고, 함수를 호출할 때 함수가 어떻게 호출되었는지에 따라 this에 바인딩할 객체가 동적으로 결정된다.
-	******:  js의 메서드를 꺼내서 다른 변수에 할당하면 더이상 그 객체에 속한 함수가 아닌 일반함수가 되기 떄문에 다시 this 는 window 객체를 가리키게된다.
-		: https://inpa.tistory.com/entry/JS-%F0%9F%93%9A-this-%EC%B4%9D%EC%A0%95%EB%A6%AC
-​
-
------------------------------------------------------------------------------------------------------------
-
-이벤트 : 상호작용이 발생하는 것
-
-
-이벤트타입명 != 이벤트속성명
-	: 이벤트속성은 onXXXX 꼴이고, 이벤트타입은 on 을 제외한 XXXX 부분이다.
-
-JS 의 함수와 메서드 주의 >> 객체 내부에서 선언된 함수라고 해서 다 메서드인게 아니라, 직접적으로 객체 내부에서 선언된 함수만 메서드이다
-	: 메서드의 내부에서 선언된 함수는 메서드가 아니라 걍 함수이다.
 
 JS 의 this 바인딩 정리
 	(0) this가 지정되지 않은 경우, this는 자동으로 전역 객체를 바라본다
@@ -48,8 +31,9 @@ JS 의 this 바인딩 정리
 			: function으로 선언된, 메서드가 아닌 함수의 경우 this가 존재하긴 하지만 값이 지정되지 않기 때문에 전역 객체를 가리키게 되는건데 , 화살표 함수로 선언한 함수에는 this가 아예 없다.
 			: JavaScript에서는 어떤 식별자를 찾을 때 현재 scope에 그 변수가 없으면 , 변수를 찾거나 가장 상위 환경에 도달 할 때까지 가까운 상위 환경 순으로 탐색한다. 화살표 함수에서의 this 바인딩 방식도 이와 마찬가지로,  화살표 함수에는 this라는 변수 자체가 존재하지 않기 때문에 그 상위 환경에서의 this를 참조하게 되는거다.
 		: 주의 >> "해당 함수를 호출한" 객체를 가리키는게 아니라(동적바인딩이 아니라) , 선언 시점의 상위 스코프 객체를 가리키게되는거다
-		: 그러니까 활용하면 좋은 경우는 함수 내부에서 해당 함수가 간접적으로 속한 객체를 this 를 이용해서 참조하고 싶을 때.
-		: 이는 해당 화살표 함수를 이벤트 함수로써 사용할 때도 적용된다. 
+		: 일반 함수가 아닌 화살표 함수를 활용하면 좋은 경우 >>  함수 내부에서 해당 함수가 간접적으로 속한 객체를 this 를 이용해서 참조하고 싶을 때.
+		: 화살표 함수를 활용하면 안되는 경우 >>  addEventListener 의 콜백함수인데 내부적으로 this 를 포함하는 경우
+			: 화살표 함수가 아닌 function 으로 선언된 함수의 경우 addEventListner 이 적용된 객체를 this 에 바인딩 시키지만, 화살표는 여전히 상위 scope 객체를 가리켜 착각의 여지가 있다
 		button.addEventListener('click', () => {
  			 console.log(this);	// Window
   			this.innerHTML = 'clicked';
@@ -59,6 +43,84 @@ JS 의 this 바인딩 정리
 	: https://developer-talk.tistory.com/884
 	: https://velog.io/@padoling/JavaScript-%ED%99%94%EC%82%B4%ED%91%9C-%ED%95%A8%EC%88%98%EC%99%80-this-%EB%B0%94%EC%9D%B8%EB%94%A9
 
+
+
+-----------------------------------------------------------------------------------------------------------
+
+이벤트 : 상호작용이 발생하는 것
+
+
+이벤트타입명 != 이벤트속성명
+	: 이벤트속성은 onXXXX 꼴이고, 이벤트타입은 on 을 제외한 XXXX 부분이다.
+		: 이벤트 속성은 
+			인라인에선 >> 태그 내부의 속성명  	
+				ex )  <div onclick="alert('클릭했습니다1.')">클릭</div>
+
+			스크립트문에선 >> 대상 객체의 속성명  
+				ex )  객체.onclick =  function view() { alert("클릭했습니다!!!"); }
+
+
+		: 이벤트 타입은 addEventListener 혹은 removeEventListener 에서 arg 로 대입된다
+			
+
+
+	: 이벤트 타입 종류
+	(1) 마우스 관련
+		1.  mouseover 과  mouseout
+			: 이벤트 발생 시 버블링이 일어난다
+			: preventDefault 메서드를 호출하여 이벤트의 기본 동작을 취소할 수 있다
+			: https://velog.io/@commi1106/MouseOver%EC%99%80-MouseEnter%EC%9D%98-%EC%B0%A8%EC%9D%B4-%EC%9D%B4%EB%B2%A4%ED%8A%B8-%EB%B2%84%EB%B8%94%EB%A7%81
+				: 그러니까  mouseOver/mouseOut과 mouseEnter/mouseLeave 의 차이점은 
+					(1) 이벤트 전파 여부
+					(2) 취소 가능
+					(3) 이건 사실인지 모르겠는데 mouseEnter/mouseLeave 은 explorer 전용이라고 한다
+
+			(1) mouseover : 마우스가 영역내에 위치
+			(2) mouseout : 마우스가 영역을 벗어남
+
+		0. mouseenter 와 mouseLeave
+			: 이벤트 발생시 버블링이 일어나지 않는다 
+			: preventDefault 메서드를 호출하여 이벤트의 기본 동작을 취소할 수 "없다"
+			(1) mouseenter : 마우스가 영역내에 위치
+			(2) mouseLeave : 마우스가 영역을 벗어남
+
+		4. mousedown :  마우스를 클릭하고 떼지않은 상태
+		5. mouseup : 마우스를 똄
+		1. click  : 마우스 버튼을 누르고 + 떼는 동작이 모두 완료된 후에 발생
+		******: 그러니까 순서 >> mousedown -> mouseup -> click
+		6. mousemove : 마우스를 움직임
+			 
+
+	(2) 키보드 관련	
+		1. keydown : 사용자가 키를 눌렀을떄
+		2. keyup : 사용자가 누른 키 뗏을 때
+
+	(3) form 관련
+		: https://inpa.tistory.com/entry/JS-%F0%9F%93%9A-%ED%8F%AC%EC%BB%A4%EC%8A%A4-%EC%A0%9C%EC%96%B4-focus-blur
+
+
+		0. focus  : 입력요소가 포커스를 받을 때. 해당 필드에 입력을 시도할 때 (아직 누른건 아님)
+			: 그러니까 입력 필드 클릭하고 입력하라고 깜빡깜빡이는 시점에 발생한다
+			: 버블링 일어나지 않는다
+
+		1. focusin : focus 와 같은 기능을 하는데 버블링을 곁들인...
+
+	******2. blur  : 입력요소가 포커스를 잃었을떄
+			: 그러니까 입력 필드를 클릭해서 포커스를 줬었다가, 외부 영역을 클릭해서 해당 영역이 깜빡이는게 멈추게 되면 발생한다
+		******: 그러니까 focus 이벤트가 선행된 경우에만 발생할 수 있는거다
+			: 버블링이 일어나지 않는다
+
+		3. focusout : blur 와 같은 기능을 하는데 버블링을 곁들인...
+
+		4. submit  : 사용자가 입력 양식을 제출할떄
+		5. change : 사용자가 입력 요소의 값을 변경할때
+
+	(4) 페이지로딩관련
+		1. load : 브라우저가 페이지 로드를 완료하면
+		2. unload : 사용자가 현재 웹 페이지를 떠날떄
+		3. resize : 사용자가 윈도우 크기를 조절할때 
+
+		
 
 
 
@@ -77,11 +139,28 @@ JS 의 this 바인딩 정리
 			(1) 인라인 : 태그의 이벤트 속성(onXXX)을 사용하여 특정 이벤트 타입과 함수(혹은 실행내용)을 바인딩 함
 				<button id="btn" onclick="console.log('버튼 클릭')">
 
+			****** 주의 >> 함수를 할당하는 경우 "함수명" 을 할당하면 안되고, "함수명( )" 을 할당해야된다 
+
 			(2) 스크립트문 
 				step1. 이벤트 발생 감지 대상 객체 얻기 
 					const btnNode = document.getElementById("btn");
 				step2. 객체의 이벤트 속성에 함수 할당
 					btnNode.onclick = ( ) => console.log("버튼 클릭") ;
+
+				******: 쥬의 >> 
+					1. "이벤트함수명( )" 을 할당하면 안된다 ! 이러면 함수를 할당하는게 아니라 함숫값을 할당하는게 된다!! >> arg 를 요구하는 이벤트함수를 할당하고 싶으면 미리 선언한걸 할당하는게 아니라 익명함수로 할당해야된다
+					2. 이벤트명을 대상으로 쓰는게 아니라 이벤트속성명( "on어쩌구") 에 할당하는거다
+					ex ) <div id="special"> Hello World! </div>
+					<script>
+					function changeColor() {
+ 					 document.getElementById("special").style.backgroundColor='blue';
+					}
+
+					document.getElementById("special").onmouseover = changeColor; 
+					// document.getElementById("special").mouseover하면안된다
+					// changeColor( ) 할당하면안된다. 
+					</script>
+
 
 
 	: 이벤트 리스너 >> addEventListener( ) 를 사용하여 이벤트와 함수를 연결 시킴. 한 이벤트 타입에 대해 여러 이벤트 함수들을 바인딩 가능.
@@ -91,11 +170,22 @@ JS 의 this 바인딩 정리
 				const btnNode = document.getElementById("btn");
 
 			step2. 객체를 대상으로 addEventListner(  이벤트타입명 , 추가할이벤트함수 , 옵션 )을 사용 
+			******: 주의 >>  
+					1. 이벤트명을 대상으로 쓰는거다 !!! ( "on어쩌구" 할당하는게아니다) 
+					2. "이벤트함수명( )" 을 할당하면 안된다 ! 이러면 함수를 할당하는게 아니라 함숫값을 할당하는게 된다!!
+
+				: ex ) 
+				let obj = document.getElementById("special");
+				obj.addEventListener("mouseover", func1 );
+				obj.addEventListener("mouseover", func2 );
+				obj.addEventListener("mouseover", func3 );
+
 				: 이벤트 함수로 익명함수도 가능하다	
 					주의 >> 이벤트 함수를 익명함수로 줄 경우 나중에 removeEventListener( 이벤트타입명 , 제거할이벤트함수명 , 옵션)로 해당 함수를 제거할 수 없게 된다
 
-				: 옵션 >> 생략 가능하고, true 할당시 이벤트 캡처가 활성화됨
-					: 디폴트값 false
+				: 옵션 : "캡쳐"를 쓸 건지의 여부 << 생략 가능하다
+					true : 이벤트 캡처가 활성화됨
+					false : 버블링이 활성화됨 << ******디폴트
 
 				btnNode.addEventListener( 'click', ( ) => console.log("버튼 클릭") );	
 
@@ -111,90 +201,13 @@ JS 의 this 바인딩 정리
 
 
 
-: event 와 그에 따른 event handler||event Listner 속성 의 종류
-	: tip >> 'on'+이벤트명== event handler||event Listner 속성
-	(1) 마우스 관련
-		2. mouseover && onmouseover : 마우스를 영역내에 위치
-			: mouseenter는 explore 전용임 주의
-		3. mouseout && onmouseout: 마우스를 영역 밖에 위치
-		1. click && onclick : 마우스로 딱 눌린 그 찰나
-		4. mousedown && onmousedown:  마우스를 클릭하고 떼지않은 상태
-		5. mouseup && onmouseup: 마우스를 똄
-		6. mousemove && onmousemove: 마우스를 움직임 
-
-	(2) 키보드 관련	
-		1. keydown && onkeydown : 사용자가 키를 눌렀을떄
-		2. keyup && onkeyup : 사용자가 누른 키 뗏을 때
-
-	(3) form 관련
-		1. focus && onfocus : 해당 필드에 입력을 시도할 때 (아직 누른건 아님)
-		2. submit && onsubmit : 사용자가 입력 양식을 제출할떄
-	******3. blur && onblur : 입력요소가 포커스를 잃었을떄
-		4. change && onchange: 사용자가 입력 요소의 값을 변경할때
-
-	(4) 페이지로딩관련
-		1. load && onload : 브라우저가 페이지 로드를 완료하면
-		2. unload && onunload: 사용자가 현재 웹 페이지를 떠날떄
-		3. resize && onresize : 사용자가 윈도우 크기를 조절할때 
 
 
 
 
 
-
-
-이벤트핸들러(이벤트 함수) : 특정요소의 이벤트핸들속성에 할당,추가되는 함수
-	: 꼭 일반적인 함수일 필요는 없고 익명함수여도 괜찮다
-	: 이벤트 함수의 경우 일반적인 함수와 다르게 내부적으로 this가 자신이 할당된 요소를 참조하게 해준다!!! 
-		: 일반적으로 할당된 함수는 window 객첼 가리킨다.
-			ex) document.body.onclick = function() { console.log(this);  }
-
-
-
-event handler , event listener >> 이벤트를 처리하는 코드. 특정 이벤트와 특정 함수를 맵핑하여 특정이벤트발생시 특정 기능을 수행하도록 하는 얘.
-	: https://developer-talk.tistory.com/884
-	: 대체로 둘이 혼용되어 불린다. 
-		: 근데  addEventListner( )를 사용하여 만든 경우 "event Listner" 이라고 하고, event handler 이라곤 못한다.
-
-	: 만드는 법
-		sol(1) 이벤트핸들러속성에 이벤트함수할당  >> 한번에 하나의 이벤트 함수만 가리킬 수 있다. 새로 할당하면 기존것은 참조를 잃어버린다
-
-			sol1 . HTML 요소의 이벤트핸들러속성에 코드를 직접 추가( 인라인 방식 ) 
-				: 태그 내부에서 this 를 사용하여 요소 자기자신을 쉽게 구할 수 있다
-				ex ) <div onmouseover='this.style.backgroundColor="blue"'>hehehehe</div>
-
-			sol 2. script문에서  요소 객체의 이벤트핸들러속성에 함수를 대입 : 
-				: 해당요소객체.이벤트핸들러속성명 = 이벤트함수"명" 혹은 익명함수;
-			******: 쥬의 >> 
-					1. "이벤트함수명( )" 을 할당하면 안된다 ! 이러면 함수를 할당하는게 아니라 함숫값을 할당하는게 된다!! >> arg 를 요구하는 이벤트함수를 할당하고 싶으면 미리 선언한걸 할당하는게 아니라 익명함수로 할당해야된다
-					2. 이벤트명을 대상으로 쓰는게 아니라 이벤트속성명( "on어쩌구") 에 할당하는거다
-				ex ) <div id="special"> Hello World! </div>
-				<script>
-				function changeColor() {
- 				 document.getElementById("special").style.backgroundColor='blue';
-				}
-
-				document.getElementById("special").onmouseover = changeColor; 
-				// document.getElementById("special").mouseover하면안된다
-				// changeColor( ) 할당하면안된다. 
-
-				</script>
-
-
-		sol (2) script문에서 addEventListner( "이벤트명", 이벤트함수명||익명함수 ) 함수를 사용 >> 하나의 이벤트에 여러개의 이벤트함수를 맵핑할 수 있다. "추가"되는 개념이다. 
-		******: 주의 >>  
-				1. 이벤트명을 대상으로 쓰는거다 !!! ( "on어쩌구" 할당하는게아니다) 
-				2. "이벤트함수명( )" 을 할당하면 안된다 ! 이러면 함수를 할당하는게 아니라 함숫값을 할당하는게 된다!!
-
-			: ex ) 
-			let obj = document.getElementById("special");
-			obj.addEventListener("mouseover", func1 );
-			obj.addEventListener("mouseover", func2 );
-			obj.addEventListener("mouseover", func3 );
-
-
-
-이벤트 객체 event object : DOM과 관련된 모든 이벤트를 저장하고있는 객체
+이벤트 객체 event object : 해당 이벤트에 관련된 모든 정보를 저장하고 있는객체
+	: 이벤트 객체가 어떤 속성을 갖느냐는 해당 이벤트 객체가 어떤 타입의 이벤트냐에 따라 달라진다
 	: 상속 구조
 		Object
 		      ▼ Event 
@@ -213,6 +226,7 @@ event handler , event listener >> 이벤트를 처리하는 코드. 특정 이�
 	: 이벤트 함수가 가질 수 있는 파라미터는 event객체 하나뿐.
 	: 이벤트 핸들러 내부의 this는 항상 currentTarget와 값이 일치하며 target에는 이벤트의 실제 타깃만 포함
 	: Event 객체의 속성
+		: https://aboveimagine.tistory.com/96
 		: 공통적인 속성
 			(1) type : 발생한 이벤트 타입명. (String 값)
 			(2) target :  이벤트가 실제로 발생된 정확한 DOM 요소 (Object값)
@@ -253,11 +267,38 @@ event handler , event listener >> 이벤트를 처리하는 코드. 특정 이�
 				: https://programming119.tistory.com/100
 
 
+	: 이벤트 타입에 따른 속성들
+		(1) 마우스이벤트
+			: https://mong-blog.tistory.com/entry/clientX-offsetX-pageX-screenX-%EC%B0%A8%EC%9D%B4
+			1. clientX , clientY : 클라이언트 영역( 보여지는 브라우저 페이지,화면 기준.  스크롤이 얼마나 되있는지 그런거 계산 없이  )의 상단과 왼쪽사이드를 0으로 잡고 가로, 세로 좌표 제공 ( 아래, 오른쪽으로 갈수록 각각 y, x 값 증가한다 ) 	
+			0. offsetX , offsetY : "이벤트 대상"( 브라우저 화면이 기준이 아니다 )의 상단과 왼쪽 사이드를 0으로 잡고, 가로, 세로 좌표를 제공한다
+			2. pageX, pageY: 전체 "문서"( 스크롤영역까지 고려하여 )의 상단을 0으로 잡고 x,y 좌표를 반환한다
+			3. screenX, screenY :  "모니터"( 브라우저 그런거 상관 없이 컴퓨터)의 상단을 0으로 잡고 x,y 좌표를 제공한다
+				: 브라우저를 움직여도 값은 같다
+
+			4. layerX, layerY : position 을 적용한 요소를 기준으로  x,y 좌표를 반환한다
+			5. button : 마우스 버튼의 종류에 따라 값 반환 ( 왼쪽 : 0, 휠 : 1 , 오른쪽: 2 ) 
+			6. buttons : 
+
+		(2) 키보드 이벤트 
+			: https://hyeonseok.com/blog/897
+			1. key : "논리적인" 키 값(= 실제로 입력되는 값 )을 문자열로 반환
+				: A를 눌렀으면 "A" 를 반환한다 . shift 를 누르면 "escape" 를 반환한다. 
+				: 참고 >> keyCode 는 해당 키의 아스키코드값을 반환한다. 그리고 현제 depreceated 되었다
+
+			2. code : "물리적인" 키 값(= 논리적키값+ 위치를나타내는접두/미사 )을 문자열로 반환
+				: A 를 눌렀으면 "keyA"를 반환한다. shift 를 누르면 왼쪽이냐 오른쪽이냐 따라서 "shiftLeft", "shiftRight" 가 반환된다.
+				: 해당 키와 연결된 문자 뿐 아니라, 해당 키의 물리적 위치까지 고려하여 정미란 작업을 처리하려는 경우 유용하다 
+
+			3. altKey , ctlrKey ,  shiftKey : 각각 alt 키 || crtl 키 || shift 키 가 눌린건지 booelan 값으로 여부를 표시한다
+
  Event 전파
 	: 요소간 포함 관계가 있는 경우 일어난다
 	: 종류
 		(1) 버블링 bubbling : 안쪽 --> 바깥쪽
-		(2) 캡쳐링 capturing
+			: 버블링이 일어나지 않는다 == 그러니까 target 과 currentTarget 이 항상 일치한다 == 자기 자신만이 이벤트를 받을 수 있다
+
+		(2) 캡쳐링 capturing : 바깥쪽 --> 안쪽
 			: 
 -----------------------------------------------------------------------------------------------------------
 
