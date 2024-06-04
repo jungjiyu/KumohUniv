@@ -392,43 +392,13 @@ Tip
 
 	2. js 파일 연결할 떄 <script src="indexScript.js" /> 처럼 축약형식으로 사용하면 잘 안된다. <script src="indexScript.js"></script> 로 제대로 해줘야된다.
 
+	3. 자바스크립트에서 객체를 대상으로 얻어지는 속성값은 죄다 
 
 -----------------------------------------------------------------------------------------------------------
 
-헷갈리는코드
-	(1) 이벤트속성에 이벤트함수 할당할떄 ' 함수명( ) ' 이 아닌 '함수명' 을 할당하는거고, addEventListener 의 arg 로 "이벤트속성명" 이 아닌 "이벤트명"이 들어가는거다
+왜 html 에서 정의한 스타일 값이 제대로 불러와지지 않는것일까>> 인라인으로 직접 정의한 스타일이 아닌 이상 getComputedStyle( ) 의 사용이 필요
+	: https://kin.naver.com/qna/detail.naver?d1id=1&dirId=1040202&docId=361349219&enc=utf8&kinsrch_src=pc_tab_kin&qb=7J6Q67CU7Iqk7YGs66a97Yq4IOqwneyytCDsho3shLEg67mIIOusuOyekOyXtA%3D%3D&rank=16&search_sort=0&section=kin.qna_ency_cafe&spq=0
 
-<!DOCTYPE html>
-<html>
-  <body>
-    <div id="ging">
-      마우스를 올려주세요!
-    </div>
+	
 
-    <script>
-     let obj = document.getElementById("ging");
-      console.log(obj);
-
-      function mouseOver() {
-        this.innerHTML = '감사합니다.'
-      }
-      function mouseOut() {
-        this.innerHTML = '마우스를 올려주세요!'
-      }
-      obj.addEventListener('mouseover',mouseOver);
-      obj.addEventListener('mouseout',mouseOut);
-
-
-      function mouseClick() {
-        this.innerHTML = 'yyyyyyyyyyyyyy.'
-      }
-      function mouseOut2(jj) { // 이벤트함수로써 적절하지 않다. 이벤트속성에 함수명만 할당해야되는데 따로 arg 를 요구하는 함수이기 떄문
-        jj.innerHTML = 'tert tetrettret!'
-      }
-      obj.onmousedown = mouseClick; // 함수명을 할당해야된다. 함수명( ) 으로 하면 값이 할당되는거라 안된다.
-      obj.onmouseout = mouseOut2; 
-
-
-    </script>
-  </body>
-</html>
+	
