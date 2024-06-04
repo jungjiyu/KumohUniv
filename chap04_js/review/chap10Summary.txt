@@ -79,7 +79,7 @@ JS 의 this 바인딩 정리
 			(2) mouseout : 마우스가 영역을 벗어남
 
 		0. mouseenter 와 mouseLeave
-			: 이벤트 발생시 버블링이 일어나지 않는다 
+			: 이벤트 발생시 버블링이 일어나지 않는다  
 			: preventDefault 메서드를 호출하여 이벤트의 기본 동작을 취소할 수 "없다"
 			(1) mouseenter : 마우스가 영역내에 위치
 			(2) mouseLeave : 마우스가 영역을 벗어남
@@ -90,6 +90,11 @@ JS 의 this 바인딩 정리
 		******: 그러니까 순서 >> mousedown -> mouseup -> click
 		6. mousemove : 마우스를 움직임
 			 
+	(0) 마우스 휠 관련 
+		: : wheel 이벤트와 scroll 이벤트는 다른거 주의
+		1. wheel : 마우스 휠을 움직임임을 감지
+			: mousewheel 이란 이벤트도 있는데 그건 비표준이고, wheel 을 보통 사용한다
+			: https://m.blog.naver.com/a_ugust/221982749023
 
 	(2) 키보드 관련	
 		1. keydown : 사용자가 키를 눌렀을떄
@@ -116,7 +121,12 @@ JS 의 this 바인딩 정리
 		5. change : 사용자가 입력 요소의 값을 변경할때
 
 	(4) 페이지로딩관련
-		1. load : 브라우저가 페이지 로드를 완료하면
+		: https://velog.io/@qwe8851/DOM-%EA%B0%9C%EB%85%90%EC%A0%95%EB%A6%AC-load-%EC%9D%B4%EB%B2%A4%ED%8A%B8
+		1. load : 해당 객체가 다 로드되었을 때 발생하는 이벤트 
+			: 주의 >> 전체 페이지 다 로딩 시( DOM 트리 완성 뿐 아니라, 이미지 와 스타일 시트 같은 외부 자원도 모두 불러오는 것이 끝났을 때) load 이벤트가 발생되는건,  window 객체를 대상으로 사용했을때만 그런거다. 
+				: 만약 특정 img 태그 요소를 대상으로 적용하면 해당 이미지가 다 로드 되었을떄 load 이벤트가 발생한다
+			: 특정 객체에 적용할 경우, 해당 객체의 하위 요소들까지 모두 load 됬을때 load 이벤트가 발생한다
+ 
 		2. unload : 사용자가 현재 웹 페이지를 떠날떄
 		3. resize : 사용자가 윈도우 크기를 조절할때 
 
@@ -206,7 +216,10 @@ JS 의 this 바인딩 정리
 
 
 
-이벤트 객체 event object : 해당 이벤트에 관련된 모든 정보를 저장하고 있는객체
+이벤트 객체 event object 
+	: 해당 이벤트에 관련된 모든 정보를 저장하고 있는객체
+		: 주의 >> 이벤트 감지 당하는 객체가 이벤트 객체인게 아니라, 이벤트 감지 당하는 객체의 이벤트에 바인딩된 이벤트 함수에 자동 주입되는 객체를 이벤트 객체라고 하는거다.
+	: 이벤트가 발생하면, 이벤트 객체는 동적으로 생성되어, 이벤트 핸들러에 인자로 암묵적으로 주입된다
 	: 이벤트 객체가 어떤 속성을 갖느냐는 해당 이벤트 객체가 어떤 타입의 이벤트냐에 따라 달라진다
 	: 상속 구조
 		Object
@@ -214,9 +227,9 @@ JS 의 this 바인딩 정리
 				▼ AnimationEvent  
 				▼ UIEvent 
 					▼ FocusEvent
-					▼ MouseEvent
+					▼ MouseEvent : mousedown, mouseup, click , mouseover , mouseout ... 
 						▼ DragEvent
-						▼ WheelEvent
+						▼ WheelEvent : wheel 이벤트 
 					▼ KeyboardEvent
 					▼ InputEvent
 
@@ -224,12 +237,13 @@ JS 의 this 바인딩 정리
 				▼CustomEvent 
 
 	: 이벤트 함수가 가질 수 있는 파라미터는 event객체 하나뿐.
-	: 이벤트 핸들러 내부의 this는 항상 currentTarget와 값이 일치하며 target에는 이벤트의 실제 타깃만 포함
 	: Event 객체의 속성
 		: https://aboveimagine.tistory.com/96
 		: 공통적인 속성
 			(1) type : 발생한 이벤트 타입명. (String 값)
 			(2) target :  이벤트가 실제로 발생된 정확한 DOM 요소 (Object값)
+				: 해당 이벤트를 실제로 트리거 시킨 대상
+					ex ) 버블링 되는 이벤트 대해 이벤트 핸들러가 부모에 바인딩되있는 상태에서, 자식에서 해당 이벤트가 일어나면(자식에는 해당 이벤트 대해 바인딩된 이벤트 핸들러가 없다 할 지라도) 부모에서 해당 이벤트 핸들러가 실행된다. 이때 target 은 자식 요소이며, currentTarget 은 부모 요소이다. 
 			(3) currentTarget  : 이벤트 핸들러가 바인딩된 DOM 요소  (Object값)
 				target vs currentTarget
 					: 아래의 경우 <li id="1">item1</li>를 클릭했을떄  e.tarage 으로는 딱 클릭했었던 <li id="1">item1</li> 이 나오고, e.currentTarget 으로는 이벤트 핸들러가 실제로 바인딩되어있는 <ul id="list"> 가 출력된다.
@@ -280,6 +294,13 @@ JS 의 this 바인딩 정리
 			5. button : 마우스 버튼의 종류에 따라 값 반환 ( 왼쪽 : 0, 휠 : 1 , 오른쪽: 2 ) 
 			6. buttons : 
 
+		(3) wheel 이벤트 
+			: mouse 이벤트를 상속하는 이벤트 타입이다
+			: https://blog.naver.com/how2frontend/222306472981
+			1. deltaX , deltaY , deltaZ : 마우스 휠의 가로 , 세로, z 축 스크롤 "양"을 리턴
+			2. deltaMode : delta 값의 측정 단위를 나타내는 숫자 반환
+			3. wheelDelta? >> https://bejerry.tistory.com/8
+
 		(2) 키보드 이벤트 
 			: https://hyeonseok.com/blog/897
 			1. key : "논리적인" 키 값(= 실제로 입력되는 값 )을 문자열로 반환
@@ -292,15 +313,75 @@ JS 의 this 바인딩 정리
 
 			3. altKey , ctlrKey ,  shiftKey : 각각 alt 키 || crtl 키 || shift 키 가 눌린건지 booelan 값으로 여부를 표시한다
 
- Event 전파
-	: 요소간 포함 관계가 있는 경우 일어난다
-	: 종류
-		(1) 버블링 bubbling : 안쪽 --> 바깥쪽
-			: 버블링이 일어나지 않는다 == 그러니까 target 과 currentTarget 이 항상 일치한다 == 자기 자신만이 이벤트를 받을 수 있다
 
-		(2) 캡쳐링 capturing : 바깥쪽 --> 안쪽
-			: 
+
+
+이벤트 위임
+	: 
+
+
+
+
+ 이벤트 전파 propagation  : 부모에 바인딩된 이벤트 핸들러에 대응하는  이벤트가 자식에서 일어나면, 해당 이벤트는 부모에서"도" 일어난 것으로 간주된다.
+	: 이벤트 전파를 적용하는게 특별한게 아니라, 이벤트 전파를 적용하지 않는게 특별한 케이스인거다.
+		: 그러니까 기본적으로 브라우저는 버블링이든, 캡쳐링이든   
+	: addEventListener( ) 로 바인딩한 이벤트 핸들러는 기본적으로 모두 버블링 방식으로 전파된다
+		: true 옵션을 줘서 캡쳐링 방식으로 전파방식을 설정할 수 있다
+		: 버블링 방식과 캡쳐링 방식을 동시에 적용할 수도 있다 >> 한 이벤트 핸들러 대해 한번은 옵션을 주고 바인딩하고 , 또 한번은 옵션을 주지 않고 바인딩하면 된다
+			child.addEventListener("click", (e) => { console.log('child clicked'); })
+			child.addEventListener("click", (e) => { console.log('child clicked'); }, true)
+
+		: 전파를 하지 않게 하려면 noPropagation( ) 을 이후에 적용해야된다
+ 
+	: 요소간 포함 관계(계층관계)가 있는 경우 일어난다
+	: 전파가 일어나지 않는다 == target 과 currentTarget 이 항상 일치한다 == 자기 자신만이 이벤트를 받을 수 있다
+	: 왜 이런 기능이 있는걸까 >>  자식 요소가 부모 요소 영역 안에 위치하고 있기 때문에 자식 요소만을 클릭하였다 하더라도 논리적으로 보면 부모 요소도 클릭한 셈이 되기 때문이다. 그러니까 논리적인 사람의 관점을 반영하는 것이다.
+
+
+	: 종류
+		(1) 버블링 bubbling : 자식에서 이벤트 발생 시 , 자식에서 먼저 자식에 바인딩됬었던 이벤트 핸들러가 먼저 호출된 후, 해당 이벤트 대해 부모에 바인딩됬었던 이벤트 핸들러가 호출된다( 안쪽 --> 바깥쪽 )
+
+			: 버블링이 적용된 이벤트 발생시 target과 currentTarget 
+				: 부모와 자식 모두에 해당 이벤트 대해 이벤트 함수 바인딩 해놓은 경우
+					: 부모에서 발생 시 : target-부모 , curTarget-부모 . 부모에 바인딩된 이벤트 함수만 호출된다
+					: 자식에서 발생 시 : target-자식 , curTarget-자식 먼저 일어난 후 ,  target-자식 , curTarget-부모  .자식에 바인딩된 이벤트 함수가 호출된 후 자동적으로 부모에 바인딩된 이벤트 함수도 호출된다
+
+				: 부모에만 해당 이벤트 대해 이벤트 함수 바인딩 해놓은 경우
+        				: 부모에서 발생 시 :  target-부모 , curTarget-부모 . 부모에 바인딩된 이벤트 함수만 호출된다
+        				: 자식에서 발생 시 : target-자식 , curTarget-부모. 부모에 바인딩된 이벤트 함수만 호출된다
+				: 자식에만 해당 이벤트 대해 이벤트 함수 바인딩 해놓은 경우
+        				: 부모에서 발생 시 : 아무 일도 안 일어난다
+        				: 자식에서 발생 시 : target-자식 , curTarget-자식. 자식에 바인딩된 이벤트 함수만 호출된다
+
+			: 암기 tip >> 버스는 안쪽 부터 앉아야된다
+
+
+
+
+		(2) 캡쳐링 capturing :  자식에서 이벤트 발생 시 , 해당 이벤트 대해 부모에 바인딩됬었던 이벤트 핸들러가 먼저 호출된 후, 자식에 바인딩됬었던 이벤트 핸들러가 호출된다 (바깥쪽 --> 안쪽)
+
+
+브라우저 객체 모델(BOM: Browser Object Model): 웹 브라우저가 가지고 있는 모든 객체
+	▼ window
+		: 자바스크립트의 모든 전역 함수는 window 객체의 메서드
+		: window 객체는 생략 가능
+		▼***document  >> DOM DocumentObjectModel
+			▼ forms 
+			▼ anchors 
+			▼ layers
+			▼ forms 
+ 		▼ navigator 
+		▼screen 
+		▼ history 
+		▼ location 
+		▼frames 
+
 -----------------------------------------------------------------------------------------------------------
+Tip
+	1. css 에서는 snake case 비슷했던 것이, js 상의 속성명으로는 camel case 이다
+		ex ) 객체.style.backgroundColor
+
+	2. js 파일 연결할 떄 <script src="indexScript.js" /> 처럼 축약형식으로 사용하면 잘 안된다. <script src="indexScript.js"></script> 로 제대로 해줘야된다.
 
 까먹지 말아야할것
 	: 단순 함수를 선언한다고 실행되는게 아니라 실제로 호출해야된다;;
