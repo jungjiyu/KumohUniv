@@ -1,4 +1,72 @@
+속성과 프로퍼티 정리
+	: https://ko.javascript.info/dom-attributes-and-properties
+	: DOM >> html 을 자바스크립트 객체로 표현한 문서 모델
+		: DOM 트리의 노드는 자바스크립트에서의 객체이다
 
+	: Attribute >> html 의 속성
+		: ex ) <div class='my-class' style="color: red;"></div> 에서 class 와 style
+	****** 주의 >> 태그 내의 인라인으로 정의된 것들에 한해서만 해당 요소의 attribute로 간주된다
+			: 아무리 표준 attribute라고 할 지라도 해당 태그에 인라인으로 명시되지 않았으면 js코드에서 "해당객체.프로퍼티명" 을 해도 빈 문자열만 나온다 (에러가 나진 않는다) >> 따라서 인라인으로 명시된 style 이 아닌 경우 js 코드에서 "해당객체.style.스타일규칙명" 을 했을때 빈문자열만 나온다.
+				: 그럼에도 불구하고 브라우저화면상엔 해당 스타일규칙이 잘 적용이 되는 것은, 외부에 선언된 스타일을 참조하여 브라우저에 그려지는 것이지, 실제로 DOM 영역의 해당 노드들에게 속성으로 적용하는 것이 아니기 때문이다. 
+			: https://helloinyong.tistory.com/284
+
+		: 정적이다 
+			: 만약 property뿐 아니라 attribute까지 수정하고 싶으면 js 코드 상에서 setAttribute 를 사용하면된다
+			ex ) 유저가 체크박스에 체크를 하면 >>  attribute 의 상태는 변하지 않는다. f12 개발자 툴의 html 소스 코드는 변하지 않는다.
+
+		: 대소문자를 구분하지 않는다
+		: 값은 대부분 문자열이다
+
+		: attribute 의 종류
+			(1) 표준 >> 기본적으로 정의되어있는 html 속성 
+				: 표준 속성이라고 해서 모든 요소가 해당 속성을 가지진 않는다
+					ex ) input 태그의 type 속성은 표준이지만, div 태그에 type 속성이 존재하진 않는다
+			(2) 비표준 >> 사용자가 직접 만든 html 속성 
+				: 몰랐는데, 태그에 아무문자열 쓰면, 그 문자열은 사용자 정의 속성이 된다
+
+		: 표준 Attribute 의 경우 "대부분" dom 의 property 로 등록되어있다
+			: 이름에 '-' 가 들어가는 Attribute 명에 대응되는 property명은 대부분 Camel case 가 적용된다
+				: 특수한 프로퍼티명)  class 속성의 경우 property 명이 className 이다
+			: 자바스크립트 코드상에선 표준 Attribute 대해 " 해당요소객체명.프로퍼티명 " 으로 해당 attribute 로의 접근 및 사용이 가능하다
+
+		: 비표준 html attribute 는 dom의 내장 property도, 사용자정의 property도 아니다.
+			: 비표준 attribute 의 경우 자바스크립트 코드 상에선 아래의 함수로 접근 및 조작이 가능하다
+				: 내부 arg 로 들어가는 속성명은 대소문자를 구분하지 않아도 된다
+			******: 이 함수들은 비표준 속성이 아니더라도, HTML attribute 와 DOM property 의 동기화를 하기 위해서 사용할 수도 있다
+				1. 대상객체.hasAttribute( '속성명' ) : 대상객체에 해당 속성이 있는지 확인
+				2. 대상객체.getAttibute( '속성명' ) : 대상객체에서 해당 속성값을 가져옴
+				3. 대상객체.setAttribute( '속성명', 속성값 ): 대상객체에 해당 속성의 값을 설정한다
+				4. 대상객체.removeAttribute( '속성명' ) : 대상객체에허 해당 속성을 삭제한다
+	
+
+	: Property >> dom 의 속성
+		: ex )  document.querySelector('div').className; 에서 className
+		: 동적이다. 
+			: ex ) 유저가 체크박스에 체크를 하면 >> property 의 상태는 checked 로 변한다.  값의 변경 이후 console 에 해당 프로퍼티의 값을 찍어보면 실제로 바뀐 값이 찍힌다
+		: 대소문자를 구별한다
+		: 값으로는 다양한 타입의 값을 가질 수 있다
+		: property 의 종류
+			(1) 내장 >> html 의 표준 attribute에 대해서는 해당요소객체명.프로퍼티명 으로 직방 접근이 및 사용이 가능하다
+
+			(2) 사용자 정의 
+				:  해당 객체를 대상으로 , 존재하지않는 프로퍼티명에 값을 할당하면 해당 프로퍼티가 해당 객체에 생성된다
+				ex ) 
+				document.body.sayTagName = function() {
+  				alert(this.tagName);
+				};
+
+				document.body.sayTagName();
+
+
+			******: 개꿀팁 >> " 어떤객체.새로운프로퍼티명" 이 아닌,  "어떤객체.prototype.새로운프로퍼티명" 을 사용하여 새로운 값을 할당하는 경우, 내방프로토타입을 수정시키는거라 해당 객체에서뿐아니라 다른 객체에서도 해당프로퍼티의 사용이 가능해진다
+					: https://www.nextree.co.kr/p7323/
+
+
+
+
+html 의 style 과 js 의 style 의 주의할 점
+	: https://helloinyong.tistory.com/284
+	: 인라인으로 직접적으로 명시된 style 규칙에 한해서만, js에서 style 객체의 property 로써 접근했을때 값이 (문자열의 형태로) 제대로 나온다. style 태그나 , 아예 바깥 css 파일에서 적용된 style 규칙의 경우 style 객체의 프로퍼티로 접근했을때 빈문자열만 나온다.
 
 
 JS 의 함수와 메서드 주의 >> 객체 내부에서 선언된 함수라고 해서 다 메서드인게 아니라, 직접적으로 객체 내부에서 선언된 함수만 메서드이다
@@ -392,7 +460,6 @@ Tip
 
 	2. js 파일 연결할 떄 <script src="indexScript.js" /> 처럼 축약형식으로 사용하면 잘 안된다. <script src="indexScript.js"></script> 로 제대로 해줘야된다.
 
-	3. 자바스크립트에서 객체를 대상으로 얻어지는 속성값은 죄다 
 
 -----------------------------------------------------------------------------------------------------------
 
