@@ -69,7 +69,11 @@ JS 로 HTML 요소 찾는법
 
 			
 
-
+form 에서 < input type="button"> 과 <button> 과 <input type="submit">
+	: https://365kim.tistory.com/64
+	: <button> 의 경우 <input> 과 마찬가지로 type 속성을 가진다
+		: <form> 태그의 자식 태그로 쓰일 경우 type 은 디폴트로 "submit"으로 지정된다. button 을 단순 button 의 용도로만 쓸 것이라면, 별도로 type="button" 을 명시해줘야된다
+		: 클릭시 발생할 이벤트를 바인딩할 수 있는건 type="button" 일때만 가능하다. ( <input type="submit"> 이건 <button type="submit"> 이건 onXXX 속성은 명시 불가하다 )
 
 
 form 데이터( 입력양식 ) 읽기 
