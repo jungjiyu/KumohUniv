@@ -68,10 +68,12 @@ html 의 style 과 js 의 style 의 주의할 점
 	: https://helloinyong.tistory.com/284
 	: 인라인으로 직접적으로 명시된 style 규칙에 한해서만, js에서 style 객체의 property 로써 접근했을때 값이 (문자열의 형태로) 제대로 나온다. style 태그나 , 아예 바깥 css 파일에서 적용된 style 규칙의 경우 style 객체의 프로퍼티로 접근했을때 빈문자열만 나온다.
 
+-----------------------------------------------------------------------------------------------------------
 
 JS 의 함수와 메서드 주의 >> 객체 내부에서 선언된 함수라고 해서 다 메서드인게 아니라, 직접적으로 객체 내부에서 선언된 함수만 메서드이다
 	: 메서드의 내부에서 선언된 함수는 메서드가 아니라 걍 함수이다.
 
+-----------------------------------------------------------------------------------------------------------
 
 생성자 함수 constructor 
 	: 일반적인 function 을 호출할 떄 new 키워드 앞에 붙이고 호출하면 그 함수는 생성자 함수 취급된다.	
@@ -81,6 +83,7 @@ JS 의 함수와 메서드 주의 >> 객체 내부에서 선언된 함수라고 
 	var me = new Person('Lee'); // Person은 생성자 함수
 	console.log(me); // Person&nbsp;{name: "Lee"}
 
+-----------------------------------------------------------------------------------------------------------
 
 
 JS 의 this 바인딩 정리
@@ -113,11 +116,13 @@ JS 의 this 바인딩 정리
 
 
 
+
+
+
 -----------------------------------------------------------------------------------------------------------
 
+
 이벤트 : 상호작용이 발생하는 것
-
-
 
 이벤트타입명 != 이벤트속성명
 	: 이벤트속성은 onXXXX 꼴이고, 이벤트타입은 on 을 제외한 XXXX 부분이다.
@@ -131,7 +136,7 @@ JS 의 this 바인딩 정리
 
 		: 이벤트 타입은 addEventListener 혹은 removeEventListener 에서 arg 로 대입된다
 			
-
+	
 
 	: 이벤트 타입 종류
 	(1) 마우스 관련
@@ -191,10 +196,23 @@ JS 의 this 바인딩 정리
 
 	(4) 페이지로딩관련
 		: https://velog.io/@qwe8851/DOM-%EA%B0%9C%EB%85%90%EC%A0%95%EB%A6%AC-load-%EC%9D%B4%EB%B2%A4%ED%8A%B8
+		
 		1. load : 해당 객체가 다 로드되었을 때 발생하는 이벤트 
+			: https://blog.naver.com/sgj4958/222022912143
 			: 주의 >> 전체 페이지 다 로딩 시( DOM 트리 완성 뿐 아니라, 이미지 와 스타일 시트 같은 외부 자원도 모두 불러오는 것이 끝났을 때) load 이벤트가 발생되는건,  window 객체를 대상으로 사용했을때만 그런거다. 
 				: 만약 특정 img 태그 요소를 대상으로 적용하면 해당 이미지가 다 로드 되었을떄 load 이벤트가 발생한다
 			: 특정 객체에 적용할 경우, 해당 객체의 하위 요소들까지 모두 load 됬을때 load 이벤트가 발생한다
+			: 필요한 이유 
+				: 특정 html 요소를 사용하는 코드를 내포한 script 태그를 해당 html 요소가 선언된 위치보다 더 앞에서 선언하면 ( 랜더링 자체는 최종적으로 잘 되긴 하는데 ) 콘솔 창 보면 Uncaught TypeError 라고 뜬다. ( 이는 브라우저가 html 문서를 파싱하여 dom 트리를 구성할 때, 위에서부터 차례대로 읽어들이는데, 읽는 중간에 scirpt 문을 만나면 해당 script 문을 바로 fetch 및 실행시키기게 되고, script 코드 상에 포함된 객체를 DOM 트리에서 읽어오게 되는데, 아직 해당 객체가 DOM 트리에 존재하지 않아 UncaughtError 가 발생하게되는것이다 ) 
+				ex ) 
+   				 <body>
+      				  <script>
+       				     let a = document.getElementById('name');
+         				   a.style.color = "blue"
+        				</script>
+      				  <p id="name">hello</p>
+    				</body>
+
  
 		2. unload : 사용자가 현재 웹 페이지를 떠날떄
 		3. resize : 사용자가 윈도우 크기를 조절할때 
@@ -460,11 +478,13 @@ Tip
 
 	2. js 파일 연결할 떄 <script src="indexScript.js" /> 처럼 축약형식으로 사용하면 잘 안된다. <script src="indexScript.js"></script> 로 제대로 해줘야된다.
 
+	3. html 에서 정의한 스타일 값을 불러올 때는 해당 스타일규칙에 대응하는 프로퍼티명을 사용해서 가져오지 말고, getComputedStyle( ) 를 사용해라
+		: 인라인으로 정의된 스타일 규칙이 아닌 이상은 프로퍼티로는 스타일 규칙이 불러와지지 않는다
+		: https://kin.naver.com/qna/detail.naver?d1id=1&dirId=1040202&docId=361349219&enc=utf8&kinsrch_src=pc_tab_kin&qb=7J6Q67CU7Iqk7YGs66a97Yq4IOqwneyytCDsho3shLEg67mIIOusuOyekOyXtA%3D%3D&rank=16&search_sort=0&section=kin.qna_ency_cafe&spq=0
 
 -----------------------------------------------------------------------------------------------------------
 
-왜 html 에서 정의한 스타일 값이 제대로 불러와지지 않는것일까>> 인라인으로 직접 정의한 스타일이 아닌 이상 getComputedStyle( ) 의 사용이 필요
-	: https://kin.naver.com/qna/detail.naver?d1id=1&dirId=1040202&docId=361349219&enc=utf8&kinsrch_src=pc_tab_kin&qb=7J6Q67CU7Iqk7YGs66a97Yq4IOqwneyytCDsho3shLEg67mIIOusuOyekOyXtA%3D%3D&rank=16&search_sort=0&section=kin.qna_ency_cafe&spq=0
+
 
 	
 
