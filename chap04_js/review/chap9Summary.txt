@@ -67,7 +67,17 @@ JS 로 HTML 요소 찾는법
 		(2) document.querySelectorAll("css선택자") >> 해당 선택자 만족하는 요소 모두 가져옴. "배열" 형태로
 
 
-			
+
+JS에서 부모, 자식, 형제 노드 접근하기
+    : 부모
+	(1) parentNode : 모든 부모 노드들을 반환
+		: 그러니까 html 요소로 정의되있지 않더라도 dom 트리 상에 존재하는 부모 노드면 ok 란 말이다
+	(2) parentElement : 부모 "요소" 노드들을 반환
+		: 그러니까 html 의 요소로 존재하는 노드들만 부모로 취급된다는 말이다
+
+
+
+
 
 form 에서 < input type="button"> 과 <button> 과 <input type="submit">
 	: https://365kim.tistory.com/64
