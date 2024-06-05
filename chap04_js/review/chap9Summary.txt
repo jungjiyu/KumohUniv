@@ -67,18 +67,39 @@ JS 로 HTML 요소 찾는법
 		(2) document.querySelectorAll("css선택자") >> 해당 선택자 만족하는 요소 모두 가져옴. "배열" 형태로
 
 
+NodeList 와 HTMLCollection
+    : NodeList >> 모든 타입의 노드들
+    : HTMLCollection  >> html 요소 타입의 노드들
+	: 노드 변경사항이 실시간 반영
 
-JS에서 부모, 자식, 형제 노드 접근하기
+Node 의 타입 
+    확인하는 법 : .nodeName
+    종류
+	(1) text : text 문자열 << innerHTML 같은거
+	    : 줄바꿈까지 Text임 주의
+	(2) element : html 요소 >> 이건 찍었을때 element 로만 띡 나오는게 아니라 div.아이디명 과 같이 좀 자세히 나옴
+	(3) comment : 주석 
+
+
+js 변수의 타입 확인하는 법 >> typeof(변수명)
+
+
+JS에서 부모, 자식, 형제 노드 접근하는 속
     : 부모
-	(1) parentNode : 모든 부모 노드들을 반환
+	(1) parentNode :  부모 노드들을 반환
 		: 그러니까 html 요소로 정의되있지 않더라도 dom 트리 상에 존재하는 부모 노드면 ok 란 말이다
 	(2) parentElement : 부모 "요소" 노드들을 반환
 		: 그러니까 html 의 요소로 존재하는 노드들만 부모로 취급된다는 말이다
 
     : 자식
-	(1) childNodes : 모든 자식 노드를 반환
+	(1.0) childNode"s" :  자식 노드들을 반환
+	(1.1) firstChild , lastChild : 첫 , 마지막 자식 노드  
+	(2.0) children : 자식 "요소" 노드들 반환
+	(2.1) firstElementChild , lastElementChild : 첫, 마지막 자식 "요소" 노드
 
-
+    : 형제 
+	(1) previousSibling , nextSibling : 형제 노드를 반환
+	(2) previousElementSibling , nextElementSibling : 형제 "요" 노드를 반환
 
 
 form 에서 < input type="button"> 과 <button> 과 <input type="submit">
