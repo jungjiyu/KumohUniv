@@ -175,6 +175,14 @@ JS 의 this 바인딩 정리
 		2. keyup : 사용자가 누른 키 뗏을 때
 
 	(3) form 관련
+	***: js의 폼 (자식) 요소 객체 관련 함수
+		: https://velog.io/@unogle/%ED%8F%BC%EA%B3%BC-%ED%8F%BC-%EC%A1%B0%EC%9E%91
+		1. 폼태그자식요소.focus( ) 
+		2. 폼태그자식요소.blur( ) 
+		3. 폼요소.submit( )  >> 폼 전송하기
+			: 이때 서버로 전송 시키지만, "submit" 이벤트 자체는 발생하지 않음 주의
+
+	   : 폼 이벤트 종류
 		: https://inpa.tistory.com/entry/JS-%F0%9F%93%9A-%ED%8F%AC%EC%BB%A4%EC%8A%A4-%EC%A0%9C%EC%96%B4-focus-blur
 
 
@@ -194,10 +202,20 @@ JS 의 this 바인딩 정리
 		4. submit  : 사용자가 입력 양식을 제출할떄
 		5. change : 사용자가 입력 요소의 값을 변경할때
 
+
+
+
+
+
 	(4) 페이지로딩관련
 		: https://velog.io/@qwe8851/DOM-%EA%B0%9C%EB%85%90%EC%A0%95%EB%A6%AC-load-%EC%9D%B4%EB%B2%A4%ED%8A%B8
-		0. loadeddata : 비디오나 오디오가 다 로드된 후 발생한다.
-		1. load : 문서(이미지)나 전체 페이지가 완전히 다 로드되었을 때 발생하는 이벤트 	
+
+		-1. loadeddata : 비디오나 오디오가 다 로드된 후 발생한다.
+
+		0. DOMContentLoaded
+			: DOM 트리 자체의 완성 즉시 발생한다.  외부 자원(이미지, 스타일시트 )까지 다 불러오는거 기다리는거 없이. 
+
+		1. load : 전체 페이지가 완전히 다 로드되었을 때( DOM트리 완성 + 외부 자원(이미지, 스타일시트 ) 로드 완료) 혹은 특정 외부자원이 완전히 로드되었을 때 발생하는 이벤트 	
 			: 주의 >> 비디오와 오디오에 대해서는 load 이벤트가 발생하지 않고, loadeddata 이벤트가 발생한다.
 			: https://blog.naver.com/sgj4958/222022912143
 			: load 이벤트 발생 가능 대상 >> window 객체와 img 요소 
@@ -344,6 +362,7 @@ JS 의 this 바인딩 정리
 				▼ ClipBoardEvent 
 				▼CustomEvent 
 
+
 	: 이벤트 함수가 가질 수 있는 파라미터는 event객체 하나뿐.
 	: Event 객체의 속성
 		: https://aboveimagine.tistory.com/96
@@ -381,7 +400,7 @@ JS 의 this 바인딩 정리
 		: 공통 메서드 
 			stopPropagation( ) :  부모엘리먼트에게 이벤트전달을 중단할 때 사용. 딱 이벤트 핸들러에 바인딩된 요소에서 이벤트가 일어나야 함수를 실행한다.
 		
-		******preventDefault( ) : 이벤트의 기본 동작을 취소. 브라우저 고유의 동작을 중단시켜줌
+		*******preventDefault( ) : 이벤트의 기본 동작을 취소. 브라우저 고유의 동작을 중단시켜줌
 				: 이 메소드는 cancelable 속성이 true일 때만 효과가 있다.
 				: 주로 사용되는 경우 >> 페이지 전환 방지 목적
 					1. a 태그를 눌렀을때도 href 링크로 이동하지 않게 할 경우
@@ -424,13 +443,13 @@ JS 의 this 바인딩 정리
 
 
 
-이벤트 위임
-	: 
 
 
 
 
- 이벤트 전파 propagation  : 부모에 바인딩된 이벤트 핸들러에 대응하는  이벤트가 자식에서 일어나면, 해당 이벤트는 부모에서"도" 일어난 것으로 간주된다.
+
+
+이벤트 "위임", 이벤트 "전파" propagation  : 부모에 바인딩된 이벤트 핸들러에 대응하는  이벤트가 자식에서 일어나면, 해당 이벤트는 부모에서"도" 일어난 것으로 간주된다.
 	: 이벤트 전파를 적용하는게 특별한게 아니라, 이벤트 전파를 적용하지 않는게 특별한 케이스인거다.
 		: 그러니까 브라우저는 버블링이든, 캡쳐링이든 이벤트 전파의 사용이 기본적으로 적용되고, 전파 시키지 않고 싶다면 일단 적용이된 이후에서야 이를 막는 방식으로 별도 처리를 해줘야된다.
 
@@ -471,6 +490,8 @@ JS 의 this 바인딩 정리
 		(2) 캡쳐링 capturing :  자식에서 이벤트 발생 시 , 해당 이벤트 대해 부모에 바인딩됬었던 이벤트 핸들러가 먼저 호출된 후, 자식에 바인딩됬었던 이벤트 핸들러가 호출된다 (바깥쪽 --> 안쪽)
 
 
+
+
 브라우저 객체 모델(BOM: Browser Object Model): 웹 브라우저가 가지고 있는 모든 객체
 	▼ window
 		: 자바스크립트의 모든 전역 함수는 window 객체의 메서드
@@ -479,13 +500,68 @@ JS 의 this 바인딩 정리
 			▼ forms 
 			▼ anchors 
 			▼ layers
-			▼ forms 
  		▼ navigator 
 		▼screen 
 		▼ history 
 		▼ location 
 		▼frames 
 
+
+폼 검증 방법
+	(1) <input> 태그에서의 검증 적용
+		1. 필수적으로 채우게 함 >> required 속성 명시
+		2. 최대/소 "숫자"값 설정 >> max, min
+		3. 최대/소 문자열길이 설정 >> maxLength , minLength	
+		4. 숫자 간격 설정 >> step
+		5. 정규표현식설정 >> pattern
+			: 주의 >> js 상에서는 / 로 패턴의 시작과 끝을 표현하지만, pattern 의 인자로 들어가는 문자열은 '/' 없이 쓴다.
+			: title 이라는 속성을 함께 줘서 정보 창에 같이 띄월수도 있다
+			ex )  생년월일 : <input type="text" name="bday" pattern="[0-9]{6}" title="'yymmdd'와 같은 6자리 숫자"><br>
+
+	(2) js 에서의 검증 적용 >> 폼요소 얻어와서 (1) 을 노가다로 구현하는 것
+
+
+js 코드로 정규표현식 활용하는 법
+	step1. 정규표현식 "리터럴"을 변수에 할당
+		: 정규표현식리터럴 >> 정규표현식 의 앞 뒤에 / 를 명시한 꼴. 
+			: 문자열의 형태가 아님을 주의 !!
+	
+
+	step2. 함수를 활용 >> 함수의 주체에 주의 
+		: https://gusugi.tistory.com/entry/%EC%9E%90%EB%B0%94-%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8javascript-%EA%B8%B0%EB%B3%B8-%EC%A0%95%EA%B7%9C-%ED%91%9C%ED%98%84%EC%8B%9Dmatch-test-replace-search
+		(1) test : 검사 대상이 해당 정규표현식을 만족하는지의 여부를 검사하고, 그 결과를 true 혹은 false 로 반환함 >> 정규표현식리터럴.test( 검사당하는변수 ) 
+		(2) match : 검사 대상에서 해당 정규표현식을 만족하는 "모든" 부분들을 , 문자열을 요소로 하는 배열의 형태로 반환함 >> 검사당하는변수.match( 정규표현식리터럴 ) 
+			ex ) 
+			const str = 'The quick brown jumps over the lazy dog';
+			const pattern = /the/gi;
+			const result = str.match(pattern); // [ 'The' , 'the' ] 를 반환한다
+
+		(3) replace : 검사 대상에서 해당 정규표현식을 만족하는 부분을 , 다른 문자열로 대체한다 >> 검사대상.replace( 정규표현식리터럴, 주입될문자열 );
+			ex )
+			const str = 'The quick brown jumps over the lazy dog';
+			const pattern = /the/gi;
+			const result = str.match(pattern); // [ 'The' , 'the' ] 를 반환한다
+
+
+
+
+정규표현식
+	: 플래그
+		(1) i >> ignore. 대소문자 구별없이 탐색
+		(2) g 
+
+	: 주의 
+		(1) + >> "1"회 이상
+		(2) . >> 한개의 문자 --> 그냥 의미없는 문자로써의 . 을 쓰고 싶으면 \. 으로 표기해야됨
+		(3) {m,n} >> 범위: m <= <=n
+
+	: 대표 예제
+	  1. 이메일 >>/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i
+		: . 은 그 자체로 못쓰고 이스케이프로써 \. 으로 써야됨을 주의
+		: 이메일의 구조 )  랜덤문자열@사이트명.도메인
+		ex ) hong@naver.com
+
+	  2. 비밀번호 >> 
 -----------------------------------------------------------------------------------------------------------
 Tip
 	1. css 에서는 snake case 비슷했던 것이, js 상의 속성명으로는 camel case 이다
