@@ -5,6 +5,18 @@
 	 {}는 객체(Object)를 생성
 	 []는 배열(Array)을 생성
 
+Truthy 값 : 참으로 간주되는 값. 
+	: 그러니까 if 문 내부 넣었을 때 해당 if 문이 실행되게 하는 값
+	: 0 아닌 숫자 << 음수도 ok
+	: 객체  << { } , [ ] 같은 빈 배열도 ok 
+******: 비어있지 않은 문자열 << 'false' 도 참이다
+
+
+
+falsy값 : 거짓간주값
+******: 빈 문자열  << null 이 아니라고 해서 true 가 아님 주의 . 자바스크립트에선 문자열 자체는 기본적으로 객체가 아니다 !!!!!
+	: 숫자 0
+
 
 
 BOM Browser Object Model
@@ -20,39 +32,73 @@ DOM(Document Object Model)
 		: 자바스크립트가 조리도구, DOM/BOM 은 요리재료
 	: HTML 문서의 계층적 구조를 트리로 표현한 것
 	: 웹 페이지가 로드 >> DOM 생성 >> DOM 을 순회하며 렌더링
-	: DOM 트리를 순회하는 법 > "여러가지"가 있다
-		(1)자식 노드와 부모노드 관계를 이용하여 한 노드씩 방문 :  childNodes, nextSibling, parentNode 을 이용
-			childNode"s" : 한 요소의 모든 자식 요소에 접근 가능
-				: "배열" 이 반환된다
-
-			firstChild : childNodes 배열의 0번째 요소가 반환된다. (== childNodes[0] )
-			lastChild : lastChild 배열의 가장 마지막 요소가 반환된다 (== childNodes[ childNodes.length - 1 ] )
-			parentNode : 현재 노드의 부모노드를 반환
-			nextSibling : 현재 노드의 "다음" 형제 노드를 반환
-			previousSibling : 현재 노드의 "이전" 형제 노드를 반환
-
-		
 	: 최상위 노드는 "document" << "<HTML>" 이 아님!
 		: 그 밑으로 <html> , <head>, <body>, <h1> 등의 요소를 나타내는 노드가 있음
-
-
 
 주의 >> window. 은 명시 안해도 되지만 document. 는 명시해야된다
 
 
-Truthy 값 : 참으로 간주되는 값. 
-	: 그러니까 if 문 내부 넣었을 때 해당 if 문이 실행되게 하는 값
-	: 0 아닌 숫자 << 음수도 ok
-	: 객체  << { } , [ ] 같은 빈 배열도 ok 
-******: 비어있지 않은 문자열 << 'false' 도 참이다
 
 
 
-falsy값 : 거짓간주값
-******: 빈 문자열  << null 이 아니라고 해서 true 가 아님 주의 . 자바스크립트에선 문자열 자체는 기본적으로 객체가 아니다 !!!!!
-	: 숫자 0
 
 
+
+NodeList 와 HTMLCollection
+    : NodeList >> 모든 타입의 노드들
+    : HTMLCollection  >> html 요소 타입의 노드들
+	: 노드 변경사항이 실시간 반영
+
+Node
+    : https://velog.io/@km2535/%EA%B0%95%EC%9D%98Javascript-document%EA%B0%9D%EC%B2%B4-%EB%85%B8%EB%93%9C-%ED%8F%BC-%EA%B0%9D%EC%B2%B4-%ED%8F%BC%EC%9D%98-%EC%A0%91%EA%B7%BC-input-%ED%83%9C%EA%B7%B8-%EC%A0%91%EA%B7%BC
+    : 종류. 타입.
+	(1) 문서 노드(document)
+	(2) 요소 노드(element) : HTML 요소는 요소 노드이며 attribute 노드를 가질 수 있는 유일한 노드 
+	(3) 속성 노드(attribute) : HTML 요소의 속성에 대한 노드
+	(4) 텍스트 노드(text) : HTML 문서의 모든 텍스트
+		: innerHTML "이외"의 텍스트. 그러니까 특정 태그로 감싸지지 않은, 코드상에 혼자 돌아다니는 텍스트들
+	********: 코드의 가독성을 높이기 위한 엔터 또한 텍스트 노드로 간주된다
+	(5) 주석 노드(comment) : HTML 문서의 모든 주석
+
+   : 노드 객체 자체 >>  [object Text] ,  [object HTMLLIElement] 와 같이 불친절하게 나온다
+   : 노드 객체의 프로퍼티
+	.nodeType >> 노드의 타입을 숫자로 반환. 읽기 전용이고, 수정은 불가
+	    : 요소 노드 - 1
+	    : 속성 노드 - 2
+	    : 텍스트 노드 - 3
+	    : 주석 노드 - 8
+	    : 문서 노드 - 9
+	   
+ 	.nodeName >> 노드의 고유이름( '#document' , '태그명' , '속성명', '#text' )을 반환.  읽기 전용이고, 수정은 불가.
+	    : 솔직히 걍 nodeType 의 문자열 버전이라 봄 될 듯
+
+  	.nodeValue >>  노드의 값을 반환한다
+	    : 모든 노드가 가지는 프로퍼티지만, document 노드와 주석 노드 같은 경우는 undefined 로 딱히 알아도 쓸모없는 값ㅇ르 반환한다
+	    (1) 속성노드 - 해당속성에 할당된 값 반환
+	    (2) 텍스트 노드 - 해당 텍스트 문자열
+
+
+
+JS에서 부모, 자식, 형제 노드/요소 단위 탐색 가능하게 하는 속성들
+    : 부모
+	(1) parentNode :  부모 노드들을 반환
+		: 그러니까 html 요소로 정의되있지 않더라도 dom 트리 상에 존재하는 부모 노드면 ok 란 말이다
+	(2) parentElement : 부모 "요소" 노드들을 반환
+		: 그러니까 html 의 요소로 존재하는 노드들만 부모로 취급된다는 말이다
+
+    : 자식
+	(1.0) childNode"s" :  자식 노드들을 반환 >> NodeList 타입으로
+	(1.1) firstChild , lastChild : 첫 , 마지막 자식 노드  
+	(2.0) children : 자식 "요소" 노드들 반환 >> HTMLCollection 타입으로
+	(2.1) firstElementChild , lastElementChild : 첫, 마지막 자식 "요소" 노드
+
+    : 형제 
+	(1) previousSibling , nextSibling : 형제 노드를 반환
+	(2) previousElementSibling , nextElementSibling : 형제 "요" 노드를 반환
+
+
+
+js 변수의 타입 확인하는 법 >> typeof(변수명)
 
 
 JS 로 HTML 요소 찾는법
@@ -69,49 +115,6 @@ JS 로 HTML 요소 찾는법
 
 
 
-NodeList 와 HTMLCollection
-    : NodeList >> 모든 타입의 노드들
-    : HTMLCollection  >> html 요소 타입의 노드들
-	: 노드 변경사항이 실시간 반영
-
-Node 의 활
-    : https://velog.io/@km2535/%EA%B0%95%EC%9D%98Javascript-document%EA%B0%9D%EC%B2%B4-%EB%85%B8%EB%93%9C-%ED%8F%BC-%EA%B0%9D%EC%B2%B4-%ED%8F%BC%EC%9D%98-%EC%A0%91%EA%B7%BC-input-%ED%83%9C%EA%B7%B8-%EC%A0%91%EA%B7%BC
-    확인하는 법 : .nodeName
-    종류
-	(1) 문서 노드(document)
-	(2) 요소 노드(element) : HTML 요소는 요소 노드이며 attribute 노드를 가질 수 있는 유일한 노드 << 이건 찍었을때 element 로만 띡 나오는게 아니라 div.아이디명 과 같이 좀 자세히 나옴
-	(3) 속성 노드(attribute) : HTML 요소의 속성에 대한 노드
-	(4) 텍스트 노드(text) : HTML 문서의 모든 텍스트 <<  << innerHTML 같은거
-	(5) 주석 노드(comment) : HTML 문서의 모든 주석
-
-    노드간의 관계
-	(1) parentNode : 부모노드
-	(2) childNodes : 자식 노드 리스트
-	(3) firstchild : 첫번째 자식 노드
-	(4) lastchild : 마지막 자식 노드
-	(5) nextSibling : 다음 형제 노드
-	(6) previousSibling : 이전 형제 노드
-
-
-js 변수의 타입 확인하는 법 >> typeof(변수명)
-
-
-JS에서 부모, 자식, 형제 노드 접근하는 속
-    : 부모
-	(1) parentNode :  부모 노드들을 반환
-		: 그러니까 html 요소로 정의되있지 않더라도 dom 트리 상에 존재하는 부모 노드면 ok 란 말이다
-	(2) parentElement : 부모 "요소" 노드들을 반환
-		: 그러니까 html 의 요소로 존재하는 노드들만 부모로 취급된다는 말이다
-
-    : 자식
-	(1.0) childNode"s" :  자식 노드들을 반환
-	(1.1) firstChild , lastChild : 첫 , 마지막 자식 노드  
-	(2.0) children : 자식 "요소" 노드들 반환
-	(2.1) firstElementChild , lastElementChild : 첫, 마지막 자식 "요소" 노드
-
-    : 형제 
-	(1) previousSibling , nextSibling : 형제 노드를 반환
-	(2) previousElementSibling , nextElementSibling : 형제 "요" 노드를 반환
 
 
 form 에서 < input type="button"> 과 <button> 과 <input type="submit">
@@ -123,6 +126,9 @@ form 에서 < input type="button"> 과 <button> 과 <input type="submit">
 		ex)   <button type="button" name="btn" /> 으로 쓰면 안되고 <button type="button" name="btn">버튼에표시할내용</button> 으로 써야된다
 	: <button> 의 경우 <input> 과 달리 value 속성이 없다
 		: 버튼상에 표시하고 싶은 내용은 시작태그와 끝태그 사이에 적는다
+
+
+
 
 <select> 와 <option>
     : 드롭다운박스. 
