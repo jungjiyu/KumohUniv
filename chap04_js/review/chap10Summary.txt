@@ -554,7 +554,21 @@ JS 의 this 바인딩 정리
 
 			(3) window 객체 제어 관련
 				: 만약 현재 윈도우를 닫고 싶으면 window.close( ); 함 되고, 별도로 직접생ㅅㅇ한 윈도우 닫고 싶으면 "해당변수명.close( )" 를 한다. 
+				: 참고 - 자식 & 부모 윈도우간 데이터 주고 받는법
+					: 원리 >> html 요소는 document 객체의 자식 객체이므로 document 객체를 대상으로 접근해야된다
+					: 부모에서 자식으로 >> 자식윈도우객체.document 를 대상으로 , 현재 페이지의 window 객체를 조작할 떄 처럼 조작하면 된다
+						: ex ) childWindow가 자식윈도우 객체이고, 해당 window 에서 cinput 이라는 id 를 가지는 요소 객체의 값을 'ㄹㄹㄹㄹ' 로 바꾸고 싶다면, childWindow.document.getElementById('cinput').value = 'ㄹㄹㄹㄹ' 로 바꾸면 된다
+
+					: 자식에서 부모로 >> 제3의 객체인 opener 객체를 활용해야한다. 그 중에서도 opener.docuemnt 를 대상으로, 현재 페이지의 window 객체를 조작할 떄 처럼 조작한다
+						: ex ) 부모 window 에서 pinput 이라는 id 를 가지는 요소 객체의 값을 'cccc' 로 바꾸고 싶다면, opener.document.getElementById('pinput').value = 'cccc' 로 하면 된다.
+
 				1. 창 닫기 >> 윈도우객체.close( );
+
+
+			(4) 시간 제어 관련
+				1. setTimeout( 콜백함수명, 밀리세컨드단위시간): 일정한 시간이 지난 후에, 콜백함수(인수로 전달된 함수)를 한 번만 호출한다.
+				2. setInterval( 콜백함수명, 밀리세컨드단위시간) : 일전시간마다 주기적으로 콜백함수를 호출한다
+					: 종료는 "반드시" 개발자가 해야된다
 
  
 
