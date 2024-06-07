@@ -519,7 +519,13 @@ JS 의 this 바인딩 정리
 			(1) 알림창관련: alert, prompt , comfirm
 			(2) 새로운 window 객체 생성: open( 오픈할URL , 타겟 , 스펙정의 , replace여부 )	
 			    : 반환값 >> 새로 만들어진 창 객체를 반환. 창 생성에 실패시 null 을 반환.	
-				: 걍 window.open 해서 해당 창을 여는 것으로 끝내지 말고, 이후에도 해당 창객체를 활용( 창객체.close( ) 를 할 수도 있고. . . ) 할 수 있도록 반환값 받아둬라 
+				: 걍 window.open 해서 해당 창을 여는 것으로 끝내지 말고, 이후에도 해당 창객체를 활용할 수 있도록 반환값 받아둬라 
+		    ******: tip >>현재 html문서의 window 객체는 "window 변수" 인거고, open 메서드를 활용하여 생성한 객체는 반환받은 변수명으로 현재 html 문서에서 이용 가능하다.
+					: ex ) 
+					window.name = "curWindow"; // 현재 html 문서 윈도우 객체의 이름 설정
+					childwindow =  window.open("Child.html", "childWindow"); // 새로운 window 객체 생성
+					childwindow.close(); // 현재 html 문서에서 , 앞서 생성한 윈도우 객체 제어
+
 			    : 팝업창 열고 싶을 떄 사용
 			    : 매개변수 
 				: 오픈할URL 
@@ -546,7 +552,8 @@ JS 의 this 바인딩 정리
 					true >> 현재 히스토리를 대체
 					false >> 히스토리에 새 항목을 만든다
 
-			(3) window 객체 제어
+			(3) window 객체 제어 관련
+				: 만약 현재 윈도우를 닫고 싶으면 window.close( ); 함 되고, 별도로 직접생ㅅㅇ한 윈도우 닫고 싶으면 "해당변수명.close( )" 를 한다. 
 				1. 창 닫기 >> 윈도우객체.close( );
 
  
