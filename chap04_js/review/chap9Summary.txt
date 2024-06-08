@@ -127,6 +127,8 @@ form 에서 < input type="button"> 과 <button> 과 <input type="submit">
 	: <button> 의 경우 <input> 과 달리 value 속성이 없다
 		: 버튼상에 표시하고 싶은 내용은 시작태그와 끝태그 사이에 적는다
 
+	: <input type="button"> 의 경우 value 속성이 있다
+
 
 
 
