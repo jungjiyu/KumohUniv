@@ -1,10 +1,7 @@
-JS에서의 forEach 
-	: " 배열변수명.forEach( 콜백함수 ) " 의 꼴로 쓰임을 주의
-		: 자바처럼 "forEach( 요소변수명 : 배열변수명 ){  ... 처리내용 .. }" 꼴이 아님을 주의
-		: arg 로 들어가는 콜백함수의 조건 >> 반드시 1개 이상의 매개변수를 가져야한다
-			(1) 1개 >> 해당 매개변수는 요소를 받는 매개변수
-			(2) 2개 >> 1. 요소를 받는 매개변수 , 2. 인덱스 받는 매개변수
-			(3) 3개 >> 1. 요소를 받는 매개변수 , 2. 인덱스 받는 매개변수 , 3.  배열을 받는 매개변수
+
+
+
+
 
 -----------------------------------------------------------------------------------------------------------
 
@@ -143,7 +140,7 @@ JS 의 this 바인딩 정리
 			스크립트문에선 >> 대상 객체의 속성명  
 				ex )  객체.onclick =  function view() { alert("클릭했습니다!!!"); }
 
-
+		: html 코드 상에선 대소문자를 구분하지 않으므로 onClick 으로 쓰나 onclick 으로 쓰나 별 상관 없지만, 자바스크립트의 경우 대소문자를 구분하므로 반드시 모두 소문자인 onclick 으로 써야된다. >> 그러니까 헷갈리지 않게 html 까지 다 소문자로 써라 . 어차피 가독성 크게 좋아지지도 않는 거.
 		: 이벤트 타입은 addEventListener 혹은 removeEventListener 에서 arg 로 대입된다
 			
 	
@@ -366,6 +363,17 @@ JS 의 this 바인딩 정리
 		: 주의 >> 이벤트 감지 당하는 객체가 이벤트 객체인게 아니라, 이벤트 감지 당하는 객체의 이벤트에 바인딩된 이벤트 함수에 자동 주입되는 객체를 이벤트 객체라고 하는거다.
 	: 이벤트가 발생하면, 이벤트 객체는 동적으로 생성되어, 이벤트 핸들러에 인자로 암묵적으로 주입된다
 	: 이벤트 객체가 어떤 속성을 갖느냐는 해당 이벤트 객체가 어떤 타입의 이벤트냐에 따라 달라진다
+	: 해당 이벤트객체의 모든 속성 뽑는 법
+		sol1 >>해당 이벤트객체를 대상으로 for ... in 문을 사용
+			for(let key in 이벤트객체명){
+			let value = 이벤트객체명[ key ];
+			console.log(` 속성명: ${ key } , 속성값 : ${value } `);
+			}
+
+		sol2 >> console.dir( 이벤트객체 ) 사용
+			: 노션 교재엔 안적혀있는데 개꿀임
+			: console.dir >> 객체의 속성을 콘솔에 출력하는데 사용됨. 객체를 나열하거나, 객체의 트리 구조를 표시하는데 유용
+
 	: 상속 구조
 		Object
 		      ▼ Event 
@@ -440,14 +448,14 @@ JS 의 this 바인딩 정리
 			5. button : 마우스 버튼의 종류에 따라 값 반환 ( 왼쪽 : 0, 휠 : 1 , 오른쪽: 2 ) 
 			6. buttons : 
 
-		(3) wheel 이벤트 
+		(2) wheel 이벤트 
 			: mouse 이벤트를 상속하는 이벤트 타입이다
 			: https://blog.naver.com/how2frontend/222306472981
 			1. deltaX , deltaY , deltaZ : 마우스 휠의 가로 , 세로, z 축 스크롤 "양"을 리턴
 			2. deltaMode : delta 값의 측정 단위를 나타내는 숫자 반환
 			3. wheelDelta? >> https://bejerry.tistory.com/8
 
-		(2) 키보드 이벤트 
+		(3) 키보드 이벤트 
 			: https://hyeonseok.com/blog/897
 			1. key : "논리적인" 키 값(= 실제로 입력되는 값 )을 문자열로 반환
 				: A를 눌렀으면 "A" 를 반환한다 . shift 를 누르면 "escape" 를 반환한다. 
@@ -459,6 +467,10 @@ JS 의 this 바인딩 정리
 
 			3. altKey , ctlrKey ,  shiftKey : 각각 alt 키 || crtl 키 || shift 키 가 눌린건지 booelan 값으로 여부를 표시한다
 
+
+
+		(4) 윈도우 이벤트
+			1. resize : 윈도우 사이즈 조정시 발생
 
 
 
@@ -515,6 +527,10 @@ JS 의 this 바인딩 정리
 	▼ window : BOM 의 최상위 객체로써, "웹브라우저 윈도우" 를 나타낸다
 		: 자바스크립트의 모든 전역 함수는 window 객체의 메서드
 		    : window 객체의 메서드 사용시 window 객체는 생략 가능
+		    : 대표적인 속성
+			(1) innerHeigth , innerWidth >>  위의 탭같은 부분 제외한 크기를 "픽셀" 단위로 반환
+			(2) outerHeigth, outerWidth >> 위의 탭같은 부분까지 포함한 크기를 "픽셀" 단위로 반환
+
 		    : 대표적인 메서드
 			(1) 알림창관련: alert, prompt , comfirm
 			(2) 새로운 window 객체 생성: open( 오픈할URL , 타겟 , 스펙정의 , replace여부 )	
@@ -542,7 +558,8 @@ JS 의 this 바인딩 정리
 				    3. _self >> 현재 창에서 열린다 (현재 페이지 대체)
 				    4. _top >> ?
 				    5. 이름 >> 해당 이름의창을 대체
-					: 만약 해당 이름의 창이 존재하지 않는 상태이면, 그 이름을 가지는 새로운 창을 생성함
+					: 해당 이름의 창이 존재하지 않는 상태 --> 그 이름을 가지는 새로운 창을 생성함
+					: 해당 이름의 창이 존재하는 상태 --> 그 이름을 가지던 창의 내용을 대체
 
 				: 스펙정의 >> window 객체의 속성 정의
 					: height , width , menubar, scrollbar 등 설정 가능
@@ -563,12 +580,27 @@ JS 의 this 바인딩 정리
 						: ex ) 부모 window 에서 pinput 이라는 id 를 가지는 요소 객체의 값을 'cccc' 로 바꾸고 싶다면, opener.document.getElementById('pinput').value = 'cccc' 로 하면 된다.
 
 				1. 창 닫기 >> 윈도우객체.close( );
-
+				2. 윈도우를 이동하기 
+					: 절대적 위치 이동 >> 윈도우객체.moveTo( x좌표 , y좌표 ) : 스크린을 기준으로 이동
+					: 상대적 위치 이동 >> 윈도우객체.moveBy( x좌표, y좌표 ) : 현재 윈도우 위치를 기준으로 이동
+				3. 윈도우 크기 조절하기 
+					: 절대적 크키 조절 >> 윈도우객체.resizeTo( ) 
+					: 상대적 크키 조절 >> 윈도우객체.resizeBy( )
+ 
+				4. 윈도우에 포커스 주기 >> 윈도우객체.focus( )
+					: 윈도우에 포커스를 준다는 것은 해당 윈도우를 젤 앞으로 가져온다는 거다 
 
 			(4) 시간 제어 관련
 				1. setTimeout( 콜백함수명, 밀리세컨드단위시간): 일정한 시간이 지난 후에, 콜백함수(인수로 전달된 함수)를 한 번만 호출한다.
-				2. setInterval( 콜백함수명, 밀리세컨드단위시간) : 일전시간마다 주기적으로 콜백함수를 호출한다
-					: 종료는 "반드시" 개발자가 해야된다
+
+				2. setInterval( 콜백함수명, 밀리세컨드단위시간) : 일전시간마다 "주기적"으로 콜백함수를 호출한다
+					: 종료는 저절로 되는게 아니라 개발자가 직접 해야된다 >> setInterval 의 반환값을 저장해두고, clearInterval( 해당변수 ) 을 해준다.
+					    : ex ) 
+						let si;
+						function show() { si = setInterval( ()=> console.log('딸기'), 500); }
+						function stop() {  clearInterval(si); }
+
+
 
  
 
@@ -576,11 +608,90 @@ JS 의 this 바인딩 정리
 			▼ forms 
 			▼ anchors 
 			▼ layers
+
  		▼ navigator : "브라우저" 자체에 대한 다양한 정보
 			: 넷스케이프의 초기 웹 브라우저였던 navigator 에서 유래한 이름
-		▼screen : 사용자 화면에 대한 정보 << 아마 모니터 화면인듯 ? 
-		▼ history : 방문기록정보
+			: https://ffoorreeuunn.tistory.com/168
+			: 속성 
+			    : tip >> 속성명의 app 은 브라우저를 의미한다고 보면 됨
+				(1) appCodeName : 브라우저 코드 네임
+				(2) appName : 브라우저 이름
+				****** :  'Netscape' 혹은 'Microsoft Internet Explorer' 둘 중 하나로"만" 나온다 ( chrome 도 'chrome' 이라 나오지 않고, 'Netscape' 라고 나온다 )
+						: 왜 >>초창기 웹 브라우저는 Netscape Navigator와 Microsoft Internet Explorer가 주가 됬었고, chrome의 경우 호환성 위해 Netscape 기준으로 개발했기 때문 
+  						: chrome 과 같은 정확한 브라우저 명은 'userAgent' 프로퍼티 값으로 알 수 있다.
+				(3) appVersion : 브라우저의 버전
+					:  userAgent 랑 비슷하게 나온다
+
+				(4) cookieEnabled : 브라우저의 쿠키가 활성화 되어있나 ?
+				(5) onLine : 브라우저가 인터넷에 연결되어있으면(==온라인이면) true
+				(6) platform : 브라우저가 동작하고 있는 운영체제 (컴파일된 플랫폼)
+					: ex ) Win32
+				(7) userAgent : user-agent 부분의 값
+					: user-agent  >> HTTP request header 의 일부로,  요청보내는 클라이언트의 식별 정보를 담고 있다.
+						: 웹 브라우저별로 맞춤화된 서비스를 제공하기 위한 정보
+						: 보통 " Mozilla 정보/버전 + 운영체제 정보 + 렌더링 엔진 정보 + 브라우저 " 의 꼴의 값을 가ㅣㅈㄴ다
+						: Gecko를 흉내내는 KHTML을 흉내내는 AppleWebkit을 사용하는 Mozilla를 흉내내는 Safari를 흉내내는 크롬 브라우저의 userAgent  == "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36" 
+						: https://guiyomi.tistory.com/150
+							: Mozila 와 NetScape 
+								: NetScape 의 초기 이름이 Mozila ( Mosaic Killer )이다. 
+									: 그러니까 Mozila == Netscape. (  Mozilla라는 문자열이 들어가면 NetScape 브라우저로 인식한다 )
+									: Mosaic >> NetScape 이전의 브라우저
+
+								: Mozila/버전명 >> 호환성 위해 Mozlia (NetScape) 가 아닌 브라우저들이 Mozlia (NetScape)인 척 하고 다니는 것 
+								: Netscape 는 IE 때문에 망했고, 이후 firefox 이름으로 다시 태어난다
+	
+
+							KHTML : 리눅스 기반 html 
+
+							Gecko : NetScape 브라우저 렌더링 엔진
+								:  like Gecko >> 실제로 Gecko 엔진은 아니지만 그와 비슷한 엔진이란 뜻. Gecko 기능도 사용하기 위해(=호환성 위해) 명시
+
+							AppleWebKit : webkit 엔진 + 여러 기능
+								: 애플사 의 Safari 의 엔진
+								: chrome 은 safari 와 비슷했고, safari 에 최적화된 페이지 제공을 위해 AppleWebKit을 사용한다
+ 
+
+				
+		▼screen : 모니터화면(=사용자 화면)에 대한 정보를 "제공" 
+			: 정보 "제공"만 해주는 객체이지, 화면 정보를 수정하는데는 사용되지는 못함
+				: 아니 코드로 컴터 사이즈 자체를 줄일수 있겠냐 ㅋ 
+			: 브라우저 창의 크기 정보가 아닌, 모니터 화면 자체에 대한 정보이기 떄문에 브라우저 창 사이즈를 변경한다고 해도 screen 객체의 availWidth, availHeight, width, height 같은 건 변동이 없다
+			: 속성
+			     : 모니터 화면 크기 관련
+				(1) screen.availHeight : 태스크바(=작업표시줄)를 제외한 높이값 반환
+ 				(2) screen.availWidth : 태스크바를 제외한 너비 값 반환
+				(3) screen.Height : (모니터) 화면의 전체 높이값 반환
+				(3) screen.Width : 화면의 전체 너비 값 반환
+			    : 모니터 화면 색 관련
+				(1) screen.pixelDepth : 컬러 해상도를 반환
+				(2) screen.colorDepth: 컬러 팔레트의 비트 깊이를 반환
+
+		▼ history : 브라우저의 방문기록정보
+			: 제공 메서드
+				(1) back( ) : 브라우저의 뒤로 가기 기능
+				(2) forward( ) : 브라우저의 앞으로 가기 기능
+				(3) go(n) : n 번째 페이지로 가는 기능
+
 		▼ location : 현재 "URL" 대한 정보
+			: 속성
+				(2) host >> hostname + port ( www.naver.com:80 )을 반환
+				(3) hostname >> hostname ( www.naver.com )을 반환
+			******(4) href >> "전체 URL "을 반환
+				(5) pathname >> 경로 즉 path ( host 부분 과 쿼리스트링 "사이"에 있는 경로 ) 를 반환
+					ex ) https://contact.naver.com/p/contact?sortField=name&sortDirection=asc&page=1&maxResults=30 에서 "/p/contact" 이 path 부분이다
+				(6) protocol >> ":" 까지 포함함 프로토콜부분 ( https: )  을 반환
+				(7) search >> 쿼리스트링 부분 반환
+					: 쿼리 스트링은 "?" 로 시작하고 , "&"  로 이어진다.
+				(8) hash >>앵커부분( #어쩌구 )을 반환
+
+			: 메서드
+				: https://devbirdfeet.tistory.com/193
+				(1) assign( "새로운URL" ) : 현재 문서를 히스토리로 남김 + 새로운 문서로 이동
+					: location.href 에 새로운 URL 을 할당함으로써 assign 메서드와 같은 기능을 할 수 있다. 둘 모두 history 를 남기고, 차이는 속도와 안정성 측면 밖에 없다
+				(2) reload( ) : 현재 문서를 다시 로드
+				(3) replace( "새로운URL" ) : "현재" 문서를 다른 문서로 "덮어씀" ( 현재 문서를 히스토리로 남기지 않음 ) 
+
+
 		▼ frames : 윈도우에 포함된 프레임 정보
 
 
