@@ -102,18 +102,35 @@
 				(6) fill( ) : 경로로 만들어진 도형을 채워서 그린다
  
 				(7) fillText( text , x , y ) : 텍스트를 해당 좌표에 그림
+					: fill( )그런거 없어도 자체적으로 그려진다
 				(8) storkeText( text, x , y ) : 텍스트를 윤곽선만 해당 좌표에 그림
+					: stroke( )그런거 없어도 자체적으로 그려진다
+
  				(9) drawImage( 이미지객체 , x , y ) : 이미지를 해당 좌표에 그림
 					: 보통 이미지 객체는 new Image( ) 로 생성하고, .src 등으로 객체 속성 설정하여 투입하는 편.  
-					: image 를 그릴 땐 stroke()  그런거 필요 없다.
+					: image 를 그릴 땐 stroke()  그런거 필요 없다
+					: 아래 그라디언트, 패턴과는 다르게 색상에 할당당하는 방식으로 사용되는게 아닌 자체 함수인 drawImage 를 사용해서 그리는거 주의.
 
 				(10) createLinearGradient( x1, y1, x2, y2 ) ,  createRadialGradient( x1, y1, r1,  x2, y2 , r2)  : 직선||원형 그라디언트 객체 생성	
 					: http://www.soen.kr/html5/html3/2-1-2.htm
 					: 선형이든 원형이든, 생성한 그라디언트 객체는 색깔 받는 속성에 할당당하는 방식으로 사용된다 . ( fillStyle 이나 StrokeStyle 에 할당 )
 					: createLinearGradient 의 arg 로 투입되는 두 좌표는 각각 시작 좌표와 종료 좌표를 의미한다. 그러니까 두 좌표를 이어 생성된 직선만큼 gradient 가 결정되고, 해당 직선 밖의 부분은 시작||종료 지점색의 연장선이라고 보면된다.
 					: createRadialGradient 의 첫 3 arg , 마지막 3 arg 는 각각 시작원과 종료원의 중심좌표, 반지름을 의미한다.
-					: 생성한 그라디언트 객체의 색상 설정  >> 생성한그라디언트객체.addColorStop( position, color ) ;
+				******: 생성한 그라디언트 객체의 색상 설정  >> 생성한그라디언트객체.addColorStop( position, color ) ;
 						: position 은 0 <= <=1 의 값이고, 색상이 배정될 상대적인 위치를 정한다
+						: 적용 대상이 context 가 아닌 그라디언트객체임을 주의
+
+				(11) createPattern( 이미지객체 , '패턴스타일' ) : 패턴 객체 생성
+					: 그라디언트 객체와 유사하게, 생성한 객체는 색깔 받는 속성에 할당당하는 방식으로 사용된다 ( fillStyle 이나 strokeStyle )  
+
+
+				(12) translate( x, y) : 캔버스 기준점을 이동시킨다
+					: https://fromyou.tistory.com/569
+					: traslate 를 주면 ( 이전기준점 + x, 이전기준점+ y ) 을 이 이후로 캔버스의 기준점으로 잡게 된다
+  					: 중간에 beginPath(  )로 새로운 path 를 여는 것과 상관 없이 , 가장 최근 기준점을 기준으로 잡고 +x , +y 하게된다
+
+				(13) rotate( angle ) : 
+					: 
 
 			: 그리는 법
 				(1) 도형을 직접 그리기 >> fillStyle & fillRect  || strokeRect 을 이용
@@ -121,7 +138,7 @@
 
 				(2) 빈 경로(path) 를 만들고, 그리기 명령을 축적한 후 한번에 캔버스에 그리기
 					: 경로 path >> 점들의 집합. 그러니까 도형과 (곡)선을 포함하는 개념
-
+				
 
 	: Canvas API >> canvas 요소 기반 그래픽을 제공하는 "라이브러리"	
 
