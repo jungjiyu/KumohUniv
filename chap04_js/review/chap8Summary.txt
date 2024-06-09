@@ -1,1 +1,38 @@
+자바스크립트 반복문 
+    : for 류
+	(1) 일반적인 for : 자바랑 ㅈㄴ 똑같음
+		for(let i = 0; i<10; i++){
+			console.log(i);
+		}
+
+******(2) for ... in : 주로 "객체"를 대상으로 사용
+		: 반복문 돌면서 in 앞의 변수가 차례대로 프로퍼티"명" 을 받게 됨
+		: 원하면 반복문 내부에서 객체를 대상으로 직접적으로 ".프로퍼티명" 써서  프로퍼티값도 얻을 수 있음
+
+		const obj = {
+ 		 name : '홍길동',
+ 		 age : '100'
+		}
+
+		for(const key in obj){
+  			console.log(key); 
+  			console.log(obj[key]); 
+		}
+
+******(3) forEach : 주로 "배열"을 대상으로 사용
+		: 자바와 다르게 ( 그러니까 forEach(  변수명 in 배열명 ) 이 아니라)  , 배열객체를 "대상으로" forEach( 콜백함수 ) 함수를 사용해야됨을 주의
+			: 콜백함수의 파라미터는 딱 하나 있어야하고, 그 파라미터는 배열의 요소를 차례대로 받게 된다
+		const array = ['1번', '2번', '3번'];
+		array.forEach( ( elmt )=> console.log(elmt) )
+
+	(4) for .. of : 'of' 이라서 그렇지 , 얘가 오히려 자바의 forEach 문과 비슷
+		: 주로 배열을 대상으로 사용됨
+		const array = ['1번', '2번', '3번'];
+		for(const element of array) {
+  			console.log(element); 
+		}
+
+    : while 류
+	(1) while
+	(2) do ... while
 
