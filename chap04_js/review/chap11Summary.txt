@@ -34,14 +34,23 @@
 
 			:  속성
 				(1) fiiStyle :  채울 색상을 결정한다
-					ex ) 
+					: ex ) 
        					 context.fillStyle = "orange";
      					 context.fillRect(50, 50, 100, 50);
+				****** : 변경을 주면서 색상 할당하는 법 
+						:  `rgb( ${ 변수1 } , ${변수2} , ${ 변수3})` 을 할당한다
 
 				(2) storkeStyle : 윤곽선 색 결정
 					: 참고로 stroke 는 뇌졸중 뿐 아니라 , '획' 이라는 뜻도 가지고 있다
 				(3) lineWidth : 직선  너비 설정
+				(3) lineCap : 직선의 양쪽 끝 모양 결정
+					: cap 은 끝, 뚜껑을 의미.
+					: butt || round || square 중 하나 가능
+						: butt 이랑 square 은 둘다 끝이 직사각형 모양인데, butt 은 말 그대로 시작/끝 지점서 날카롭게 잘려나가는 느낌이고, square 는 시작/끝 지점 보다 좀 널널하게 잘려나가는 느낌이다.
 				(4) lineDashOffset : 현재 위치에서 얼마나 떨어진 곳에서 직선 그리기를 시작할건가 결정
+				(5) font : (텍스트 그리는데 사용될) 폰트 속성 정의
+					: '글자크기 글꼴'
+					ex ) '38pt 궁서체'
 
  			: 함수
 			    1. cavas 위에 직접 그리는 것 관련
@@ -56,20 +65,32 @@
 				(-2) setLineDash( [ 선의길이, 공백길이 ] ) : 직선 모양 설정
 				(-1) lineTo( x, y ) : 펜을 떼지 않고, (직선모양으로 ) 해당 좌표로 이동
 				(0) arc( x, y , radius, startAngle, endAngle, antiClockwise여부 ) : 펜을 떼지 않고, (곡선 모양으로 ) 해당 좌표로 이동
-					: radius(반지름) >> 
+					: radius == 반지름
 					: startAngle, endAngle >> 곡선 시작||종료 각도 
+						: 주의 >>
+							0. (반)시계방향과 상관없이, 시작( || 종료)각도가 어떻게 되든지,   해당 x,y 를 중심좌표를 하여 , "무조건" x축 오른쪽 축 부터 그리기를 시작한다.  
+								: ex )  
+								 context.arc(100,100, 10 ,1.5*Math.PI , 2*Math.PI, false); >> 오른쪽축부터 시작하여, (2-1.5)*Math.Pi 만큼인, 90º 만큼 그린다.
+								 context.arc(100,100, 10 ,1.5*Math.PI , 2*Math.PI, true ); >> 오른쪽축부터 시작하여, ( 2*Math.Pi - (2-1.5)*Math.Pi ) 만큼인, 270º 만큼 그린다.
+
+
+							1. 270º 뭐 이렇게 설정한 후 fill 한다고 해서, 수학 전공책처럼 , 피자 조각처럼 딱 예쁘게 떨어지는게 아니다. 시작점과 끝점을 잇고 그걸 채운 꼴이기 떄문에, 원과 비스무리 하지만 그 부분이 살짝 비껴나간 그런 모양이 된다.
 						: 주로 n *  Math.PI 꼴
 							2.0 * Math.PI >> 360º
 							1.5 * Math.PI >> 270º
 							1* Math.PI >> 180º
 							Math.PI >> 90º
 
-					: antiClockwise >> 반시계로 그릴 지
+					: antiClockwise >> 반시계로 그릴 지 . 
+						: true 로 할 시 반시계 . false 로 하면 시계(디폴트)
+					******: 반시계 방향으로 그리는건, 원래 그릴 거에서 못그리고 남는 부분이라고 생각함 된다. 예외적으로 2ㅠ 만큼 그리는 경우 반시계로 그리나 시계로 그리나 똑같이 온전한 원이 그려진다.
+
 				(1) bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y) : 펜을 떼지 않고, (베지어 곡선 모양으로, 그러니까 3차 곡선모양으로 ) 해당 좌표로 이동
 					: 현재 지점을 시작지점 으로 하고, arg 로 넣은 첫번째 두번쨰 좌표를 Control point 로, 마지막에 넣은 좌표를 끝 지점으로 하여 삼차 베지어 곡선을 그린다
 					
-				(2) rect( x, y, width , height ) :  펜을 떼지 않고, (직사각형 모양으로 ) 해당 좌표로 이동
+				(2) rect( x, y, width , height ) :  펜을 """떼고""", (직사각형 모양으로 ) 해당 좌표로 이동
 					: 이것 자체로는 그린게 보이지 않고, stroke( ) 나 fill( ) 필요
+
 				(3) moveTo( x,y ) : 펜을 떼고(== 아무것도 그리지 않고 ), 해당 좌표로 이동
 				(4) closePath( ) : 현재 경로의 시작 부분( == 처음으로 그려지기 시작한 점 != beginPath( ) 부분 )과 끝부분(== 마지막으로 그려진 점 )을 "직선" 으로 연결하여 경로를 닫는다
 				******:  fill() 메서드 사용 시 자동으로 닫히게되어 closePath() 하든 안하든 상관 없지만 , stroke( ) 활용하는데 경로를 닫고 싶다면(=시작과 끝을 잇고 싶다면) closePath( ) 를 해주어야된다. ( 물론 시작과 끝을 잇기 싫음 걍 안함 된다.)
@@ -80,6 +101,19 @@
 				******: 그러니까 stroke( ) 하지 않으면 , 아무리 열심히 그렸어도 그린게 보이지 않는다
 				(6) fill( ) : 경로로 만들어진 도형을 채워서 그린다
  
+				(7) fillText( text , x , y ) : 텍스트를 해당 좌표에 그림
+				(8) storkeText( text, x , y ) : 텍스트를 윤곽선만 해당 좌표에 그림
+ 				(9) drawImage( 이미지객체 , x , y ) : 이미지를 해당 좌표에 그림
+					: 보통 이미지 객체는 new Image( ) 로 생성하고, .src 등으로 객체 속성 설정하여 투입하는 편.  
+					: image 를 그릴 땐 stroke()  그런거 필요 없다.
+
+				(10) createLinearGradient( x1, y1, x2, y2 ) ,  createRadialGradient( x1, y1, r1,  x2, y2 , r2)  : 직선||원형 그라디언트 객체 생성	
+					: http://www.soen.kr/html5/html3/2-1-2.htm
+					: 선형이든 원형이든, 생성한 그라디언트 객체는 색깔 받는 속성에 할당당하는 방식으로 사용된다 . ( fillStyle 이나 StrokeStyle 에 할당 )
+					: createLinearGradient 의 arg 로 투입되는 두 좌표는 각각 시작 좌표와 종료 좌표를 의미한다. 그러니까 두 좌표를 이어 생성된 직선만큼 gradient 가 결정되고, 해당 직선 밖의 부분은 시작||종료 지점색의 연장선이라고 보면된다.
+					: createRadialGradient 의 첫 3 arg , 마지막 3 arg 는 각각 시작원과 종료원의 중심좌표, 반지름을 의미한다.
+					: 생성한 그라디언트 객체의 색상 설정  >> 생성한그라디언트객체.addColorStop( position, color ) ;
+						: position 은 0 <= <=1 의 값이고, 색상이 배정될 상대적인 위치를 정한다
 
 			: 그리는 법
 				(1) 도형을 직접 그리기 >> fillStyle & fillRect  || strokeRect 을 이용
