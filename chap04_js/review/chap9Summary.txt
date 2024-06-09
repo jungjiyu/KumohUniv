@@ -223,8 +223,14 @@ HTML 요소 "변경"하기
 
 HTML 요소 생성 및 삽입 
 	(1) 특정 요소 "객체" 생성 및 삽입
-		step1. 일단 특정 타입의 요소 객체 생성하고, 변수로 받아둔다 >> let 변수명 =  document.createElement('태그명');
+		step1. 일단 특정 타입의 요소 객체 생성하고, 변수로 받아둔다 
+		    sol(1) createElement 기반 >> let 변수명 =  document.createElement('태그명');
 			ex ) let newNode=document.createElement('p'); // <p></p> 생성
+		    sol(2) JS 제공 클래스 기반 
+			: 모든 태그들에 대해 클래스의 꼴로 제공되는게 아니다. 일부 태그에 대해서만 제공됨.
+			: img 태그의 경우 new Image( ); 
+			ex ) let newNode= new Image( ) ; // <img> 생성
+
 		step2. 생성한 객체를 대상으로 속성 설정을 한다 >> 변수명.속성명 = 어떤값;
 			ex ) 
 			newNode.innerHTML = 'bingshin'; 
@@ -235,6 +241,8 @@ HTML 요소 생성 및 삽입
 			ex ) 
 			let parentNode = document.getElementById('hhh');
 			parentNode.appendChild( newNode );
+
+	   
 
 	(2) (요소 안에 들어갈 구체적인 내용까지) 문자열을 사용해 한번에 전체적으로 생성 : document.write('어쩌구')
 
