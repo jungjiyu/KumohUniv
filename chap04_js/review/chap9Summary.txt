@@ -221,11 +221,22 @@ HTML 요소 "변경"하기
 			sol4. .classList.toggle("특정클래스명")
 				: 있으면 없애고 없으면 추가하고
 
-HTML 요소 생성하기 
-	(1) 특정 요소 껍데기만 생성: document.createElement('태그명');
-		ex ) let newNode=document.createElement('p'); // <p></p> 생성
+HTML 요소 생성 및 삽입 
+	(1) 특정 요소 "객체" 생성 및 삽입
+		step1. 일단 특정 타입의 요소 객체 생성하고, 변수로 받아둔다 >> let 변수명 =  document.createElement('태그명');
+			ex ) let newNode=document.createElement('p'); // <p></p> 생성
+		step2. 생성한 객체를 대상으로 속성 설정을 한다 >> 변수명.속성명 = 어떤값;
+			ex ) 
+			newNode.innerHTML = 'bingshin'; 
+			newNode.class = 'hehe'; // <p class='hehe' >bingshin<p>
 
-	(2) (요소 안에 들어갈 구체적인 내용까지)전체적으로 생성 : document.write('어쩌구')
+		step3. 생성한 요소 객체를 DOM 의 특정 위치에 삽입한다 >> 특정부모요소객체명.appendChild( 변수명 )
+			: 이를 위해선 삽입될 부모 요소 객체를 따로 구해놔야된다
+			ex ) 
+			let parentNode = document.getElementById('hhh');
+			parentNode.appendChild( newNode );
+
+	(2) (요소 안에 들어갈 구체적인 내용까지) 문자열을 사용해 한번에 전체적으로 생성 : document.write('어쩌구')
 
 HTML 요소 추가하기 >> 특정요소1.appendChild( 특정요소2) 
 		: 특정요소1의 자식으로 arg 노드를 추가한다.
