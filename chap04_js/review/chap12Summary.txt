@@ -1,3 +1,6 @@
+인텔리제이 커뮤니티 + JSP >> https://blog.naver.com/hong227/221427027109
+
+
 웹 서버와 jsp 
 
 웹 서버와 클라이언트의 상호작용
@@ -33,8 +36,8 @@ SEO Search Engine Optimization 검색엔진 최적화 : 사용자들에게 양�
 
 
 웹 서버쪽에서 자바 언어가 주로 채택되는 이유
-	1. 플랫폼에 독립적이고( WORA ) == "이식성" 이 있다.
-	2. 스레드를 활용할 수 있고
+	1. 플랫폼에 독립적이다( WORA ) == "이식성" 이 있다 .
+	2. 스레드를 활용할 수 있다
 	3. 제공 라이브러리가 풍부함.	
 
 
@@ -68,9 +71,8 @@ CGI  와 서블릿 servlet  >>둘 다 사용자의 요청에 따라 "서버사�
 		: servlet -->  자바 언어로만 작성 가능. 요청마다 쓰레드 단위 처리.
 
 
-   : Servlet 
-	: 자바 기반으로, 멀티스레드 개념을 통해 동적인 처리하기 위해 등장한 프로그램
-		: 각 요청에 대해 프로세스가 아닌, "스레드"를 생성하여 멀티 스레드로 처리한다
+   : Servlet >> 자바를 사용하여  멀티스레드 개념을 통해 웹페이지를 동적으로 생성하는 서버측 프로그램.
+	: 각 요청에 대해 프로세스가 아닌, "스레드"를 생성하여 멀티 스레드로 처리한다
 	: CGI 와 완전히 다른 개념은 아니다. 내부적으로는 CGI 통신 규약을 지킨다.
 	: 서블릿 클래스는 HttpServlet 을 extends 하고, 내부적으로 init( ) ,  service( ) ,  doGet( ) , doPost( ) 같은 메서드를 오버라이딩한다.
 
@@ -83,12 +85,32 @@ CGI  와 서블릿 servlet  >>둘 다 사용자의 요청에 따라 "서버사�
 		4. destroy(  ) :  서블릿이 메모리에서 해제될 떄 "한번만" 호출
 
 	: 서블릿 형식
-		: doGet( request , response ) ,  doPost( request, response ) >>  get 방식 || post 방식 요청 처리
-	****** 헷갈리는거
+		: doGet( request , response ) ,  doPost( request, response ) >>  get 방식 || post 방식 요청에 대한 처리하는 메서드 
+
+	****** 헷갈리는 인코딩 타입 관련 설정 
 			: https://cbw1030.tistory.com/62
 			request.setCharacterEncoding("UTF-8"); : request 된 내용을 해당 방식으로 디코딩하라고 서버에게 알려주는 것
 			response.setCharacterEncoding("UTF-8"); : 실제로 해당 방식으로 인코딩하여 response
 			response.setContentType("text/html; charset=utf-8"); : 해당 방식으로 인코딩하였으니, 클라이언트에게 이 방식으로 디코딩하라고 알려주는 것. MIME 타입 결정하는 것.
+
+
+		: 출력하기
+			: PrintWriter out = response.getWriter() >>클라이언트와 연결된 출력 스트림 얻기 
+				: HttpServletResponse 의 getWriter( ) 는 java.io 의 PrintWriter 클래스를 리턴한다. 그리고 그 인스턴스의 스트림은 클라이언트와 연결되어있다.
+					: PrintWriter 클래스 >> 해당 데이터를 간편하게 출력 스트림에 출력해준다
+						: 이 클래스의 인스턴스를 대상으로 print( ) , write( ) 메서드의 사용이 가능하다.
+							: out.println( ) vs out.write( )
+								: 어쩄뜬 서블릿에선 out.println 을 더 쓴다.
+								: print( ) >> 해당 데이터를 텍스트 형식으로 출력. 데이터 포맷을 해준다.
+								: write( ) >> 해당 데이터를 그대로 (바이너리 형식으로) 출력
+								: ex ) write(49) == "1" ,  print(49) == "49"
+
+						: 자바에서 제공되는 System.out 도 PrintWriter 클래스의 인스턴스인데, 이 인스턴스의 경우 클라이언트와 연결되있는 것이 아니고 서버쪽(콘솔)에 연결되있는거라 출력하면 콘솔에 뜨지, 클라이언트에게 가진 않는다
+			
+
+			: out.println("HTML코드")  >>클라이언트에게 반환될 HTML코드 출력
+
+
 
 		public class Hello extends HttpServlet {
     
@@ -111,6 +133,8 @@ CGI  와 서블릿 servlet  >>둘 다 사용자의 요청에 따라 "서버사�
 		out.println("<html> <body>");
 		out.println("	<h2>안녕하세요. " + name + "(" + id + ")님!!!</h2>");
 		out.println("	</body> </html>");
+
+
 	}
 
 	
@@ -121,30 +145,101 @@ CGI  와 서블릿 servlet  >>둘 다 사용자의 요청에 따라 "서버사�
 
 
 
-servlet 과 JSP
-   : JSP Java Server Pages 
-	: 서블릿과 반대로 HTML 내부에 자바 코드를 삽입하는 형식으로 view 를 구현한 것
-	: JSP 코드는 내부적으로 서블릿으로 변환된다. Servlet 과 완전히 다른 개념이 아니다.
-******: 프로그래밍 언어는 아니지만, (서버사이드) "스크립트 언어" 로 분류된다 
-	: ASP Active Server Pages 의 영향을 받아 만들어졌다.
-		: 
-	: JSP 페이지 처리 과정
-		: 해당 JSP 페이지 대한 request 가 들어오면 , servelt container 에 해당 JSP 페이지 대한 Servlet 인스턴스가 존재하는지 검사 후, 존재하지 않는다면 JSP 컨테이너에서 JSP 페이지를 서블릿으로 변환해 컴파일하여 class 파일을 생성한다
-		1. JSP 의 스크립틀릿에 작성된 코드는 Servlet 으로 변환되었을 때
-			: 표현식의 경우 out.println( ) 으로 변환되어 들어간다
-			: 선언문의 경우 멤버 메서드로 변환된다.
-			: 일반 HTML 태그들은 out.write( ) 로 변환된다
-			: page 디렉티브의 속성값들은 Servlet 으로 변환 시 참고할 정보로 활용된다
+preprocessor 전처리기 >> 특정 작업(주로 컴파일 작업) 이전에 작업을 수행하는 도구.
+	: 대표적으론 c언어의 #include , #define 같은거. 얘네는 컴파일 이전에 다른 파일을 불러오고, 상수를 정의하여 문제 없이 코드를 컴파일 시킬 수 있게 한다.
 
-	: JSP 컨테이너 >> JSP 파일을 서블릿으로 변환 및 컴파일 까지 담당한다.  이후에는 Servlet 컨테이너가 담당한다.
+
+스크립트 언어 : 인터프리터를 통해 실행되며 , 주로 동적인 작업을 하기 위해 사용되는 언어.
+	: 클라이언트 측 스크립트 언어와 서버 측 스크립트 언어가 모두 있다.
+		: 서버 측 스크립트 언어 >> PHP, JSP, ASP 
+		: 클라이언트 측 스크립트 언어 >> JS 
+
+
+
+JSP 와 ASP 와 PHP >> 서버사이드 스크립트 언어로 , 동적 웹 페이지를 생성하기 위해 사용된다.
+    : https://ts2ree.tistory.com/21
+    : 전처리기st 이다. >>  클라이언트에게 response 되기 전에 .asp , .jsp, .php 파일은 HTML 파일로 변환되기 떄문에, 클라이언트 측의 response 결과에는 asp , jsp, php 코드가 포함되어있지 않다. 
+
+
+
+   : PHP Hypertext PreProcessor >> HTML 내부에 PHP 코드를 삽입하는 형식의 스크립트 언어
+	: 하이퍼텍스트 "전처리기".
+	: 확장자가 .php
+
+
+    : ASP Active Server Pages >> HTML 내부에 VBScript 코드를 삽입하는 형식의 스크립트 언어
+	: MS사에서 서비스한다
+	: 확장자는 .asp
+
+
+
+   : JSP Java Server Pages >> 서블릿과 반대로 HTML 내부에 자바 코드를 삽입하는 형식의 스크립트 언어
+   	: ASP 의 영향을 받아 만들어졌고, 서블릿의 단점( 자바 코드 속 HTML 코드 )을 보완하였다.
+	: JSP 코드는 내부적으로 서블릿으로 변환된다. Servlet 과 완전히 다른 개념이 아니다.
+	: Oracle 사에서 서비스한다
+	: JSP 페이지 처리 과정
+		1. JSP 페이지 대한 request 가 들어옴
+		2. web server 가 해당 요청을 web container 에게 위임
+		3. 이미 요청 받은 적 있는 JSP 파일인지 체크 >> 즉, 해당 JSP 파일에 대한 서블릿 클래스가 있는지 검사. 
+			3-1. 처음 요청 >>   "JSP 컨테이너" 에서 해당 JSP 파일을 Servlet 파일로 파싱하여 클래스 파일을 생성(컴파일)시켜줌
+				: JSP 의 스크립틀릿에 작성된 코드는 Servlet 으로 변환될 때
+					: 표현식의 경우 out.println( ) 으로 변환되어 들어간다
+					: 선언문의 경우 멤버 메서드로 변환된다.
+					: 일반 HTML 태그들은 out.write( ) 로 변환된다
+					: page 디렉티브의 속성값들은 Servlet 으로 변환 시 참고할 정보로 활용된다
+
+			3-2. 이미 요청됬었음 >> 바로 다음 단계로 넘어감
+		
+		4. "서블릿 컨테이너"에서 ( 해당 JSP 파일에 대한) 서블릿 클래스를 실행시켜 동적 웹 페이지를 생성하고, 이를 web server에게 반환한다
+		5. web server 가 해당 페이지를 클라이언트에게 response 한다
+
+	; JSP 문법
+		: 
+
+	: 톰캣 디렉터리 구조 ( JSP 구동 관련 ) 
+		: https://velog.io/@ovan/Tomcat-%EA%B5%AC%EC%A1%B0
+		: 톰캣 프로그램 디렉터리 ( C:\Program Files\Apache Software Foundation\Tomcat 10.1  )
+			▼ bin  : 톰캣 실행/종료 역할을 하는 스크립트(.bat, .sh) 파일을 저장
+
+			▼ conf  :  톰캣 서버의 설정에 대한 파일들을 저장 
+			******▶  server.xml : Tomcat의 주 설정 파일. 
+					: 서버설정 (커넥션명, 호스트명, 포트번호 등의 설정) 내용을 담음.
+
+			▼ work  : jsp 파일을 Servlet 형태로 변환된 .java 파일과 .class 파일이 저장되있는 디렉터리
+		******▼ webapps : 톰캣이 관리하는 웹 애플리케이션들이 위치하는 폴더
+				: webapps 디렉터리의 자식 디렉터리는 한 애플리케이션이라 보면 되고, 이 자식디렉터리명은 contextPath 로 사용되어, URL 로 접근이 가능하다 . 각 자식 디렉터리마다 , URL 로 접근이 불가하여 금고 느낌으로 사용되는 "WEB-INF" 라는 디렉터리를 필수적으로 가진다. 그리고 이 WEB-INF 디렉터리는 "web.xml" 이란 파일을 꼭 가진다. 					:
+				▼ ROOT : URL 상으로 "/" 경로일 떄 접근 가능하다.
+					▼ WEB-INF : URL 로 접근이 불가한 톰캣의 금고
+						▶ web.xml : 애플리케이션 별 "설정" 파일
+							:  Servlet-mapping 등을 담음
+							: 얘가 server.xml 처럼, 전역적으로 적용되는건 아니더라도, 엄연히 설정하는 역할을 한다.
+
+				▼ 내가정한프젝폴더명 
+					▶ 내가작성한파일명.jsp
+					▼ WEB-INF 
+						▶ web.xml
+
+
+
+	: JSP 실습
+		: 그냥 쓰면 한글이 깨지는 이유 >> <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 를 축가하지 않았기 때문. 
+			: 
+
 
 
 WAS Web Application Server : Web Server + Web Container 
 	: 웹 서버의 정적 데이터 처리 기능과, 웹 컨테이너의 동적 데이터 처리 기능을 모두 가진다.
+	: 필요한 이유 >> 동적 컨텐츠를 만들기 위함
 	: Web Server 
 		1. 클라이언트와 통신하는 역할 . request 를 받고, 최종적인 response 를 하는 부분 
-		2-1. 동적인 웹 페이지 생성이 필요할 시, request 를 Web Container 에게 위임하고, 결과를 반환받아 클라이언트에게 response 한다.
+		2-1. 동적인 웹 페이지 생성이 필요할 시, request 를 Web Container 에게 위임하고, 결과를 반환받아 클라이언트에게 response 한다.다
 		2-5. 정적인 웹 페이지의 경우 Web Server 가 바로 response 한다.
+
+	: Web Container  >> Servlet Containter , JSP Container 
+		: Servlet, JSP를 실행할 수 있는 소프트웨어. 즉, 동적 데이터 처리 기능을 보유.
+		: JSP 컨테이너 >> JSP 파일을 서블릿으로 변환 및 컴파일 까지 담당한다.  이후에는 Servlet 컨테이너가 담당한다.
+		: Sevelt 컨테이너 >>Servlet 파일을 실행하여 , 동적 웹 페이지를 생성해낸다.
+
 
 Apache Tomcat : WAS 역할 수행.
 	: 동적인 데이터 처리를 위해 자바 서블릿이 실행될 수 있는 웹 컨테이너(서블릿 컨테이너) 환경을 제공. 
