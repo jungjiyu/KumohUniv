@@ -573,7 +573,7 @@ VHDL 모델링 방법
 					라벨명: process( 감지신호1, 감지신호2 .. )               
 						begin
 							. . .	
-					end process 라벨명;
+					end process ;
 
 				: proccess문 내부의 신호 배정문( '<=' 로 시그널에 할당하는거 ) 은 proccess 문이 끝나야 실행된다
 					: ex)
