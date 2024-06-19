@@ -1,5 +1,5 @@
 Object
-  equals : 참조변수의 값이 같은지 다른지 여부를 비교할 때 사용한다.
+  (1) equals : 참조변수의 값이 같은지 다른지 여부를 비교할 때 사용한다.
     : 원시타입의 경우 "==" 로 값이 같은지 다른지 판단 가능하지만, 참조 변수에 사용하는 경우 값자체가 아닌, 주소값을 비교하게 된다. 따라서 참조변수의 값 자체의 비교를 위한 메서드가 필요하다.
       String s1 = "Hello";
       String s2 = "Hello";
@@ -21,8 +21,20 @@ Object
 
 
 
-  hashcode
-  toString
+  (2) hashcode : 객체의 공한 숫자값. 주민등록번호.
+      : 보통 equals 를 오버라이딩하는 경우, hashcode 도 해야됨
+        :  equals() 의 결과가 true 인 두 객체의 해시코드는 반드시 같아야한다는 자바의 규칙 때문
+          : hashcode 와 equals 가 모두 같아야, 같은 객체로 인식된다.때문에 두 메소드를 재정의 하지 않을시 (hash 값을 사용하는) Collection을 사용할 때 , 아무리 equals 로 같은 객체 처리를 했어도 해시값은 다르기 떄문에 최종적으론 다른 객체로 인식하여 중복된 내용이 삽입될 수 있는 문제가 발생한다. 
+
+      : 구현 내용
+        : 간단히 하면, equals 메서드에서 같은지 검사당하는 필드를 대상으로 Object"s".hash( Object obj ) 를 활용하면된다.
+        public int hashcode() {
+          return Objects.hash( 특정필드 );
+        }
+
+
+
+  (3) toString
 
 
 
