@@ -171,13 +171,62 @@ Object
     2. 작업 스레드 task thread
       : Runnable 인터페이스
         : Thread 인스턴스 생성시 이 타입의 객체를 필수적으로 arg 로 넣어야된다. 
-        : public void run( ) >> 스레드가 실행할 코드가 담긴다.
+        : public void run( ) >> 스레드객체를 대상으로 .start()  하여 실행할 시, 이 메서드의 코드가 실행된다.
+
+      : 주의 > 스레드를 생성한다고 해서, 실행되는게 아니다. 객체 생성 이후, 직접 "스레드객체명.start( ) " 해줘야 실행된다.
+
+    : 스레드의 상태
+      1. new : 스레드 객체가 생성된 상테
+          : 이 상태서 start( ) 메서드의 호출로, runnable 단계로 넘어갈 수 있다. 그러니까 start( ) 를 쓴다고 해서 , 바로 실행되는게 아니라 , 실행 대기 상태로 넘어가는거다,
+      2. runnable : 실행대기상태.
+      3. running : 실행 상태
+        : cpu 를 점유하여, run( ) 이 실행되고 있는 상태
+        : run( ) 메서드기 모두 실행되면 terminated 단게로 간다.
+        : cpu 스케줄링에 의해 해당 스레드가 다시 runnable 상태로 돌아가고, 다른 스레드가 실행될수도 있다. 즉, 각 스레드는 실행대기상태와 실행상태를 번갈아가면서 조금씩 실행된다.
+
+      3.5 일시정지 : 스레드가 실행될 수 없는 상태.
+          : 다시 실행되기 위해선, runnable 을 거쳐 run 상태로 가야된다.
+          : 주의 >>  
+            1. cpu 스케줄링에 의해 run 상태에서 runnbale 상태로 다이렉트 back 하는 상황과 일시정지 상태는 다른거다
+            2. 오류 난게 아니다. 
+
+          : 일시정지로 보내는 메서드
+            (1) Thread.sleep( ms단위시간 ) : 해당시간동안 스레드를 일시정지상태로 만든다. 해당 시간이 지나면, 자동적으로 runnable 상태로 돌린다.
+            (2) Thread.join() : join( ) 을 호출시킨 메서드가 속한 스레드를 일시정지상태로 만든다. 실 ??
+            (3) Thread.wait() : 동기화 블록 내에서 스레드를 일시정지 상태로 만든다.
+
+          : 일시정지를 푸는 메서드
+            (1) interrupt( ) : interruptedException 을 발생시켜 runnbale 혹은 terminated 상태로 돌린다
+            (2) notify( ) , notifyAll( ): wait( ) 메서드로 인해 일시정지상태인 스레드들을 , runnbale 상태로 돌린다.
+
+      4. terminated : 종료
+
 
       : 생성 방법
-        sol(1) Thread 타입 객체 생성 : 
-          1. Runnable 구현 클래스 정의 
-          2. Runnable구현클래스객체를 arg 로 하여 Thread 생성
+        sol(1) Thread 타입 객체 생성 :
+          1. Runnable 구현 클래스 정의 >>  run( ) 을 오버라이딩하여 실행내용을 명시한다.
+          2. Runnable구현클래스타입 객체를 arg 로 하여 Thread 생성
+            : Thread 스레드명 = new Thread( Runnable구헌객체 );
+ 
+        sol(2) Thread 자식 타입 객체로 생성 : 
+          1. Thread 클래스를 상속하는 자식 클래스 정의 >> 이떄 반드시 run( ) 을 "오버라이딩"해준다.
+          2. 자식클래스타입의 객체 생성
+            : Thread 스레드명 = new 자식클래스멍( ); 
 
-        sol(2) Thread 자식 타입 객체로 생성 :
+
+      : 스레드 일시중지 하는 법 >> Thread.sleep( 나노세크단위 );
+        : run() 이 속한 스레드를 해당 시간 만큼 중지시킨다.
+
+      **: 주의 >> 예외를 발생시키기 떄문에 try catch 문과 함께 써야된다
+          ex) try{ Thread.sleep(1000);} catch(Exception e){e.printstacktrace();} 
+
+
+    : 각 작업 스레드는 자동적으로 , "Thread-n" 이라는 이름을 가지게 된다.
+      : n 은 "0" 부터 실행된다.
+      : Thread 객체를 대상으로 getName 을 사용하여 얻을 수 있고, 이름의 수정을 원하는 경우 .setName(String name) 쓰면 된다.
+        : Thread 스레드명 = Thread.getCurrentThread( ); 을 통해 현제 스레드에 대한 객체를 얻고, 이 변수를 대상으로 쓰면된다.
+
+
+
 
       
