@@ -183,6 +183,7 @@ Object
         : cpu 를 점유하여, run( ) 이 실행되고 있는 상태
         : run( ) 메서드기 모두 실행되면 terminated 단게로 간다.
         : cpu 스케줄링에 의해 해당 스레드가 다시 runnable 상태로 돌아가고, 다른 스레드가 실행될수도 있다. 즉, 각 스레드는 실행대기상태와 실행상태를 번갈아가면서 조금씩 실행된다.
+        : runnable 로 보내는 메서드 >> yield( );
 
       3.5 일시정지 : 스레드가 실행될 수 없는 상태.
           : 다시 실행되기 위해선, runnable 을 거쳐 run 상태로 가야된다.
@@ -191,17 +192,42 @@ Object
             2. 오류 난게 아니다. 
 
           : 일시정지로 보내는 메서드
+           **: 주의 >> 해당 스레드가 일시정지 상태일떄, 다른 스레드에서 InterruptedException 이 발생할 수 있기 떄문에 ,필수적으로 InterruptedException 예외처리 필요
             (1) Thread.sleep( ms단위시간 ) : 해당시간동안 스레드를 일시정지상태로 만든다. 해당 시간이 지나면, 자동적으로 runnable 상태로 돌린다.
-            (2) Thread.join() : join( ) 을 호출시킨 메서드가 속한 스레드를 일시정지상태로 만든다. 실 ??
-            (3) Thread.wait() : 동기화 블록 내에서 스레드를 일시정지 상태로 만든다.
+              ex) try{ Thread.sleep(1000);} catch(InterruptedException e){e.printstacktrace();} 
+
+
+            (2) 특정스레드객체.join() : join( ) 을 호출시킨 스레드를, 툭정스레드가 종료될 때까지 일시정지시켰다가 실행하게한다.
+
+        ****(3) wait() : 동기화 블록 내에서 스레드를 일시정지 상태로 만든다.
+                : Object 클래스의 메서드이다.
+
 
           : 일시정지를 푸는 메서드
-            (1) interrupt( ) : interruptedException 을 발생시켜 runnbale 혹은 terminated 상태로 돌린다
-            (2) notify( ) , notifyAll( ): wait( ) 메서드로 인해 일시정지상태인 스레드들을 , runnbale 상태로 돌린다.
+
+            (1) Thread.interrupt( ) : interruptedException 을 발생시켜 runnbale 혹은 terminated 상태로 돌린다
+        ****(2) notify( ) , notifyAll( ): wait( ) 메서드로 인해 일시정지상태인 스레드들을 , runnbale 상태로 돌린다.
+                : Object 클래스의 메서드이다.
+                : 실행시키는거지 대기 시키는게 아니니까 Interrupted Execepion 처리 불필요
 
       4. terminated : 종료
 
 
+      : 스레드 동기화 
+        : 멀티 스레드는 하나의 객체를 공유해서 작업할 수 있다. 근데 한 스레드에서 작업 하고 있는 동안 또다른 스레드에서도 해당 객체에접근하여 작업한다면, 예상치 못한 결과가 나올 수 있다. 이를 방지하기 위해, 한 스레드가 사용중인 동안은 다른 스레드가 접근하지 못하게 만드는게 synchronized 이다 .
+        : 해당 객체 내부의 sybchronized 적용된 메서드 중 하나라도 실행중인 상태면, 다른 synchroized 적용된 메서드 모두 막힌다. (일반 메서드는 가능). 그 스레드의 해당 메서드 실행이 끝나면 자동으로 잠금이 풀린다.
+        : 스레드에 의해 공유당하는 객체의 메서드의 접근 제한자 다음에 synchriubued 명시한다
+
+        : 교대로 사용하게 하고 싶을 떄, wait( ) 과 notify( ) 를 사용한다.
+          : 자신의 작업이 끝나면, notify( ) 를 통해 상대를 일시정지상태에서 해제시키고, wait( )  를 통해 자신을 일시정지 상태로 만든다.
+          : 
+        public synchronize void hehehe(){
+            .
+            .
+            .
+          notify(); // 먼저 깨우고
+          try{ wait(); }catch(InterruptedExcpeion e){} // 자신은 정지상태로 만든다 >> 또 실행되는거 방지 위함. 
+        }
       : 생성 방법
         sol(1) Thread 타입 객체 생성 :
           1. Runnable 구현 클래스 정의 >>  run( ) 을 오버라이딩하여 실행내용을 명시한다.
@@ -213,12 +239,6 @@ Object
           2. 자식클래스타입의 객체 생성
             : Thread 스레드명 = new 자식클래스멍( ); 
 
-
-      : 스레드 일시중지 하는 법 >> Thread.sleep( 나노세크단위 );
-        : run() 이 속한 스레드를 해당 시간 만큼 중지시킨다.
-
-      **: 주의 >> 예외를 발생시키기 떄문에 try catch 문과 함께 써야된다
-          ex) try{ Thread.sleep(1000);} catch(Exception e){e.printstacktrace();} 
 
 
     : 각 작업 스레드는 자동적으로 , "Thread-n" 이라는 이름을 가지게 된다.
