@@ -1,26 +1,75 @@
-: 스프링 부트 써서 웹서버 만든다
-: kocw - 우병우 - 웹 프로그래밍 복습
-	: 리액트 + express 
+오늘 수업 노션 >> https://nano5.notion.site/c2a2fe72dc18488d91c7eda988c74691#e9433e8873ad48af89bb03b5375d7690
 
-전달 수단 >> media
-	mass media >> 다수에게 전달할 수 있는 매체
-	multi media >> 여러 매체를 사용해서 전달
+학교 이메일로 ultimate 쓸 수 있다.
+
+프론트앤드 >> 사용자쪽의 가장 앞단
+백엔드>> 서버쪽
+
+URL에서 "사용자ID:사용자비번@"부분 >> userinformation
+
+URL >> pathvariable
+쿼리스트링 >> requestParam
+raw data >> requestBody
+
+get 방식 >> URL 에 주저리주저리
+post 방식 >> http 패킷 엔터 다음에 데이터가 들어있다.
+	: 패킷 보면 다 보여지기 떄문에 보안상의 이점은 없다. 
+	: 장점 >> 인코딩
+
+400번대 오류 >> 클라이언트가 잘못해서 발생
+500번대 오류 >> 서버측 오류
 
 
-전기 통신(모스 부호)
-동축케이블
-광섬유
-적외선 통신
-방사 통신
 
-네트워크
-	: ARP >> IP 랑 MAC 바인딩해둔것
-	: 패킷 >> 네트워크 계층의 데이터 전송 단위
-	: 직렬 , 병렬 << 속도 자체는 병렬이 빨라도 오류가 많기 떄문에, 통신에서는 주로 serial 로 통신한다
-		: 직렬 serial ) 한번에 한 가닥만.
-			: USB 의 약자도 Universal Serial Bus 로, 시리얼 통신을 사용한다
-		: 병렬 parellel ) 한번에 여러 가닥. << 이게 훨씬 빠르다. 근데 오류가 많다. (간섭때문에)
+KT >> 코틀린
+	: 세미콜론이 없다.
+		: 그렇다고 세미콜론 쓰면 오류가 나는건 아니다.
+ 	: 자료형을 항상 명시해줘야되는건 아니다
+		: 자료형 명시할 꺼면 ":" 뒤에 명시한다
+	: until >> 끝 숫자는 포함이 안된다.
+	: unit == 일반적인 언어에서의 void 
+		: 함수의 리턴타입 명시 안하면 자동으로 unit 자료형으로 간주
 
+	: 문자열 중간에 $ 쓰고 그 바로 뒤에 쓰는 문자열은 변수 취급된다 
+	: 연습 사이트 >> https://play.kotlinlang.org/#eyJ2ZXJzaW9uIjoiMi4wLjIwIiwicGxhdGZvcm0iOiJqYXZhIiwiYXJncyI6IiIsIm5vbmVNYXJrZXJzIjp0cnVlLCJ0aGVtZSI6ImlkZWEiLCJjb2RlIjoiLyoqXG4gKiBZb3UgY2FuIGVkaXQsIHJ1biwgYW5kIHNoYXJlIHRoaXMgY29kZS5cbiAqIHBsYXkua290bGlubGFuZy5vcmdcbiAqL1xuZnVuIG1haW4oKSB7XG4gICAgcHJpbnRsbihcIkhlbGxvLCB3b3JsZCEhIVwiKVxufSJ9
+	: 예시 사이트 >> https://play.kotlinlang.org/byExample
+
+
+파스칼 케이스 >> 젤 앞글자를 대문자로 쓰는것
+	: 자료형의 경우 파스칼 케이스
+
+캐멀 케이스 >> 젤 첫글자를 소문자로 쓰고 띄어쓰기 단위로 대문자 표시
+	: 변수의 경우 캐멀 케이스
+
+
+커스텀 >> 
+	: setting-editor-general 에서 Ctrl+Mouse Wheel 위 아래로 폰트 크기 변경 활성화
+	: setting-editor-general-autoimport 에서 코틀린 부분 모두 체크
+		: 사용하지 않는 import 문을 삭제해주는 기능
+
+
+
+인텔리제이 단축키 >>
+    알고있던
+	ctrl + space >> import 할 거 추천 창
+	ctrl + / >> 현재 줄 주석처리
+	ctrl + d >> 선택줄 복제
+		: 여러줄 선택 후 ctrl + d 하면 그만큼 *2 된다
+
+
+    헷갈리는
+	ctrl + shift10 >> 빌드 및 실행
+	shift 두번 >> 프로젝트 전체 서치 창
+	ctrl + w >> 현재 커서 있는 단어 선택
+	ctrl + w 두번 >> 현재 커서 있는 문자열 혹은 블럭을 전체 선택
+	ctrl + w 3번 >> 현재 줄에 입력한 문장 전체를 선택
+	shift + 위아래키 >> 커서로부터 윗줄 아랫줄 점차 선택
+	
+
+
+숙제 : kocw.net 에서 오병우 - 대학 강의 - jetpack compose 를 활용한 안드로이드 프로그래밍 (http://www.kocw.net/home/search/kemView.do?kemId=1488273
+) 의 kotlin 언어 문법만 수강 
+	: 가능하면 인텔리제이를 에디터로 써라
 
 
 
