@@ -1,0 +1,30 @@
+강의 자료 >> https://nano5.notion.site/HTML-d80fc40cda4d49e28a2a2b3411c5d307
+
+엔터프라이즈 - 대규모. 기업
+
+스프링부트
+   형상 관리 - 어떤 버전끼리 어울리는지
+	Configuration Management (CM): 형상 관리. 서로 어울리는 버전끼리 모여 있어야 함
+
+   tomcat - 웹서버
+
+Package name - 세상 유일한 문자열
+
+
+숙제 제출할 떄 형식을 지켜 프젝 생성 필요
+	- group : kr.ac.kumoh.ce.s20231073
+	- artifact , name, description : 알아서 잘 
+
+
+
+alt + shift + f10 >> 굳이 main 페이지에서 실행안해도 되게 해준다
+
+
+
+깃허브에 올리기
+VCS version control system
+share project on github
+
+
+코틀린에 엘비스 연산자? 그런거 있다
+
