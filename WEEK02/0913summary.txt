@@ -81,10 +81,15 @@ os 기반 파이썬 코딩
 			IM CONFIG DEFAULT MODE=AUTO -> IM CONFIG DEFAULT MODE=fcitx 로 수정
 	
 
+	4. 시작 -> 개발  –> 어쩌구 하고 다음을 입력 후 실행
+		: from grovepi import *  하면 module 없다는 에러 뜨고, 정상인거임. 이제 이 모둘을 설치해줘야됨.
 
 
 
 
+
+
+python3
 
 
 
