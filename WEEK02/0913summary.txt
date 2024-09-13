@@ -1,0 +1,108 @@
+os 기반 파이썬 코딩
+
+
+(1) 라즈베리 파이 설치
+    1. 초기 페이지 설정
+	: 장치선택 - rasberry pi 3
+	: 운영체제 선택 - rasberry pi os (32-bit)
+		: 다운로드 용량이 1기가 전후
+	: 저장소 - SD 칩 꽂은 USB 에 대한 것 선택
+
+
+     2. 커스터마이징 설정을 적용하시겠습니까? >> 예
+	: hostname - raspberrypi
+	: 사용자 이름 및 비밀번호
+		id, pw >> pi
+
+	: 무선 LAN 설정
+		 본체는 그대로 두고 원격 접속해서 할거다. 매번 실습 할 떄마다 직접 모니터, 키보드 연결해서 하긴 좀 .. 개 귀찮
+		원격접속했을떄 클라이언트 >> 노트북
+		무선 접속할 떄 노트북의 핫스팟을 이용
+
+		1. 모바일 핫스팟을 노트북에서 "켬"
+		2. 네트워크 속성 설정(편집)
+			이름 : jiyu-network
+			암호 : 1234567890
+			네트워크 대역 : 2.4GHz
+
+		SSID : jiyu-network
+		비밀번호 : 1234567890
+
+	: 로케일 설정
+		: 시간대 Asia/Seoul
+		: us
+
+	: 서비스 탭 
+		SSH 설정 활성화 및 나머지는 그대로 둠	
+
+
+     3. 설치 버튼 누르고 다 되면 sd 카드 뽑음
+
+
+(2) sd 카드 다시 라즈베리 파이에 꼽고 전원 연결
+(3) 모바일 핫스팟 키고 연결된 장치 1 될 떄까지 대기탐
+	: 이떄 연결 잘 안되면 걍 노트북 재부팅 함 잘 된다
+
+(4) putty 접속
+	1. 접속 >>  hostname 을 raspberrypi 로 하고 걍 접속, id 와 pw 입력(둘 다 pi) 
+		: 이거 핫스팟에서 raspberrypi 라는 이름으로 연결된거라서 그렇디
+
+	2. sudo vim /boot/config,txt
+		: 이거 이젠 안쓴다는 문구가 적혀있는데 그거 개무시 하고 다 밀어버리고 다음을 작성
+			hdmi_force_hotplug=1 
+			hdmi_group=2
+			hdmi_mode=82
+
+	3. sudo raspi-config 
+	    (1) 다음을 설정
+		1.Interface Options -> I3. VNC -> Yes
+		2. Display Options -> D3. VNC Resolution -> 1920*1080
+	    (2) finish
+	    (3) 재부팅
+		: 좀 기다리면 다시 핫스팟 쪽에 연결된 기기 1로 뜬다
+
+		
+		
+
+(4) VNC 설치 -> winow 버전으로
+(5) VNC viwer 실행 
+	1. hostname 을 raspberrypi 로 하여 접속
+	2. 부팅 되서 화면 나오면 윗부분의 터미널 버튼 클릭하여 터미널 열고 다음을 수행
+		(1) sudo apt install fonts-unfonts-core >> 한글 설정
+	3. 시작 -> Preferences –RPI Configuration-Localisation
+		: Locale 에서 다음으로 설정
+			Language > Ko(korean)
+			Character set > UTF-8
+
+	4. 터미널 또 열고 다음을 수행 
+		(1) sudo apt remove ibus ibus-hangul
+		(2) sudo apt install fcitx fcitx-hangul
+		(3) sudo vim /etc/default/im-config
+			IM CONFIG DEFAULT MODE=AUTO -> IM CONFIG DEFAULT MODE=fcitx 로 수정
+	
+
+
+
+
+
+
+
+
+
+---------------------------------
+
+초안 기획서
+	- 완전 새로운게 아니라 기존에 판매되고 있는 것도 괜찮음
+		ex ) 자동으로 열리는 쓰레기 통 >> 초음파 센서 와 모터 
+			: 근데 아래에도 적었듯이 최소 3개이상 써야되서 하나 더 적용해야됨
+
+	- 최소 3개이상의 부품을 사용해야됨
+
+
+
+
+
+
+
+
+
